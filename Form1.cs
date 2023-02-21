@@ -66,8 +66,6 @@ namespace videocapture
         {
             public string ip;
             public DrawPictureCache.DrawLine line;
-            //public List<DrawPictureCache.DrawLine> line = new List<DrawPictureCache.DrawLine>();
-            //public DrawPictureCache.DrawRectangle gGetDrawRectangle;
             public bool state = false;
             public double length;
             public int pixeldis;
@@ -94,9 +92,6 @@ namespace videocapture
                         return;
                     }
                     this.drawPictureBoxVideo.drawCache.addDrawLineList(extraConfig.line.xMin, extraConfig.line.yMin, extraConfig.line.xMax, extraConfig.line.yMax, 3, Color.Blue);
-                    //var rec = extraConfig.gGetDrawRectangle;
-                    //this.drawPictureBoxVideo.drawCache.addDrawRectangleList(rec.xMin, rec.yMin, rec.xMax, rec.yMax, 3, Color.Blue);
-                    //DrawPictureCache.gGetDrawRectangle = rec;
                     MessageBox.Show("参数读取成功");
                 }
                 else
@@ -120,16 +115,12 @@ namespace videocapture
         {
             try
             {
-                //extraConfig.line = DrawPictureCache.LineList;
                 extraConfig.line = DrawPictureCache.gGetDrawLine;
-                //extraConfig.gGetDrawRectangle = DrawPictureCache.gGetDrawRectangle;
                 if (File.Exists("config.json"))
                 {
                     var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
                     extras.nums = this.comboBox1.SelectedIndex + 3;
                     extras.config[flag].line = DrawPictureCache.gGetDrawLine;
-                    //extras.config[flag].line = DrawPictureCache.LineList;
-                    //extras.config[flag].gGetDrawRectangle = DrawPictureCache.gGetDrawRectangle;
                     totalConfig = extras;
                     convert(totalConfig);
                 }
@@ -154,22 +145,6 @@ namespace videocapture
             this.drawPictureBoxVideo.mouseClickType = "";
         }
 
-        //private void CleanRectangle()
-        //{
-        //    drawRangeToolStripMenuItem.Text = drawRangeToolStripMenuItem.Text.Replace("*", "");
-        //    this.drawPictureBoxVideo.mouseClickType = "";
-        //    this.drawPictureBoxVideo.drawCache.clearDrawRectangleList();
-        //    try
-        //    {
-        //        for (int index = 0; index < cutWithLineShowIndex.Count; index++)
-        //        {
-        //            this.drawPictureBoxVideo.drawCache.removeDrawLineList(cutWithLineShowIndex[index]);
-        //        }
-        //    }
-        //    catch { }
-        //    this.drawPictureBoxVideo.refresh();
-        //    this.drawPictureBoxVideo.mouseClickType = "";
-        //}
 
         //画线
         private void drawLineToolStripMenuItem_Click(object sender, EventArgs e)
@@ -186,20 +161,6 @@ namespace videocapture
             }
         }
 
-        //画框
-        //private void drawRangeToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    if (drawRangeToolStripMenuItem.Text.Contains("*"))
-        //    {
-        //        CleanRectangle();
-        //    }
-        //    else
-        //    {
-        //        drawRangeToolStripMenuItem.Text += "*";
-        //        this.drawPictureBoxVideo.mouseClickType = "drawRectangle";
-        //    }
-
-        //}
 
         //读配置
         private void readConfigToolStripMenuItem_Click(object sender, EventArgs e)
@@ -579,12 +540,8 @@ namespace videocapture
             {
                 if (extras.config[press].line != null)
                 {
-                    //DrawPictureCache.DrawRectangle rec1 = (DrawPictureCache.DrawRectangle)drawPictureBoxVideo.drawCache.drawRectangleList[0];
-                    //var rec2 = extras.config[press].gGetDrawRectangle;
                     DrawPictureCache.DrawLine line1 = (DrawPictureCache.DrawLine)drawPictureBoxVideo.drawCache.drawLineList[0];
                     var line2 = extras.config[press].line;
-                    //int ans1 = rec1.xMax + rec1.xMin + rec1.yMax + rec1.yMin;
-                    //int ans2 = rec2.xMax + rec2.xMin + rec2.yMax + rec2.yMin;
                     int ans3 = line1.xMax + line1.xMin + line1.yMax + line1.yMin;
                     int ans4 = line2.xMax + line2.xMin + line2.yMax + line2.yMin;
                     if (ans3 != ans4) { MessageBox.Show("当前配置未保存"); }
