@@ -67,7 +67,7 @@ namespace videocapture
             public string ip;
             public DrawPictureCache.DrawLine line;
             //public List<DrawPictureCache.DrawLine> line = new List<DrawPictureCache.DrawLine>();
-            public DrawPictureCache.DrawRectangle gGetDrawRectangle;
+            //public DrawPictureCache.DrawRectangle gGetDrawRectangle;
             public bool state = false;
             public double length;
             public int pixeldis;
@@ -80,7 +80,7 @@ namespace videocapture
         }
         private void readConfig()
         {
-            this.drawPictureBoxVideo.drawCache.clearDrawRectangleList();
+            //this.drawPictureBoxVideo.drawCache.clearDrawRectangleList();
             this.drawPictureBoxVideo.drawCache.clearDrawLineList();
             try
             {
@@ -94,9 +94,9 @@ namespace videocapture
                         return;
                     }
                     this.drawPictureBoxVideo.drawCache.addDrawLineList(extraConfig.line.xMin, extraConfig.line.yMin, extraConfig.line.xMax, extraConfig.line.yMax, 3, Color.Blue);
-                    var rec = extraConfig.gGetDrawRectangle;
-                    this.drawPictureBoxVideo.drawCache.addDrawRectangleList(rec.xMin, rec.yMin, rec.xMax, rec.yMax, 3, Color.Blue);
-                    DrawPictureCache.gGetDrawRectangle = rec;
+                    //var rec = extraConfig.gGetDrawRectangle;
+                    //this.drawPictureBoxVideo.drawCache.addDrawRectangleList(rec.xMin, rec.yMin, rec.xMax, rec.yMax, 3, Color.Blue);
+                    //DrawPictureCache.gGetDrawRectangle = rec;
                     MessageBox.Show("参数读取成功");
                 }
                 else
@@ -129,7 +129,7 @@ namespace videocapture
                     extras.nums = this.comboBox1.SelectedIndex + 3;
                     extras.config[flag].line = DrawPictureCache.gGetDrawLine;
                     //extras.config[flag].line = DrawPictureCache.LineList;
-                    extras.config[flag].gGetDrawRectangle = DrawPictureCache.gGetDrawRectangle;
+                    //extras.config[flag].gGetDrawRectangle = DrawPictureCache.gGetDrawRectangle;
                     totalConfig = extras;
                     convert(totalConfig);
                 }
