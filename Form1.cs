@@ -574,19 +574,19 @@ namespace videocapture
         private void CheckLine()
         {
             var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-            if (drawPictureBoxVideo.drawCache.drawRectangleList.Count != 0 && drawPictureBoxVideo.drawCache.drawLineList.Count != 0 && can_saveconfig())
+            if (drawPictureBoxVideo.drawCache.drawLineList.Count != 0 && can_saveconfig())
             {
-                if (extras.config[press].gGetDrawRectangle != null && extras.config[press].line != null)
+                if (extras.config[press].line != null)
                 {
-                    DrawPictureCache.DrawRectangle rec1 = (DrawPictureCache.DrawRectangle)drawPictureBoxVideo.drawCache.drawRectangleList[0];
-                    var rec2 = extras.config[press].gGetDrawRectangle;
+                    //DrawPictureCache.DrawRectangle rec1 = (DrawPictureCache.DrawRectangle)drawPictureBoxVideo.drawCache.drawRectangleList[0];
+                    //var rec2 = extras.config[press].gGetDrawRectangle;
                     DrawPictureCache.DrawLine line1 = (DrawPictureCache.DrawLine)drawPictureBoxVideo.drawCache.drawLineList[0];
                     var line2 = extras.config[press].line;
-                    int ans1 = rec1.xMax + rec1.xMin + rec1.yMax + rec1.yMin;
-                    int ans2 = rec2.xMax + rec2.xMin + rec2.yMax + rec2.yMin;
+                    //int ans1 = rec1.xMax + rec1.xMin + rec1.yMax + rec1.yMin;
+                    //int ans2 = rec2.xMax + rec2.xMin + rec2.yMax + rec2.yMin;
                     int ans3 = line1.xMax + line1.xMin + line1.yMax + line1.yMin;
                     int ans4 = line2.xMax + line2.xMin + line2.yMax + line2.yMin;
-                    if (ans1 != ans2 || ans3 != ans4) { MessageBox.Show("当前配置未保存"); }
+                    if (ans3 != ans4) { MessageBox.Show("当前配置未保存"); }
 
                 }
                 else
