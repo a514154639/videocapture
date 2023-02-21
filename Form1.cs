@@ -212,14 +212,15 @@ namespace videocapture
         //写配置
         private void setConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (can_saveconfig())
-            {
-                setConfig();
-            }
-            else
-            {
-                MessageBox.Show("当前线框不合理");
-            }
+            //if (can_saveconfig())
+            //{
+            //    setConfig();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("当前线框不合理");
+            //}
+            setConfig();
 
         }
 
@@ -574,7 +575,7 @@ namespace videocapture
         private void CheckLine()
         {
             var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-            if (drawPictureBoxVideo.drawCache.drawLineList.Count != 0 && can_saveconfig())
+            if (drawPictureBoxVideo.drawCache.drawLineList.Count != 0)
             {
                 if (extras.config[press].line != null)
                 {
@@ -596,27 +597,6 @@ namespace videocapture
 
             }
 
-        }
-
-        //判断当前线框是否合理
-        private bool can_saveconfig()
-        {
-            if (drawPictureBoxVideo.drawCache.drawRectangleList.Count != 0)
-            {
-                DrawPictureCache.DrawRectangle rec1 = (DrawPictureCache.DrawRectangle)drawPictureBoxVideo.drawCache.drawRectangleList[0];
-                DrawPictureCache.DrawLine line1 = (DrawPictureCache.DrawLine)drawPictureBoxVideo.drawCache.drawLineList[0];
-                if (line1.yMax > rec1.yMax || line1.xMin < rec1.xMin || line1.xMax > rec1.xMax || line1.yMin < rec1.yMin)
-                {
-                    return false;
-                }
-                else return true;
-
-            }
-            else
-            {
-                MessageBox.Show("当前未画框");
-                return false;
-            }
         }
 
         //相机按钮背景颜色设置
