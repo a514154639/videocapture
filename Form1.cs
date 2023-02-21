@@ -88,7 +88,7 @@ namespace videocapture
                 {
                     var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
                     extraConfig = extras.config[flag];
-                    if (extras.config[flag].gGetDrawRectangle == null || extras.config[flag].line == null)
+                    if (extras.config[flag].line == null)
                     {
                         MessageBox.Show("未配置参数");
                         return;
@@ -122,7 +122,7 @@ namespace videocapture
             {
                 //extraConfig.line = DrawPictureCache.LineList;
                 extraConfig.line = DrawPictureCache.gGetDrawLine;
-                extraConfig.gGetDrawRectangle = DrawPictureCache.gGetDrawRectangle;
+                //extraConfig.gGetDrawRectangle = DrawPictureCache.gGetDrawRectangle;
                 if (File.Exists("config.json"))
                 {
                     var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
