@@ -91,12 +91,22 @@ namespace videocapture
                     if (extras.type.Contains("0"))
                     {
                         flag--;//当没有应急车道的时候相机下标需要减一
+                        extraConfig = extras.config[flag];
+                        if (extras.config[flag].line == null)
+                        {
+                            MessageBox.Show("未配置参数");
+                            return;
+                        }                     
+                        flag++;
                     }
-                    extraConfig = extras.config[flag];
-                    if (extras.config[flag].line == null)
+                    else
                     {
-                        MessageBox.Show("未配置参数");
-                        return;
+                        extraConfig = extras.config[flag];
+                        if (extras.config[flag].line == null)
+                        {
+                            MessageBox.Show("未配置参数");
+                            return;
+                        }                     
                     }
                     this.drawPictureBoxVideo.drawCache.addDrawLineList(extraConfig.line.xMin, extraConfig.line.yMin, extraConfig.line.xMax, extraConfig.line.yMax, 3, Color.Blue);
                     MessageBox.Show("参数读取成功");
@@ -105,7 +115,6 @@ namespace videocapture
                 {
                     MessageBox.Show("参数文件不存在");
                 }
-
                 //this.drawPictureBoxVideo.refresh();
 
             }
@@ -113,7 +122,6 @@ namespace videocapture
             {
                 MessageBox.Show(ex.ToString());
             }
-
         }
 
         List<ExtraConfig> configs = new List<ExtraConfig>();
@@ -129,9 +137,30 @@ namespace videocapture
                     //extras.nums = this.comboBox1.SelectedIndex + 3;
                     if (extras.type.Contains("0"))
                     {
-                        flag--;//当没有应急车道的时候配置下标需要减一
+                        flag--;
+                        extras.config[flag].line = DrawPictureCache.gGetDrawLine;
+                        if (this.button5.Text.Contains("*"))
+                        {
+                            extras.config[flag].flip = true;
+                        }
+                        else
+                        {
+                            extras.config[flag].flip = false;
+                        }
+                        flag++;
                     }
-                    extras.config[flag].line = DrawPictureCache.gGetDrawLine;
+                    else
+                    {
+                        extras.config[flag].line = DrawPictureCache.gGetDrawLine;
+                        if (this.button5.Text.Contains("*"))
+                        {
+                            extras.config[flag].flip = true;
+                        }
+                        else
+                        {
+                            extras.config[flag].flip = false;
+                        }
+                    }                  
                     totalConfig = extras;
                     convert(totalConfig);
                 }
@@ -679,6 +708,7 @@ namespace videocapture
             }
         }
 
+
         //车道选择 配置文件初始化
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -924,15 +954,28 @@ namespace videocapture
             if (File.Exists("config.json"))
             {
                 var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-                
-                if (textBox1.Text != "")
+                if (extras.type.Contains("0"))
                 {
-                    extras.config[flag].length = double.Parse(textBox1.Text);
-                    extras.config[flag].pixeldis = dis;
-                    totalConfig = extras;
-                    convert(totalConfig);
+                    flag--;//当没有应急车道的时候相机下标需要减一
+                    if (textBox1.Text != "")
+                    {
+                        extras.config[flag].length = double.Parse(textBox1.Text);
+                        extras.config[flag].pixeldis = dis;
+                        totalConfig = extras;
+                        convert(totalConfig);
+                    }
+                    flag++;
                 }
-
+                else
+                {
+                    if (textBox1.Text != "")
+                    {
+                        extras.config[flag].length = double.Parse(textBox1.Text);
+                        extras.config[flag].pixeldis = dis;
+                        totalConfig = extras;
+                        convert(totalConfig);
+                    }
+                }              
             }
         }
 
