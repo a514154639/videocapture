@@ -30,6 +30,7 @@ namespace videocapture
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button12 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -58,7 +59,6 @@ namespace videocapture
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button12 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -100,6 +100,16 @@ namespace videocapture
             this.splitContainer1.Size = new System.Drawing.Size(958, 824);
             this.splitContainer1.SplitterDistance = 116;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(632, 68);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(104, 39);
+            this.button12.TabIndex = 18;
+            this.button12.Text = "上传参数";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // button11
             // 
@@ -181,10 +191,10 @@ namespace videocapture
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
+            "2+0车道",
             "2+1车道",
-            "3+1车道",
-            "4+1车道",
-            "5+1车道"});
+            "3+0车道",
+            "3+1车道"});
             this.comboBox1.Location = new System.Drawing.Point(789, 16);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(120, 26);
@@ -404,16 +414,6 @@ namespace videocapture
             this.pictureBox1.Size = new System.Drawing.Size(360, 704);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(632, 68);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(104, 39);
-            this.button12.TabIndex = 18;
-            this.button12.Text = "上传参数";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // Form1
             // 

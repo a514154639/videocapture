@@ -59,6 +59,7 @@ namespace videocapture
         public class TotalConfig
         {
             public int nums;
+            public string type;
             public List<ExtraConfig> config = new List<ExtraConfig>();
         }
 
@@ -69,6 +70,8 @@ namespace videocapture
             public bool state = false;
             public double length;
             public int pixeldis;
+            public bool flip = false;
+            public int lane;
 
         }
         
@@ -85,6 +88,10 @@ namespace videocapture
                 if (File.Exists("config.json"))
                 {
                     var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
+                    if (extras.type.Contains("0"))
+                    {
+                        flag--;//当没有应急车道的时候相机下标需要减一
+                    }
                     extraConfig = extras.config[flag];
                     if (extras.config[flag].line == null)
                     {
@@ -119,7 +126,11 @@ namespace videocapture
                 if (File.Exists("config.json"))
                 {
                     var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-                    extras.nums = this.comboBox1.SelectedIndex + 3;
+                    //extras.nums = this.comboBox1.SelectedIndex + 3;
+                    if (extras.type.Contains("0"))
+                    {
+                        flag--;//当没有应急车道的时候配置下标需要减一
+                    }
                     extras.config[flag].line = DrawPictureCache.gGetDrawLine;
                     totalConfig = extras;
                     convert(totalConfig);
@@ -521,8 +532,8 @@ namespace videocapture
                 cv2Video.dispose();
             }
             cv2Video = new Cv2Video();
-            bool res = cv2Video.openRtsp(str + ":554 latency = 0 ! rtph265depay ! h265parse ! omxh265dec ! video/x-raw,format=(string)BGRx, width=(int)1080,height=(int)1920, ! videoconvert ! appsink sync = false");
-            //bool res = cv2Video.openVideoFile(@"demo.mp4");
+            //bool res = cv2Video.openRtsp(str + ":554 latency = 0 ! rtph265depay ! h265parse ! omxh265dec ! video/x-raw,format=(string)BGRx, width=(int)1080,height=(int)1920, ! videoconvert ! appsink sync = false");
+            bool res = cv2Video.openVideoFile(@"demo.mp4");
             if (!res)
             {
                 cv2Video = null;
@@ -538,6 +549,10 @@ namespace videocapture
             var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
             if (drawPictureBoxVideo.drawCache.drawLineList.Count != 0)
             {
+                if (extras.type.Contains("0"))
+                {
+                    press--;//当没有应急车道的时候相机下标需要减一
+                }
                 if (extras.config[press].line != null)
                 {
                     DrawPictureCache.DrawLine line1 = (DrawPictureCache.DrawLine)drawPictureBoxVideo.drawCache.drawLineList[0];
@@ -593,111 +608,43 @@ namespace videocapture
         //相机0
         private void button1_Click(object sender, EventArgs e)
         {
-            flag = 0;
-            if (comboBox1.Text == "")
-            {
-                MessageBox.Show("请先选择车道");
-                return;
-            }
-            if (this.checkBox0.Checked == true)
-            {
-                buttonColor(splitContainer2.Panel2);
-                CheckLine();
-                string str = checkip(0);
-                if (str == "rtsp://admin:wanji168@") return;
-                showimage(str);
-                //isopen = true;
-            }
-            else
-            {
-                MessageBox.Show("相机未启用");
-                return;
-            }
-            press = 0;
-
+            cam_op(0);
         }
 
         //相机1
         private void button2_Click(object sender, EventArgs e)
         {
-            flag = 1;
-            if (comboBox1.Text == "")
-            {
-                MessageBox.Show("请先选择车道");
-                return;
-            }
-            if (this.checkBox1.Checked == true)
-            {
-                buttonColor(splitContainer2.Panel2);
-                CheckLine();
-                string str = checkip(1);
-                if (str == "rtsp://admin:wanji168@") return;
-                showimage(str);
-            }
-            else
-            {
-                MessageBox.Show("相机未启用");
-                return;
-            }
-            press = 1;
-
+            cam_op(1);
         }
 
         //相机2
         private void button3_Click(object sender, EventArgs e)
         {
-            flag = 2;
-            if (comboBox1.Text == "")
-            {
-                MessageBox.Show("请先选择车道");
-                return;
-            }
-            if (this.checkBox2.Checked == true)
-            {
-                buttonColor(splitContainer2.Panel2);
-                CheckLine();
-                string str = checkip(2);
-                if (str == "rtsp://admin:wanji168@") return;
-                showimage(str);
-            }
-            else
-            {
-                MessageBox.Show("相机未启用");
-                return;
-            }
-            press = 2;
-
+            cam_op(2);
         }
 
         //相机3
         private void button4_Click(object sender, EventArgs e)
         {
-            flag = 3;
-            if (comboBox1.Text == "")
-            {
-                MessageBox.Show("请先选择车道");
-                return;
-            }
-            if (this.checkBox3.Checked == true)
-            {
-                buttonColor(splitContainer2.Panel2);
-                CheckLine();
-                string str = checkip(3);
-                if (str == "rtsp://admin:wanji168@") return;
-                showimage(str);
-            }
-            else
-            {
-                MessageBox.Show("相机未启用");
-                return;
-            }
-            press = 3;
+            cam_op(3);
         }
 
         //相机4
         private void button6_Click(object sender, EventArgs e)
         {
-            flag = 4;
+            cam_op(4);
+        }
+
+        //相机5
+        private void button7_Click(object sender, EventArgs e)
+        {
+            cam_op(5);
+        }
+
+        //相机操作
+        private void cam_op(int index)
+        {
+            flag = index;
             if (comboBox1.Text == "")
             {
                 MessageBox.Show("请先选择车道");
@@ -707,7 +654,7 @@ namespace videocapture
             {
                 buttonColor(splitContainer2.Panel2);
                 CheckLine();
-                string str = checkip(4);
+                string str = checkip(index);
                 if (str == "rtsp://admin:wanji168@") return;
                 showimage(str);
             }
@@ -716,32 +663,7 @@ namespace videocapture
                 MessageBox.Show("相机未启用");
                 return;
             }
-            press = 4;
-        }
-
-        //相机5
-        private void button7_Click(object sender, EventArgs e)
-        {
-            flag = 5;
-            if (comboBox1.Text == "")
-            {
-                MessageBox.Show("请先选择车道");
-                return;
-            }
-            if (this.checkBox5.Checked == true)
-            {
-                buttonColor(splitContainer2.Panel2);
-                CheckLine();
-                string str = checkip(5);
-                if (str == "rtsp://admin:wanji168@") return;
-                showimage(str);
-            }
-            else
-            {
-                MessageBox.Show("相机未启用");
-                return;
-            }
-            press = 5;
+            press = index;
         }
 
         //水平翻转
@@ -767,23 +689,63 @@ namespace videocapture
             this.button4.Visible = false;
             this.button6.Visible = false;
             this.button7.Visible = false;
+            int selectedIndex = this.comboBox1.SelectedIndex + 2;
+            int lane_nums = 0;
             if (File.Exists("config.json"))
             {
                 File.Delete("config.json");
             }
             configs.Clear();
+            if (this.comboBox1.SelectedItem.ToString() == "2+0车道")
+            {
+                this.button1.Visible = false;
+                this.button2.Visible = true;
+                this.button3.Visible = true;
+                this.checkBox0.Visible = false;
+                this.checkBox3.Visible = false;
+                this.checkBox4.Visible = false;
+                this.checkBox5.Visible = false;
+                for (int i = 0; i < selectedIndex; i++)
+                {
+                    configs.Add(new ExtraConfig { ip = "" ,lane = selectedIndex - i});
+                }
+                lane_nums = selectedIndex;
+                totalConfig.type = "2+0";
+            }
             if (this.comboBox1.SelectedItem.ToString() == "2+1车道")
             {
                 this.button1.Visible = true;
                 this.button2.Visible = true;
                 this.button3.Visible = true;
+                this.button4.Visible = false;
+                this.checkBox0.Visible = true;
                 this.checkBox3.Visible = false;
                 this.checkBox4.Visible = false;
                 this.checkBox5.Visible = false;
-                for (int i = 0; i < this.comboBox1.SelectedIndex + 3; i++)
+                for (int i = 0; i < selectedIndex; i++)
                 {
-                    configs.Add(new ExtraConfig { ip = "" });
+                    configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - i });
                 }
+                lane_nums = selectedIndex;
+                totalConfig.type = "2+1";
+            }
+            if (this.comboBox1.SelectedItem.ToString() == "3+0车道")
+            {
+                this.button1.Visible = false;
+                this.button2.Visible = true;
+                this.button3.Visible = true;
+                this.button4.Visible = true;
+                this.button6.Visible = false;
+                this.checkBox0.Visible = false;
+                this.checkBox3.Visible = true;
+                this.checkBox4.Visible = false;
+                this.checkBox5.Visible = false;
+                for (int i = 0; i < selectedIndex - 1; i++)
+                {
+                    configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - 1 - i });
+                }
+                lane_nums = selectedIndex - 1;
+                totalConfig.type = "3+0";
             }
             if (this.comboBox1.SelectedItem.ToString() == "3+1车道")
             {
@@ -791,47 +753,21 @@ namespace videocapture
                 this.button2.Visible = true;
                 this.button3.Visible = true;
                 this.button4.Visible = true;
+                this.button6.Visible = false;
+                this.button7.Visible = false;
+                this.checkBox0.Visible = true;
                 this.checkBox3.Visible = true;
                 this.checkBox4.Visible = false;
                 this.checkBox5.Visible = false;
-                for (int i = 0; i < this.comboBox1.SelectedIndex + 3; i++)
+                for (int i = 0; i < selectedIndex - 1; i++)
                 {
-                    configs.Add(new ExtraConfig { ip = "" });
+                    configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - 1 - i });
                 }
-            }
-            if (this.comboBox1.SelectedItem.ToString() == "4+1车道")
-            {
-                this.button1.Visible = true;
-                this.button2.Visible = true;
-                this.button3.Visible = true;
-                this.button4.Visible = true;
-                this.button6.Visible = true;
-                this.checkBox3.Visible = true;
-                this.checkBox4.Visible = true;
-                this.checkBox5.Visible = false;
-                for (int i = 0; i < this.comboBox1.SelectedIndex + 3; i++)
-                {
-                    configs.Add(new ExtraConfig { ip = "" });
-                }
-            }
-            if (this.comboBox1.SelectedItem.ToString() == "5+1车道")
-            {
-                this.button1.Visible = true;
-                this.button2.Visible = true;
-                this.button3.Visible = true;
-                this.button4.Visible = true;
-                this.button6.Visible = true;
-                this.button7.Visible = true;
-                this.checkBox3.Visible = true;
-                this.checkBox4.Visible = true;
-                this.checkBox5.Visible = true;
-                for (int i = 0; i < this.comboBox1.SelectedIndex + 3; i++)
-                {
-                    configs.Add(new ExtraConfig { ip = "" });
-                }
+                lane_nums = selectedIndex - 1;
+                totalConfig.type = "3+1";
             }
             totalConfig.config = configs;
-            totalConfig.nums = this.comboBox1.SelectedIndex + 3;
+            totalConfig.nums = lane_nums;
             convert(totalConfig);
         }
 
@@ -841,8 +777,16 @@ namespace videocapture
             if (File.Exists("config.json"))
             {
                 var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-                this.comboBox1.SelectedIndex = extras.nums - 3;
+                if (extras.type.Contains("2"))
+                {
+                    this.comboBox1.SelectedIndex = extras.nums - 2;
+                }
+                if (extras.type.Contains("3"))
+                {
+                    this.comboBox1.SelectedIndex = extras.nums - 1;
+                }
                 this.comboBox1.Refresh();
+
                 totalConfig = extras;
                 convert(totalConfig);
             }
@@ -851,10 +795,14 @@ namespace videocapture
         //检查并写入相机ip 
         private string checkip(int camnum)
         {
-            String str = "rtsp://admin:wanji168@";
+            String str = "rtsp://admin:wanji168@";           
             if (File.Exists("config.json"))
             {
                 var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
+                if (extras.type.Contains("0"))
+                {
+                    camnum--;//当没有应急车道的时候相机下标需要减一
+                }
                 if (extras.config[camnum].ip == "")
                 {
                     ipinput.ShowDialog();
@@ -862,7 +810,7 @@ namespace videocapture
                     if (IP == "") return str;
                     str += IP;
                     extras.config[camnum].ip = IP;
-                    extras.config[camnum].state = true;
+                    extras.config[camnum].state = true;                 
                     totalConfig = extras;
                     convert(totalConfig);
 
@@ -933,8 +881,7 @@ namespace videocapture
         {
             //string str = checkip(flag);
             //showimage(str);
-            isopen = true;
-             
+            isopen = true;            
             //deepstream.start();
 
         }
@@ -977,6 +924,7 @@ namespace videocapture
             if (File.Exists("config.json"))
             {
                 var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
+                
                 if (textBox1.Text != "")
                 {
                     extras.config[flag].length = double.Parse(textBox1.Text);
