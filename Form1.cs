@@ -548,9 +548,7 @@ namespace videocapture
                 }
 
             }));
-        }
-
-        
+        }      
 
         //显示相机画面
         private void showimage(string str)
@@ -673,6 +671,14 @@ namespace videocapture
         //相机操作
         private void cam_op(int index)
         {
+            //复原相机角度
+            if (button5.Text.Contains("*"))
+            {
+                button5.Text = button5.Text.Replace("*", "");
+            }
+            rotate = 0;
+            isrotate = false;
+
             flag = index;
             if (comboBox1.Text == "")
             {
@@ -707,7 +713,6 @@ namespace videocapture
                 button5.Text += "*";
             }
         }
-
 
         //车道选择 配置文件初始化
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -982,6 +987,22 @@ namespace videocapture
         //复制参数文件到/home
         private void button12_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("确认执行该操作吗？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                string sourceFilePath = @"config.json";
+                string destinationFolderPath = "/home/code";
+                // 使用 Path 类的 GetFileName 方法获取文件名
+                string fileName = Path.GetFileName(sourceFilePath);
+                // 将文件复制到目标文件夹中
+                string destinationFilePath = Path.Combine(destinationFolderPath, fileName);
+                File.Copy(sourceFilePath, destinationFilePath, true);
+                MessageBox.Show("上传成功");
+            }
+            else
+            {
+                return;
+            }        
 
         }
     }
