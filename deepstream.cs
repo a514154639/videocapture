@@ -22,16 +22,16 @@ namespace videocapture
 
         //static Form1 Form1 = new Form1();
 
-        const string DLLPATH = "libdeepstream_rtsp.so";
+        const string DLLPATH = "libRtspClient.so";
         //-------------------declaration of Function of dll-------------------
         [DllImport(DLLPATH)]
-        public static extern int rtsp_init_1(string uri, int width, int height, int drop_frame_interval);
+        public static extern int createRtspClient(int id, char url, int conn_mode);
 
         [DllImport(DLLPATH)]
-        public static extern int rtsp_init_2(string uri, int width, int height, int drop_frame_interval);     
+        public static extern int destoryRtspClientAll();
 
         [DllImport(DLLPATH)]
-        public static extern int rtsp_start();
+        public static extern void init();
         [DllImport(DLLPATH)]
         public static extern int rtsp_pause();
         [DllImport(DLLPATH)]
@@ -76,80 +76,80 @@ namespace videocapture
         }
      
         //初始化deepstream pipline获取对应ip的rtsp流
-        public static void Ini1()
-        {
-            Console.WriteLine("starting ...........");           
-            Console.WriteLine("thread 1:");
-            int res1 = rtsp_set_callback(GetCall1);//调用回调函数
-            if (res1 != 1)
-            {
-                Console.WriteLine("callback_fail");
-            }
-            string uri = "rtsp://admin:wanji168@10.100.8.64:554/";
-            int res = rtsp_init_1(uri, SIZE_WIDTH, SIZE_HEIGHT, 3);//初始化pipline
-            if (res != 1)
-            {
-                Console.WriteLine("init fail");
-            }
+        //public static void Ini1()
+        //{
+        //    Console.WriteLine("starting ...........");           
+        //    Console.WriteLine("thread 1:");
+        //    int res1 = rtsp_set_callback(GetCall1);//调用回调函数
+        //    if (res1 != 1)
+        //    {
+        //        Console.WriteLine("callback_fail");
+        //    }
+        //    string uri = "rtsp://admin:wanji168@10.100.8.64:554/";
+        //    int res = rtsp_init_1(uri, SIZE_WIDTH, SIZE_HEIGHT, 3);//初始化pipline
+        //    if (res != 1)
+        //    {
+        //        Console.WriteLine("init fail");
+        //    }
             
-            //for (int j = 0; j < 10; j++)
-            //{
-            rtsp_start();//开启rtsp流
-            Thread.Sleep(TimeSpan.FromMinutes(30));
-            //Thread.Sleep(TimeSpan.FromSeconds(10));
-            //    rtsp_pause();
-            //    Thread.Sleep(100);
-            //}
+        //    //for (int j = 0; j < 10; j++)
+        //    //{
+        //    rtsp_start();//开启rtsp流
+        //    Thread.Sleep(TimeSpan.FromMinutes(30));
+        //    //Thread.Sleep(TimeSpan.FromSeconds(10));
+        //    //    rtsp_pause();
+        //    //    Thread.Sleep(100);
+        //    //}
 
-            //rtsp_release();
-            Console.WriteLine("current_frame_1:" + frame_index1);
-            Console.WriteLine("end......");
-            //return res;
-        }
+        //    //rtsp_release();
+        //    Console.WriteLine("current_frame_1:" + frame_index1);
+        //    Console.WriteLine("end......");
+        //    //return res;
+        //}
 
-        public static void Ini2()
-        {
-            Console.WriteLine("starting ...........");          
-            Console.WriteLine("thread 2:");
-            int res1 = rtsp_set_callback(GetCall2);
-            if (res1 != 1)
-            {
-                Console.WriteLine("callback_fail");
-            }
-            string uri = "rtsp://admin:wanji168@10.100.8.75:554/";
-            int res = rtsp_init_2(uri, SIZE_WIDTH, SIZE_HEIGHT, 3);
-            if (res != 1)
-            {
-                Console.WriteLine("init fail");
-            }
+        //public static void Ini2()
+        //{
+        //    Console.WriteLine("starting ...........");          
+        //    Console.WriteLine("thread 2:");
+        //    int res1 = rtsp_set_callback(GetCall2);
+        //    if (res1 != 1)
+        //    {
+        //        Console.WriteLine("callback_fail");
+        //    }
+        //    string uri = "rtsp://admin:wanji168@10.100.8.75:554/";
+        //    int res = rtsp_init_2(uri, SIZE_WIDTH, SIZE_HEIGHT, 3);
+        //    if (res != 1)
+        //    {
+        //        Console.WriteLine("init fail");
+        //    }
            
-            //for (int j = 0; j < 10; j++)
-            //{
-            rtsp_start();//开启rtsp流
-            Thread.Sleep(TimeSpan.FromMinutes(30));
-            //Thread.Sleep(TimeSpan.FromSeconds(10));
-            //    rtsp_pause();
-            //    Thread.Sleep(100);
-            //}          
-            //rtsp_release();
-            Console.WriteLine("current_frame_2:" + frame_index2);
-            Console.WriteLine("end......");
-            //return res;
-        }
+        //    //for (int j = 0; j < 10; j++)
+        //    //{
+        //    rtsp_start();//开启rtsp流
+        //    Thread.Sleep(TimeSpan.FromMinutes(30));
+        //    //Thread.Sleep(TimeSpan.FromSeconds(10));
+        //    //    rtsp_pause();
+        //    //    Thread.Sleep(100);
+        //    //}          
+        //    //rtsp_release();
+        //    Console.WriteLine("current_frame_2:" + frame_index2);
+        //    Console.WriteLine("end......");
+        //    //return res;
+        //}
 
 
-        public static void start()
-        {
-            cv2Video = new Cv2Video();//不加这句会报错
-            //Ini1();
-            //Ini2();//线性执行没有问题
-            Thread thread1 = new Thread(Ini1);
-            //Thread thread2 = new Thread(Ini2);
-            thread1.Start();
-            //thread2.Start();
-            ////Thread.Sleep(TimeSpan.FromSeconds(5));
+        //public static void start()
+        //{
+        //    cv2Video = new Cv2Video();//不加这句会报错
+        //    //Ini1();
+        //    //Ini2();//线性执行没有问题
+        //    Thread thread1 = new Thread(Ini1);
+        //    //Thread thread2 = new Thread(Ini2);
+        //    thread1.Start();
+        //    //thread2.Start();
+        //    ////Thread.Sleep(TimeSpan.FromSeconds(5));
 
-        }
+        //}
 
 
 

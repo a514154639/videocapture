@@ -185,7 +185,6 @@ namespace videocapture
             this.drawPictureBoxVideo.mouseClickType = "";
         }
 
-
         //画线
         private void drawLineToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -200,7 +199,6 @@ namespace videocapture
                 this.drawPictureBoxVideo.mouseClickType = "drawLineV";
             }
         }
-
 
         //读配置
         private void readConfigToolStripMenuItem_Click(object sender, EventArgs e)
@@ -379,8 +377,10 @@ namespace videocapture
                 cv2Video.dispose();
             }
             cv2Video = new Cv2Video();
-            //bool res = cv2Video.openRtsp(str + ":554 latency = 0 ! rtph265depay ! h265parse ! omxh265dec ! video/x-raw,format=(string)BGRx, width=(int)1080,height=(int)1920, ! videoconvert ! appsink sync = false");
-            bool res = cv2Video.openVideoFile(@"demo.mp4");
+            //, width = (int)1440,height = (int)2560
+            //:554 latency = 0 ! rtph265depay ! h265parse ! nvv4l2decoder ! video/x-raw,format=(string)BGRx, ! videoconvert ! appsink sync = false
+            bool res = cv2Video.openRtsp(str + ":554/0");
+            //bool res = cv2Video.openVideoFile(@"demo.mp4");
             if (!res)
             {
                 cv2Video = null;
@@ -555,11 +555,14 @@ namespace videocapture
             {
                 this.button1.Visible = false;
                 this.button2.Visible = true;
+                this.button2.Text = "相机2";
                 this.button3.Visible = true;
+                this.button3.Text = "相机1";
                 this.checkBox0.Visible = false;
                 this.checkBox3.Visible = false;
                 this.checkBox4.Visible = false;
                 this.checkBox5.Visible = false;
+                this.pictureBox1.Load(@"road_2.jpeg");
                 for (int i = 0; i < selectedIndex; i++)
                 {
                     configs.Add(new ExtraConfig { ip = "" ,lane = selectedIndex - i});
@@ -570,13 +573,17 @@ namespace videocapture
             if (this.comboBox1.SelectedItem.ToString() == "2+1车道")
             {
                 this.button1.Visible = true;
+                this.button1.Text = "相机3";
                 this.button2.Visible = true;
+                this.button2.Text = "相机2";
                 this.button3.Visible = true;
+                this.button3.Text = "相机1";
                 this.button4.Visible = false;
                 this.checkBox0.Visible = true;
                 this.checkBox3.Visible = false;
                 this.checkBox4.Visible = false;
                 this.checkBox5.Visible = false;
+                this.pictureBox1.Load(@"road_2.jpeg");
                 for (int i = 0; i < selectedIndex; i++)
                 {
                     configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - i });
@@ -588,13 +595,17 @@ namespace videocapture
             {
                 this.button1.Visible = false;
                 this.button2.Visible = true;
+                this.button2.Text = "相机3";
                 this.button3.Visible = true;
+                this.button3.Text = "相机2";
                 this.button4.Visible = true;
+                this.button4.Text = "相机1";
                 this.button6.Visible = false;
                 this.checkBox0.Visible = false;
                 this.checkBox3.Visible = true;
                 this.checkBox4.Visible = false;
                 this.checkBox5.Visible = false;
+                this.pictureBox1.Load(@"road_3.jpeg");
                 for (int i = 0; i < selectedIndex - 1; i++)
                 {
                     configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - 1 - i });
@@ -605,15 +616,20 @@ namespace videocapture
             if (this.comboBox1.SelectedItem.ToString() == "3+1车道")
             {
                 this.button1.Visible = true;
+                this.button1.Text = "相机4";
                 this.button2.Visible = true;
+                this.button2.Text = "相机3";
                 this.button3.Visible = true;
+                this.button3.Text = "相机2";
                 this.button4.Visible = true;
+                this.button4.Text = "相机1";
                 this.button6.Visible = false;
                 this.button7.Visible = false;
                 this.checkBox0.Visible = true;
                 this.checkBox3.Visible = true;
                 this.checkBox4.Visible = false;
                 this.checkBox5.Visible = false;
+                this.pictureBox1.Load(@"road_3.jpeg");
                 for (int i = 0; i < selectedIndex - 1; i++)
                 {
                     configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - 1 - i });
@@ -811,7 +827,7 @@ namespace videocapture
             if (result == DialogResult.Yes)
             {
                 string sourceFilePath = @"config.json";
-                string destinationFolderPath = "/home/code";
+                string destinationFolderPath = "/home/net5.0";
                 // 使用 Path 类的 GetFileName 方法获取文件名
                 string fileName = Path.GetFileName(sourceFilePath);
                 // 将文件复制到目标文件夹中
