@@ -49,7 +49,7 @@ namespace videocapture
         public static IntPtr Ini()
         {
             TensorRT.ModelParam model = new TensorRT.ModelParam();
-            model.modelPath = "s_car_nx.engine";
+            model.modelPath = "s_car.engine";
             model.classesNum = 2;
             model.iouThres = 0.5f;
             model.confThres = 0.4f;
@@ -63,6 +63,8 @@ namespace videocapture
             // 源目标参数  
             int resNum = 0;
             float waste = 0;
+            int row = 2560;
+            int clomn = 1440;
             int size = Marshal.SizeOf(typeof(DetectRes)) * 128;
             IntPtr pt = Marshal.AllocHGlobal(size);
             ret = new YoloOnnx.PredictResult();

@@ -30,6 +30,7 @@ namespace videocapture
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label1 = new System.Windows.Forms.Label();
             this.button12 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@ namespace videocapture
             this.setConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.readConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             this.checkBox0 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -58,7 +58,7 @@ namespace videocapture
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -79,7 +79,6 @@ namespace videocapture
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.button12);
             this.splitContainer1.Panel1.Controls.Add(this.button11);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
@@ -100,6 +99,16 @@ namespace videocapture
             this.splitContainer1.Size = new System.Drawing.Size(958, 824);
             this.splitContainer1.SplitterDistance = 116;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(796, 58);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 28);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "道路类型";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button12
             // 
@@ -261,15 +270,6 @@ namespace videocapture
             this.splitContainer2.SplitterDistance = 594;
             this.splitContainer2.TabIndex = 0;
             // 
-            // drawPictureBoxVideo
-            // 
-            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
-            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
-            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
-            this.drawPictureBoxVideo.Size = new System.Drawing.Size(594, 704);
-            this.drawPictureBoxVideo.TabIndex = 0;
-            // 
             // checkBox0
             // 
             this.checkBox0.AutoSize = true;
@@ -406,21 +406,21 @@ namespace videocapture
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // label1
+            // drawPictureBoxVideo
             // 
-            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(796, 54);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 28);
-            this.label1.TabIndex = 19;
-            this.label1.Text = "道路类型";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
+            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
+            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
+            this.drawPictureBoxVideo.Size = new System.Drawing.Size(594, 704);
+            this.drawPictureBoxVideo.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(958, 824);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Form1";
