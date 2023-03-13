@@ -153,7 +153,7 @@ namespace videocapture
             return currImage.ToBitmap();
         }
 
-        public Bitmap currFrameGetImageRotate(int rotate)
+        public Bitmap currFrameGetImageRotate()
         {
 
             //if (Form1.frameList.Count > 0)
@@ -169,18 +169,19 @@ namespace videocapture
             {
                 positionFrameByIndex(capture.PosFrames + 1);//视频异常时，无法读取时，跳过该帧
             }
-            if (rotate == 1)
-            {
-                currImage = Cv2Flip.rotate90(currImage);//顺时针旋转
-            }
-            if (rotate == 2)
-            {
-                currImage = Cv2Flip.rotate180(currImage);//顺时针旋转
-            }
-            if (rotate == 3)
-            {
-                currImage = Cv2Flip.rotate270(currImage);//顺时针旋转
-            }
+            currImage = Cv2Flip.rotate90(currImage);
+            //if (rotate == 1)
+            //{
+            //    currImage = Cv2Flip.rotate90(currImage);//顺时针旋转
+            //}
+            //if (rotate == 2)
+            //{
+            //    currImage = Cv2Flip.rotate180(currImage);//顺时针旋转
+            //}
+            //if (rotate == 3)
+            //{
+            //    currImage = Cv2Flip.rotate270(currImage);//顺时针旋转
+            //}
 
             if (currImage.Empty())
             {
@@ -285,7 +286,7 @@ namespace videocapture
         /// <param name="index"></param>
         public int positionFrameByIndex(int index)
         {
-            //return capture.Set(CaptureProperty.PosFrames, index);//opencv4.0.0
+            //capture.Set(CaptureProperty.PosFrames, index);//opencv4.0.0
             capture.Set(VideoCaptureProperties.PosFrames, index);//opencv4.5.3
             return index; //opencv4.5.3
         }
@@ -298,7 +299,7 @@ namespace videocapture
         /// <returns></returns>
         public int positionFrameByRatio(double ratio)
         {
-            //return capture.Set(CaptureProperty.PosAviRatio, ratio);//opencv4.0.0
+            //capture.Set(CaptureProperty.PosAviRatio, ratio);//opencv4.0.0
             capture.Set(VideoCaptureProperties.PosAviRatio, ratio);//opencv4.5.3
             return (int)((float)videoFrameCount * ratio); //opencv4.5.3
         }
@@ -311,7 +312,7 @@ namespace videocapture
         /// <returns></returns>
         public int positionFrameByMisec(int index)
         {
-            //return capture.Set(CaptureProperty.PosMsec, index);//opencv4.0.0
+            //capture.Set(CaptureProperty.PosMsec, index);//opencv4.0.0
             capture.Set(VideoCaptureProperties.PosMsec, index);//opencv4.5.3
             return index; //opencv4.5.3
         }

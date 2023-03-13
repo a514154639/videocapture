@@ -30,7 +30,6 @@ namespace videocapture
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.label1 = new System.Windows.Forms.Label();
             this.button12 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,6 +57,7 @@ namespace videocapture
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -100,16 +100,6 @@ namespace videocapture
             this.splitContainer1.SplitterDistance = 116;
             this.splitContainer1.TabIndex = 2;
             // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(796, 58);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 28);
-            this.label1.TabIndex = 19;
-            this.label1.Text = "道路类型";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // button12
             // 
             this.button12.Location = new System.Drawing.Point(632, 68);
@@ -149,6 +139,7 @@ namespace videocapture
             // 
             // button10
             // 
+            this.button10.Enabled = false;
             this.button10.Location = new System.Drawing.Point(272, 68);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(86, 39);
@@ -173,7 +164,7 @@ namespace videocapture
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(91, 39);
             this.button9.TabIndex = 12;
-            this.button9.Text = "旋转";
+            this.button9.Text = "中心线";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
@@ -207,7 +198,7 @@ namespace videocapture
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(91, 46);
             this.button5.TabIndex = 8;
-            this.button5.Text = "水平翻转";
+            this.button5.Text = "网格线";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.Flip_Click);
             // 
@@ -405,6 +396,16 @@ namespace videocapture
             this.pictureBox1.Size = new System.Drawing.Size(360, 704);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(796, 58);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 28);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "道路类型";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // drawPictureBoxVideo
             // 

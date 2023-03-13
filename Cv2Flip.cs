@@ -47,7 +47,7 @@ namespace videocapture
         public static Mat rotate90(Mat image)
         {
             Cv2.Transpose(image, image);
-            Cv2.Flip(image, image, FlipMode.Y);
+            //Cv2.Flip(image, image, FlipMode.Y);
             return image;
             
         }

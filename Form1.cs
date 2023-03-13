@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -8,15 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenCvSharp;
-using OpenCvSharp.Extensions;
 using System.Threading;
 using System.IO;
 using Newtonsoft.Json;
-//using Microsoft.VisualBasic;
-using System.Runtime.InteropServices;
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Web.Script.Serialization;
 
 namespace videocapture
 {
@@ -70,7 +63,7 @@ namespace videocapture
             public bool state = false;
             public double length;
             public int pixeldis;
-            public bool flip = false;
+            //public bool flip = false;
             public int lane;
 
         }
@@ -139,27 +132,27 @@ namespace videocapture
                     {
                         flag--;
                         extras.config[flag].line = DrawPictureCache.gGetDrawLine;
-                        if (this.button5.Text.Contains("*"))
-                        {
-                            extras.config[flag].flip = true;
-                        }
-                        else
-                        {
-                            extras.config[flag].flip = false;
-                        }
+                        //if (this.button5.Text.Contains("*"))
+                        //{
+                        //    extras.config[flag].flip = true;
+                        //}
+                        //else
+                        //{
+                        //    extras.config[flag].flip = false;
+                        //}
                         flag++;
                     }
                     else
                     {
                         extras.config[flag].line = DrawPictureCache.gGetDrawLine;
-                        if (this.button5.Text.Contains("*"))
-                        {
-                            extras.config[flag].flip = true;
-                        }
-                        else
-                        {
-                            extras.config[flag].flip = false;
-                        }
+                        //if (this.button5.Text.Contains("*"))
+                        //{
+                        //    extras.config[flag].flip = true;
+                        //}
+                        //else
+                        //{
+                        //    extras.config[flag].flip = false;
+                        //}
                     }                  
                     totalConfig = extras;
                     convert(totalConfig);
@@ -226,166 +219,20 @@ namespace videocapture
         //视频线程
         private void videoThread()
         {
-            IntPtr pt = TensorRT.Ini();
-            Console.WriteLine(pt);
             while (true)
             {
                 try
                 {
-                    showCurrVideoFrame_tr(pt);
-                    //showCurrVideoFrame_onx();
+                    showCurrVideoFrame_onx();
                 }
                 catch { }
                 Thread.Sleep(1);
             }
-        }
-     
+        }  
 
         DrawPictureCache.DrawRectangle rec = DrawPictureCache.gGetDrawRectangle;
 
         //获取当前帧
-        //tensorrt
-        private void showCurrVideoFrame_tr(IntPtr pt)
-        {
-            this.Invoke(new ThreadStart(delegate
-            {
-                try
-                {
-                    if (isopen)
-                    {
-                        rec = DrawPictureCache.gGetDrawRectangle;
-                        if (currBitmap != null)
-                        {
-                            currBitmap.Dispose();
-                        }
-                        currBitmap = null;
-
-                        //镜像
-                        if (button5.Text.Contains("*"))
-                        {
-                            currBitmap = cv2Video.currFrameGetImageFlip(true, rotate);//当前帧
-                            //GC.Collect();
-                            if (isrotate)
-                            {
-                                currBitmap = cv2Video.currFrameGetImageFlip(true, rotate);//当前帧
-                                GC.Collect();
-                            }
-                        }
-                        //旋转
-                        else if (isrotate)
-                        {
-                            currBitmap = cv2Video.currFrameGetImageRotate(rotate);//当前帧
-                            //GC.Collect();
-                            if (button5.Text.Contains("*"))
-                            {
-                                currBitmap = cv2Video.currFrameGetImageFlip(true, rotate);
-                                GC.Collect();
-                            }
-                        }
-
-                        else
-                        {
-                            currBitmap = cv2Video.currFrameGetImageFlip(false, 0);//当前帧
-                        }
-
-                        if (currBitmap != null)
-                        {
-                            //显示                           
-                            //截取客车
-                            if (checkBox6.Checked)
-                            {
-                                Mat mat = Cv2Mat.ImageToMat(currBitmap);
-                                //YoloOnnx _YoloOnnx = YoloOnnx.GetInstance();
-                                YoloOnnx.PredictResult ret;
-                                int frame_num = cv2Video.getCurrFrameIndex();
-                                bool jumpflag = true;
-                                if (jumpflag && frame_num % 2 == 0)
-                                {
-                                    return;
-                                }
-                                Console.WriteLine(mat.Size());
-                                bool res = TensorRT.PredictGPU(mat, out ret, pt);
-                                //Console.WriteLine(res);
-                                //bool res = _YoloOnnx.Predict(mat, out ret);
-                                if (res)
-                                {                                 
-                                    #region s_car逻辑    
-                                    int preframe = 0;
-                                    var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-                                    if (ret.Targets.Count > 0)
-                                    {
-                                        Console.WriteLine(ret.Targets.Count);
-                                        Console.WriteLine(ret.Targets[0].Label);
-                                        string label = ret.Targets[0].Label;
-                                        double bottom = ret.Targets[0].Box.Bottom;
-                                        int curframe = cv2Video.getCurrFrameIndex();
-                                        //&& bottom < extras.config[0].line.yMax && bottom > extras.config[0].line.yMin
-                                        if (curframe == stopframe && label == "1")
-                                        {
-                                            Console.WriteLine(ret.Targets[0].Box.Bottom);
-                                            drawPictureBoxVideo.setImage(currBitmap);//显示
-                                            currBitmap.Save("car.png", System.Drawing.Imaging.ImageFormat.Png);
-                                            isopen = false;
-                        
-                                            //MessageBox.Show("触发");
-                                        }
-
-                                        if (ret.Targets.Count >= 2)
-                                        {
-                                            ret.Targets = ret.Targets.OrderByDescending(o => o.Box.X).ToList();
-                                        }
-                                        for (int i = 0; i < ret.Targets.Count; i++)
-                                        {
-                                            if (ret.Targets.Count >= 1 && ret.Targets[i].Label == "1")
-                                            {
-                                                preframe = cv2Video.getCurrFrameIndex();//获取触发帧序号
-
-                                            }
-
-                                            break;
-                                        }
-                                        stopframe = preframe + 2;
-
-                                    }
-                                    #endregion
-                                    //if (currBitmap != null)
-                                    //{
-                                    //    drawPictureBoxVideo.setImage(currBitmap);
-                                    //}
-                                    
-                                    //Cv2.WaitKey(1);
-
-                                }
-
-                            }
-                            //显示
-                            //this.Invoke(new ThreadStart(delegate
-                            //{
-
-                            //    drawPictureBoxVideo.setImage(currBitmap);//显示
-
-                            //}));
-                            //drawPictureBoxVideo.setImage(currBitmap);
-                            //Cv2.WaitKey(1);
-                        }
-                        else
-                        {
-                            if (cv2Video.getCurrFrameIndex() == -1)
-                            {
-                                isopen = false;
-                            }
-
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                    //IcyTools.Log.WriteLog("Error", "", ex.ToString());
-                }
-
-            }));
-        }
         //onnx
         private void showCurrVideoFrame_onx()
         {
@@ -401,93 +248,103 @@ namespace videocapture
                             currBitmap.Dispose();
                         }
                         currBitmap = null;
-
-                        //镜像
-                        if (button5.Text.Contains("*"))
-                        {
-                            currBitmap = cv2Video.currFrameGetImageFlip(true, rotate);//当前帧
-                            //GC.Collect();
-                            if (isrotate)
-                            {
-                                currBitmap = cv2Video.currFrameGetImageFlip(true,rotate);//当前帧
-                                GC.Collect();
-                            }
-                        }
-                        //旋转
-                        else if (isrotate)
-                        {
-                            currBitmap = cv2Video.currFrameGetImageRotate(rotate);//当前帧
-                            //GC.Collect();
-                            if (button5.Text.Contains("*"))
-                            {
-                                currBitmap = cv2Video.currFrameGetImageFlip(true, rotate);
-                                GC.Collect();
-                            }
-                        }
-
-                        else
-                        {
-                            currBitmap = cv2Video.currFrameGetImageFlip(false, 0);//当前帧
-                        }
-                        //int res = deepstream.Ini();
-
+                        currBitmap = cv2Video.currFrameGetImageFlip(false, 0);//当前帧
+                        
                         if (currBitmap != null)
                         {
-                            //截取客车
-                            if (checkBox6.Checked)
+                            #region 截取客车
+                            //if (checkBox6.Checked)
+                            //{
+
+                            //    //Mat mat = BitmapConverter.ToMat(currBitmap);
+                            //    Mat mat = Cv2Mat.ImageToMat(currBitmap);
+                            //    YoloOnnx _YoloOnnx = YoloOnnx.GetInstance();
+                            //    YoloOnnx.PredictResult ret;
+                            //    int frame_num = cv2Video.getCurrFrameIndex();
+                            //    bool jumpflag = true;
+                            //    if (jumpflag && frame_num % 2 == 0)
+                            //    {
+                            //        return;
+                            //    }
+
+                            //    if (_YoloOnnx.Predict(mat, out ret))
+                            //    {
+                            //        int preframe = 0;
+
+                            //        if (ret.Targets.Count > 0)
+                            //        {
+                            //            int curframe = cv2Video.getCurrFrameIndex();
+                            //            if (curframe == stopframe && ret.Targets[0].Label == "1")
+                            //            {
+                            //                isopen = false;
+                            //                //currBitmap.Save(@"/out/test.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+                            //            }
+
+                            //            if (ret.Targets.Count >= 2)
+                            //            {
+                            //                ret.Targets = ret.Targets.OrderByDescending(o => o.Box.X).ToList();
+                            //            }
+                            //            for (int i = 0; i < ret.Targets.Count; i++)
+                            //            {
+
+                            //                if (ret.Targets.Count >= 1 && ret.Targets[i].Label == "1")
+                            //                {
+                            //                    preframe = cv2Video.getCurrFrameIndex();//获取触发帧序号
+
+                            //                }
+                            //                break;
+                            //            }
+                            //            stopframe = preframe + 2;
+
+                            //        }
+
+                            //    }
+
+                            //    //Console.WriteLine(sw.ElapsedMilliseconds);
+                            //}
+                            #endregion
+
+                            using (Graphics g = Graphics.FromImage(currBitmap))
                             {
-                                
-                                //Mat mat = BitmapConverter.ToMat(currBitmap);
-                                Mat mat = Cv2Mat.ImageToMat(currBitmap);
-                                YoloOnnx _YoloOnnx = YoloOnnx.GetInstance();
-                                YoloOnnx.PredictResult ret;
-                                int frame_num = cv2Video.getCurrFrameIndex();
-                                bool jumpflag = true;
-                                if (jumpflag && frame_num % 2 == 0)
+                                #region 网格线
+                                if (button5.Text.Contains("*"))
                                 {
-                                    return;
-                                }
-
-                                if (_YoloOnnx.Predict(mat, out ret))
-                                {
-                                    int preframe = 0;
-
-                                    if (ret.Targets.Count > 0)
+                                    var pen = new Pen(Color.Red, 2);
+                                    //垂直
+                                    for (int i = 0; i < currBitmap.Width; i += 80)
                                     {
-                                        int curframe = cv2Video.getCurrFrameIndex();
-                                        if (curframe == stopframe && ret.Targets[0].Label == "1")
+                                        if (i > 0)
                                         {
-                                            isopen = false;
-                                            currBitmap.Save(@"/out/test.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+                                            g.DrawLine(pen, new System.Drawing.Point(i, currBitmap.Height / 2), new System.Drawing.Point(i,currBitmap.Height));
                                         }
-
-                                        if (ret.Targets.Count >= 2)
-                                        {
-                                            ret.Targets = ret.Targets.OrderByDescending(o => o.Box.X).ToList();
-                                        }
-                                        for (int i = 0; i < ret.Targets.Count; i++)
-                                        {
-
-                                            if (ret.Targets.Count >= 1 && ret.Targets[i].Label == "1")
-                                            {
-                                                preframe = cv2Video.getCurrFrameIndex();//获取触发帧序号
-
-                                            }
-                                            break;
-                                        }
-                                        stopframe = preframe + 2;
-
                                     }
-
+                                    //水平
+                                    for (int i = 0; i < currBitmap.Height / 2; i += 80)
+                                    {
+                                        if (i > 0)
+                                        {
+                                            g.DrawLine(pen, new System.Drawing.Point(0, i + currBitmap.Height / 2), new System.Drawing.Point(currBitmap.Width, i + currBitmap.Height / 2));
+                                        }
+                                    }
                                 }
-
-                                //Console.WriteLine(sw.ElapsedMilliseconds);
+                                #endregion
+                                #region 中心线
+                                if (button9.Text.Contains("*"))
+                                {
+                                    var pen = new Pen(Color.Red, 10);
+                                    //垂直中线
+                                    g.DrawLine(pen, new System.Drawing.Point(currBitmap.Width / 2, 0), new System.Drawing.Point(currBitmap.Width / 2, currBitmap.Height));
+                                    //水平中线
+                                    g.DrawLine(pen, new System.Drawing.Point(0, currBitmap.Height / 2), new System.Drawing.Point(currBitmap.Width, currBitmap.Height / 2));
+                                }
+                                #endregion
                             }
+
 
                             //显示
                             this.Invoke(new ThreadStart(delegate
                             {
-
+                                
                                 drawPictureBoxVideo.setImage(currBitmap);//显示
 
                             }));
@@ -520,10 +377,11 @@ namespace videocapture
             {
                 cv2Video.dispose();
             }
-            cv2Video = new Cv2Video();
-            //:554 latency = 0 ! rtph265depay ! h265parse ! nvv4l2decoder ! video/x-raw,format=(string)BGRx, ! videoconvert ! appsink sync = false
-            //bool res = cv2Video.openRtsp(str + ":554/0");
+            cv2Video = new Cv2Video();          
+            //bool res = cv2Video.openRtsp(str + ":554 latency = 0 ! rtph264depay ! h264parse ! nvv4l2decoder ! nvvidconv ! video/x-raw,format=(string)BGRx, width=(int)1920,height=(int)1080 ! videoconvert ! appsink sync = false");
             bool res = cv2Video.openVideoFile(@"demo.mp4");
+            //bool res = cv2Video.openRtsp(str + ":554 ");
+ 
             if (!res)
             {
                 cv2Video = null;
@@ -881,12 +739,20 @@ namespace videocapture
         //旋转按钮
         private void button9_Click(object sender, EventArgs e)
         {
-            rotate++;
-            isrotate = true;
-            if (rotate == 4)
+            //rotate++;
+            //isrotate = true;
+            //if (rotate == 4)
+            //{
+            //    rotate = 0;
+            //    isrotate = false;
+            //}
+            if (button9.Text.Contains("*"))
             {
-                rotate = 0;
-                isrotate = false;
+                button9.Text = button9.Text.Replace("*", "");
+            }
+            else
+            {
+                button9.Text += "*";
             }
         }
 
