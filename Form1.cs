@@ -10,6 +10,8 @@ using OpenCvSharp;
 using System.Threading;
 using System.IO;
 using Newtonsoft.Json;
+using Renci.SshNet;
+
 
 namespace videocapture
 {
@@ -30,6 +32,12 @@ namespace videocapture
         private Ipinput ipinput = new Ipinput();
         public string IP = "";
         public int stopframe = 0;
+
+        // 定义IP地址和密码的成员变量
+        private string ipAddress;
+        private string password;
+        private string username;
+
         public Form1()
         {
             InitializeComponent();
@@ -311,7 +319,7 @@ namespace videocapture
                                 {
                                     var pen = new Pen(Color.Red, 2);
                                     //垂直
-                                    for (int i = 0; i < currBitmap.Width; i += 80)
+                                    for (int i = 0; i < currBitmap.Width; i += 60)
                                     {
                                         if (i > 0)
                                         {
@@ -319,11 +327,11 @@ namespace videocapture
                                         }
                                     }
                                     //水平
-                                    for (int i = 0; i < currBitmap.Height / 2; i += 80)
+                                    for (int i = 0; i < currBitmap.Height / 2; i += 60)
                                     {
                                         if (i > 0)
                                         {
-                                            g.DrawLine(pen, new System.Drawing.Point(0, i + currBitmap.Height / 2), new System.Drawing.Point(currBitmap.Width, i + currBitmap.Height / 2));
+                                            g.DrawLine(pen, new System.Drawing.Point(0, i + currBitmap.Height / 2 - 60), new System.Drawing.Point(currBitmap.Width, i + currBitmap.Height / 2 - 60));
                                         }
                                     }
                                 }
@@ -339,7 +347,6 @@ namespace videocapture
                                 }
                                 #endregion
                             }
-
 
                             //显示
                             this.Invoke(new ThreadStart(delegate
@@ -829,26 +836,59 @@ namespace videocapture
             }
         }
 
-        //复制参数文件到/home
+        //上传参数文件到/home
         private void button12_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("确认执行该操作吗？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            //DialogResult result = MessageBox.Show("确认执行该操作吗？", "确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (result == DialogResult.Yes)
+            //{
+            //    string sourceFilePath = @"config.json";
+            //    string destinationFolderPath = "/home/net5.0";
+            //    // 使用 Path 类的 GetFileName 方法获取文件名
+            //    string fileName = Path.GetFileName(sourceFilePath);
+            //    // 将文件复制到目标文件夹中
+            //    string destinationFilePath = Path.Combine(destinationFolderPath, fileName);
+            //    File.Copy(sourceFilePath, destinationFilePath, true);
+            //    MessageBox.Show("上传成功");
+            //}
+            try
             {
-                string sourceFilePath = @"config.json";
-                string destinationFolderPath = "/home/net5.0";
-                // 使用 Path 类的 GetFileName 方法获取文件名
-                string fileName = Path.GetFileName(sourceFilePath);
-                // 将文件复制到目标文件夹中
-                string destinationFilePath = Path.Combine(destinationFolderPath, fileName);
-                File.Copy(sourceFilePath, destinationFilePath, true);
-                MessageBox.Show("上传成功");
-            }
-            else
-            {
-                return;
-            }        
+                using (var dialog = new ConnectDialog())
+                {
+                    var res = dialog.ShowDialog();
+                    if (res == DialogResult.OK)
+                    {
+                        ipAddress = dialog.IpAddress;
+                        password = dialog.Password;
+                        username = dialog.Username;
+                        using (var sftpClient = new SftpClient(ipAddress, 22, username, password))
+                        {
+                            sftpClient.Connect();
+                            string localFilePath = "config.json";
+                            string remoteFilePath = "/home/code/config.json";
+                            using (var fileStream = new FileStream(localFilePath, FileMode.Open))
+                            {
+                                try
+                                {
+                                    sftpClient.UploadFile(fileStream, remoteFilePath);
+                                    MessageBox.Show("上传成功");
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show(ex.ToString());
+                                }
+                            }
 
+                            sftpClient.Disconnect();
+                        }
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
     }

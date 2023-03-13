@@ -44,6 +44,7 @@ namespace videocapture
             this.setConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.readConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             this.checkBox0 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -58,7 +59,6 @@ namespace videocapture
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -258,15 +258,24 @@ namespace videocapture
             this.splitContainer2.Panel2.Controls.Add(this.button1);
             this.splitContainer2.Panel2.Controls.Add(this.pictureBox1);
             this.splitContainer2.Size = new System.Drawing.Size(958, 704);
-            this.splitContainer2.SplitterDistance = 594;
+            this.splitContainer2.SplitterDistance = 454;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // drawPictureBoxVideo
+            // 
+            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
+            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
+            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
+            this.drawPictureBoxVideo.Size = new System.Drawing.Size(454, 704);
+            this.drawPictureBoxVideo.TabIndex = 0;
             // 
             // checkBox0
             // 
             this.checkBox0.AutoSize = true;
             this.checkBox0.Checked = true;
             this.checkBox0.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox0.Location = new System.Drawing.Point(55, 611);
+            this.checkBox0.Location = new System.Drawing.Point(47, 621);
             this.checkBox0.Name = "checkBox0";
             this.checkBox0.Size = new System.Drawing.Size(22, 21);
             this.checkBox0.TabIndex = 12;
@@ -277,7 +286,7 @@ namespace videocapture
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(55, 495);
+            this.checkBox1.Location = new System.Drawing.Point(47, 506);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(22, 21);
             this.checkBox1.TabIndex = 11;
@@ -288,7 +297,7 @@ namespace videocapture
             this.checkBox2.AutoSize = true;
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(55, 382);
+            this.checkBox2.Location = new System.Drawing.Point(47, 382);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(22, 21);
             this.checkBox2.TabIndex = 10;
@@ -299,7 +308,7 @@ namespace videocapture
             this.checkBox3.AutoSize = true;
             this.checkBox3.Checked = true;
             this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(55, 271);
+            this.checkBox3.Location = new System.Drawing.Point(47, 271);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(22, 21);
             this.checkBox3.TabIndex = 9;
@@ -310,7 +319,7 @@ namespace videocapture
             this.checkBox4.AutoSize = true;
             this.checkBox4.Checked = true;
             this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.Location = new System.Drawing.Point(55, 160);
+            this.checkBox4.Location = new System.Drawing.Point(47, 160);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(22, 21);
             this.checkBox4.TabIndex = 8;
@@ -321,7 +330,7 @@ namespace videocapture
             this.checkBox5.AutoSize = true;
             this.checkBox5.Checked = true;
             this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox5.Location = new System.Drawing.Point(55, 51);
+            this.checkBox5.Location = new System.Drawing.Point(47, 51);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(22, 21);
             this.checkBox5.TabIndex = 7;
@@ -369,7 +378,7 @@ namespace videocapture
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(105, 471);
+            this.button2.Location = new System.Drawing.Point(105, 482);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(129, 67);
             this.button2.TabIndex = 2;
@@ -380,7 +389,7 @@ namespace videocapture
             // button1
             // 
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(105, 587);
+            this.button1.Location = new System.Drawing.Point(105, 597);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(129, 67);
             this.button1.TabIndex = 1;
@@ -392,8 +401,9 @@ namespace videocapture
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(360, 704);
+            this.pictureBox1.Size = new System.Drawing.Size(500, 704);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -406,15 +416,6 @@ namespace videocapture
             this.label1.TabIndex = 19;
             this.label1.Text = "道路类型";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // drawPictureBoxVideo
-            // 
-            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
-            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
-            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
-            this.drawPictureBoxVideo.Size = new System.Drawing.Size(594, 704);
-            this.drawPictureBoxVideo.TabIndex = 0;
             // 
             // Form1
             // 

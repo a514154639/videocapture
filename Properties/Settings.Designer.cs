@@ -22,5 +22,41 @@ namespace videocapture.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("123456a?")]
+        public string LastPassword {
+            get {
+                return ((string)(this["LastPassword"]));
+            }
+            set {
+                this["LastPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10.100.8.61")]
+        public string LastIpAddress {
+            get {
+                return ((string)(this["LastIpAddress"]));
+            }
+            set {
+                this["LastIpAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("nx")]
+        public string LastUsername {
+            get {
+                return ((string)(this["LastUsername"]));
+            }
+            set {
+                this["LastUsername"] = value;
+            }
+        }
     }
 }
