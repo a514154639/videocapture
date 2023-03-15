@@ -170,18 +170,22 @@ namespace videocapture
                 positionFrameByIndex(capture.PosFrames + 1);//视频异常时，无法读取时，跳过该帧
             }
             currImage = Cv2Flip.rotate90(currImage);
-            //if (rotate == 1)
-            //{
-            //    currImage = Cv2Flip.rotate90(currImage);//顺时针旋转
-            //}
-            //if (rotate == 2)
-            //{
-            //    currImage = Cv2Flip.rotate180(currImage);//顺时针旋转
-            //}
-            //if (rotate == 3)
-            //{
-            //    currImage = Cv2Flip.rotate270(currImage);//顺时针旋转
-            //}
+
+            if (currImage.Empty())
+            {
+                return null;
+            }
+            return currImage.ToBitmap();
+        }
+
+        public Bitmap nextFrameGetImage()
+        {
+            int framepos = capture.PosFrames;
+            capture.Read(currImage);
+            if (capture.PosFrames != framepos + 1)
+            {
+                positionFrameByIndex(capture.PosFrames + 1);//视频异常时，无法读取时，跳过该帧
+            }
 
             if (currImage.Empty())
             {

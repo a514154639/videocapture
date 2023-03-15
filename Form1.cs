@@ -17,7 +17,6 @@ namespace videocapture
 {
     public partial class Form1 : Form
     {
-        private List<int> cutWithLineShowIndex = new List<int>();
         public int laneNum = 1;//车道数
         public int flag = 99;//相机标志
         public int press = 99;
@@ -32,6 +31,16 @@ namespace videocapture
         private Ipinput ipinput = new Ipinput();
         public string IP = "";
         public int stopframe = 0;
+        public double height = 6.7;
+        public double landwidth = 3.75;
+        public double B = 104;
+        public double Tanα = 0;
+        public double Tana = 0;
+        public int Struler = 0;
+        public double Downruler = 0;
+        public double Upruler = 0;
+        private int skipFramesCount = 0; // 跳过的帧数
+        private int skipFramesInterval = 3; // 跳帧的间隔
 
         // 定义IP地址和密码的成员变量
         private string ipAddress;
@@ -49,10 +58,6 @@ namespace videocapture
             videoThr = new Thread(videoThread);
             videoThr.IsBackground = true;
             videoThr.Start();
-            //drawPictureBoxVideo的左上坐标 未用
-            int x = this.drawPictureBoxVideo.Location.X;
-            int y = this.drawPictureBoxVideo.Location.Y;
-            this.drawPictureBoxVideo.refreshTopLeft(x, y);
 
             pictureBox1.Load(@"road.jpg");
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -69,10 +74,19 @@ namespace videocapture
             public string ip;
             public DrawPictureCache.DrawLine line;
             public bool state = false;
-            public double length;
-            public int pixeldis;
+            //public double length;
+            //public int pixeldis;
             //public bool flip = false;
             public int lane;
+            public double height;
+            public double landwidth;
+            public int landwidthpix;
+            public double B;
+            public double tanα;
+            public double tana;
+            public double downruler;
+            public double upruler;
+            public int struler;
 
         }
         
@@ -97,7 +111,14 @@ namespace videocapture
                         {
                             MessageBox.Show("未配置参数");
                             return;
-                        }                     
+                        }
+                        info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
+                        info_box.AppendText("------------\r\n");
+                        info_box.AppendText("车道像素宽：" + extraConfig.landwidth + "\r\n");
+                        info_box.AppendText("上沿标尺：" + extraConfig.upruler + "\r\n");
+                        info_box.AppendText("下沿标尺：" + extraConfig.downruler + "\r\n");
+                        info_box.AppendText("最终标尺：" + extraConfig.struler + "\r\n");
+                        info_box.AppendText("------------\r\n");
                         flag++;
                     }
                     else
@@ -107,7 +128,14 @@ namespace videocapture
                         {
                             MessageBox.Show("未配置参数");
                             return;
-                        }                     
+                        }
+                        info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
+                        info_box.AppendText("------------\r\n");
+                        info_box.AppendText("车道像素宽：" + extraConfig.landwidth + "\r\n");
+                        info_box.AppendText("上沿标尺：" + extraConfig.upruler + "\r\n");
+                        info_box.AppendText("下沿标尺：" + extraConfig.downruler + "\r\n");
+                        info_box.AppendText("最终标尺：" + extraConfig.struler + "\r\n");
+                        info_box.AppendText("------------\r\n");
                     }
                     this.drawPictureBoxVideo.drawCache.addDrawLineList(extraConfig.line.xMin, extraConfig.line.yMin, extraConfig.line.xMax, extraConfig.line.yMax, 3, Color.Blue);
                     MessageBox.Show("参数读取成功");
@@ -140,29 +168,29 @@ namespace videocapture
                     {
                         flag--;
                         extras.config[flag].line = DrawPictureCache.gGetDrawLine;
-                        //if (this.button5.Text.Contains("*"))
-                        //{
-                        //    extras.config[flag].flip = true;
-                        //}
-                        //else
-                        //{
-                        //    extras.config[flag].flip = false;
-                        //}
+                        extras.config[flag].height = height;
+                        extras.config[flag].landwidth = landwidth;
+                        extras.config[flag].B = B;
+                        extras.config[flag].tana = Tana;
+                        extras.config[flag].tanα = Tanα;
+                        extras.config[flag].struler = Struler;
+                        extras.config[flag].downruler = Downruler;
+                        extras.config[flag].upruler = Upruler;
                         flag++;
                     }
                     else
                     {
                         extras.config[flag].line = DrawPictureCache.gGetDrawLine;
-                        //if (this.button5.Text.Contains("*"))
-                        //{
-                        //    extras.config[flag].flip = true;
-                        //}
-                        //else
-                        //{
-                        //    extras.config[flag].flip = false;
-                        //}
+                        extras.config[flag].height = height;
+                        extras.config[flag].landwidth = landwidth;
+                        extras.config[flag].B = B;
+                        extras.config[flag].tana = Tana;
+                        extras.config[flag].tanα = Tanα;
+                        extras.config[flag].struler = Struler;
+                        extras.config[flag].downruler = Downruler;
+                        extras.config[flag].upruler = Upruler;
                     }                  
-                    totalConfig = extras;
+                    totalConfig = extras;                  
                     convert(totalConfig);
                 }
                 MessageBox.Show("参数保存成功");
@@ -238,8 +266,6 @@ namespace videocapture
             }
         }  
 
-        DrawPictureCache.DrawRectangle rec = DrawPictureCache.gGetDrawRectangle;
-
         //获取当前帧
         //onnx
         private void showCurrVideoFrame_onx()
@@ -250,131 +276,93 @@ namespace videocapture
                 {
                     if (isopen)
                     {
-                        rec = DrawPictureCache.gGetDrawRectangle;
-                        if (currBitmap != null)
+                        if (skipFramesCount == 0)
                         {
-                            currBitmap.Dispose();
-                        }
-                        currBitmap = null;
-                        currBitmap = cv2Video.currFrameGetImageFlip(false, 0);//当前帧
-                        
-                        if (currBitmap != null)
-                        {
-                            #region 截取客车
-                            //if (checkBox6.Checked)
-                            //{
-
-                            //    //Mat mat = BitmapConverter.ToMat(currBitmap);
-                            //    Mat mat = Cv2Mat.ImageToMat(currBitmap);
-                            //    YoloOnnx _YoloOnnx = YoloOnnx.GetInstance();
-                            //    YoloOnnx.PredictResult ret;
-                            //    int frame_num = cv2Video.getCurrFrameIndex();
-                            //    bool jumpflag = true;
-                            //    if (jumpflag && frame_num % 2 == 0)
-                            //    {
-                            //        return;
-                            //    }
-
-                            //    if (_YoloOnnx.Predict(mat, out ret))
-                            //    {
-                            //        int preframe = 0;
-
-                            //        if (ret.Targets.Count > 0)
-                            //        {
-                            //            int curframe = cv2Video.getCurrFrameIndex();
-                            //            if (curframe == stopframe && ret.Targets[0].Label == "1")
-                            //            {
-                            //                isopen = false;
-                            //                //currBitmap.Save(@"/out/test.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
-                            //            }
-
-                            //            if (ret.Targets.Count >= 2)
-                            //            {
-                            //                ret.Targets = ret.Targets.OrderByDescending(o => o.Box.X).ToList();
-                            //            }
-                            //            for (int i = 0; i < ret.Targets.Count; i++)
-                            //            {
-
-                            //                if (ret.Targets.Count >= 1 && ret.Targets[i].Label == "1")
-                            //                {
-                            //                    preframe = cv2Video.getCurrFrameIndex();//获取触发帧序号
-
-                            //                }
-                            //                break;
-                            //            }
-                            //            stopframe = preframe + 2;
-
-                            //        }
-
-                            //    }
-
-                            //    //Console.WriteLine(sw.ElapsedMilliseconds);
-                            //}
-                            #endregion
-
-                            using (Graphics g = Graphics.FromImage(currBitmap))
+                            if (currBitmap != null)
                             {
-                                #region 网格线
-                                if (button5.Text.Contains("*"))
+                                currBitmap.Dispose();
+                            }
+                            currBitmap = null;
+                            currBitmap = cv2Video.currFrameGetImageFlip(false, 0);//当前帧
+
+                            if (currBitmap != null)
+                            {
+                                using (Graphics g = Graphics.FromImage(currBitmap))
                                 {
-                                    var pen = new Pen(Color.Red, 2);
-                                    //垂直
-                                    for (int i = 0; i < currBitmap.Width; i += 60)
-                                    {
-                                        if (i > 0)
-                                        {
-                                            g.DrawLine(pen, new System.Drawing.Point(i, currBitmap.Height / 2), new System.Drawing.Point(i,currBitmap.Height));
-                                        }
-                                    }
-                                    //水平
-                                    for (int i = 0; i < currBitmap.Height / 2; i += 60)
-                                    {
-                                        if (i > 0)
-                                        {
-                                            g.DrawLine(pen, new System.Drawing.Point(0, i + currBitmap.Height / 2 - 60), new System.Drawing.Point(currBitmap.Width, i + currBitmap.Height / 2 - 60));
-                                        }
-                                    }
-                                }
-                                #endregion
-                                #region 中心线
-                                if (button9.Text.Contains("*"))
-                                {
+                                    #region 中心线
                                     var pen = new Pen(Color.Red, 10);
                                     //垂直中线
                                     g.DrawLine(pen, new System.Drawing.Point(currBitmap.Width / 2, 0), new System.Drawing.Point(currBitmap.Width / 2, currBitmap.Height));
                                     //水平中线
                                     g.DrawLine(pen, new System.Drawing.Point(0, currBitmap.Height / 2), new System.Drawing.Point(currBitmap.Width, currBitmap.Height / 2));
+                                    #endregion
+                                    #region 网格线
+                                    if (button5.Text.Contains("*"))
+                                    {
+                                        pen = new Pen(Color.Red, 2);
+                                        //垂直
+                                        for (int i = 0; i < currBitmap.Width; i += 60)
+                                        {
+                                            if (i > 0)
+                                            {
+                                                g.DrawLine(pen, new System.Drawing.Point(i, currBitmap.Height / 2), new System.Drawing.Point(i, currBitmap.Height));
+                                            }
+                                        }
+                                        //水平
+                                        for (int i = 0; i < currBitmap.Height / 2; i += 60)
+                                        {
+                                            if (i > 0)
+                                            {
+                                                g.DrawLine(pen, new System.Drawing.Point(0, i + currBitmap.Height / 2 - 60), new System.Drawing.Point(currBitmap.Width, i + currBitmap.Height / 2 - 60));
+                                            }
+                                        }
+                                    }
+                                    #endregion
+
                                 }
-                                #endregion
-                            }
 
-                            //显示
-                            this.Invoke(new ThreadStart(delegate
-                            {
+                                //显示
+                                this.Invoke(new ThreadStart(delegate
+                                {
+
+                                    drawPictureBoxVideo.setImage(currBitmap);//显示                                  
+
+                                }));
                                 
-                                drawPictureBoxVideo.setImage(currBitmap);//显示
+                                //Cv2.WaitKey(1);
+                            }
+                            else
+                            {
+                                if (cv2Video.getCurrFrameIndex() == -1)
+                                {
+                                    isopen = false;
+                                }
 
-                            }));
-                            //Cv2.WaitKey(1);
+                            }
+                            // 重置跳帧计数器
+                            skipFramesCount = skipFramesInterval;
+
                         }
                         else
                         {
-                            if (cv2Video.getCurrFrameIndex() == -1)
-                            {
-                                isopen = false;
-                            }
+                            //cv2Video.nextFrameGetImage();
+                            //currBitmap.Dispose();
+                            //GC.Collect();
+                            // 更新跳帧计数器
+                            skipFramesCount--;
 
                         }
+                        
                     }
+                    
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.ToString());
-                    //IcyTools.Log.WriteLog("Error", "", ex.ToString());
                 }
 
             }));
-        }      
+        }
 
         //显示相机画面
         private void showimage(string str)
@@ -463,49 +451,98 @@ namespace videocapture
         //相机0
         private void button1_Click(object sender, EventArgs e)
         {
-            cam_op(0);
+            if (this.checkBox0.Checked == true)
+            {
+                cam_op(0);
+            }
+            else
+            {
+                MessageBox.Show("相机未启用");
+                return;
+            }
+           
         }
 
         //相机1
         private void button2_Click(object sender, EventArgs e)
         {
-            cam_op(1);
+            if (this.checkBox1.Checked == true)
+            {
+                cam_op(1);
+            }
+            else
+            {
+                MessageBox.Show("相机未启用");
+                return;
+            }
         }
 
         //相机2
         private void button3_Click(object sender, EventArgs e)
         {
-            cam_op(2);
+            if (this.checkBox2.Checked == true)
+            {
+                cam_op(2);
+            }
+            else
+            {
+                MessageBox.Show("相机未启用");
+                return;
+            }
         }
 
         //相机3
         private void button4_Click(object sender, EventArgs e)
         {
-            cam_op(3);
+            if (this.checkBox3.Checked == true)
+            {
+                cam_op(3);
+            }
+            else
+            {
+                MessageBox.Show("相机未启用");
+                return;
+            }
         }
 
         //相机4
         private void button6_Click(object sender, EventArgs e)
         {
-            cam_op(4);
+            if (this.checkBox4.Checked == true)
+            {
+                cam_op(4);
+            }
+            else
+            {
+                MessageBox.Show("相机未启用");
+                return;
+            }
         }
 
         //相机5
         private void button7_Click(object sender, EventArgs e)
         {
-            cam_op(5);
+            if (this.checkBox5.Checked == true)
+            {
+                cam_op(5);
+            }
+            else
+            {
+                MessageBox.Show("相机未启用");
+                return;
+            }
         }
 
         //相机操作
         private void cam_op(int index)
         {
             //复原相机角度
-            if (button5.Text.Contains("*"))
-            {
-                button5.Text = button5.Text.Replace("*", "");
-            }
-            rotate = 0;
-            isrotate = false;
+            //if (button5.Text.Contains("*"))
+            //{
+            //    button5.Text = button5.Text.Replace("*", "");
+            //}
+            //rotate = 0;
+            //isrotate = false;
 
             flag = index;
             if (comboBox1.Text == "")
@@ -513,19 +550,12 @@ namespace videocapture
                 MessageBox.Show("请先选择车道");
                 return;
             }
-            if (this.checkBox4.Checked == true)
-            {
-                buttonColor(splitContainer2.Panel2);
-                CheckLine();
-                string str = checkip(index);
-                if (str == "rtsp://admin:wanji168@") return;
-                showimage(str);
-            }
-            else
-            {
-                MessageBox.Show("相机未启用");
-                return;
-            }
+            buttonColor(splitContainer2.Panel2);
+            CheckLine();
+            string str = checkip(index);
+            if (str == "rtsp://admin:wanji168@") return;
+            showimage(str);
+            info_box.Clear();
             press = index;
         }
 
@@ -573,7 +603,7 @@ namespace videocapture
                 this.pictureBox1.Load(@"road_2.jpeg");
                 for (int i = 0; i < selectedIndex; i++)
                 {
-                    configs.Add(new ExtraConfig { ip = "" ,lane = selectedIndex - i});
+                    configs.Add(new ExtraConfig { ip = "" ,lane = selectedIndex - i, height = 6.7, landwidth = 3.75, B = 104});
                 }
                 lane_nums = selectedIndex;
                 totalConfig.type = "2+0";
@@ -594,7 +624,7 @@ namespace videocapture
                 this.pictureBox1.Load(@"road_2.jpeg");
                 for (int i = 0; i < selectedIndex; i++)
                 {
-                    configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - i });
+                    configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - i, height = 6.7, landwidth = 3.75, B = 104 });
                 }
                 lane_nums = selectedIndex;
                 totalConfig.type = "2+1";
@@ -616,7 +646,7 @@ namespace videocapture
                 this.pictureBox1.Load(@"road_3.jpeg");
                 for (int i = 0; i < selectedIndex - 1; i++)
                 {
-                    configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - 1 - i });
+                    configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - 1 - i, height = 6.7, landwidth = 3.75, B = 104 });
                 }
                 lane_nums = selectedIndex - 1;
                 totalConfig.type = "3+0";
@@ -640,13 +670,13 @@ namespace videocapture
                 this.pictureBox1.Load(@"road_3.jpeg");
                 for (int i = 0; i < selectedIndex - 1; i++)
                 {
-                    configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - 1 - i });
+                    configs.Add(new ExtraConfig { ip = "", lane = selectedIndex - 1 - i, height = 6.7, landwidth = 3.75, B = 104 });
                 }
                 lane_nums = selectedIndex - 1;
                 totalConfig.type = "3+1";
             }
             totalConfig.config = configs;
-            totalConfig.nums = lane_nums;
+            totalConfig.nums = lane_nums;         
             convert(totalConfig);
         }
 
@@ -667,6 +697,7 @@ namespace videocapture
                 this.comboBox1.Refresh();
 
                 totalConfig = extras;
+                //totalConfig.config.Reverse(); // 对 config 数组进行倒序排列
                 convert(totalConfig);
             }
         }
@@ -743,98 +774,41 @@ namespace videocapture
             File.WriteAllText("config.json", res1.ToString());
         }
 
-        //旋转按钮
-        private void button9_Click(object sender, EventArgs e)
+        //相机高度文本框
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            //rotate++;
-            //isrotate = true;
-            //if (rotate == 4)
-            //{
-            //    rotate = 0;
-            //    isrotate = false;
-            //}
-            if (button9.Text.Contains("*"))
+            if(textBox1.Text != "")
             {
-                button9.Text = button9.Text.Replace("*", "");
+                height = double.Parse(textBox1.Text);
             }
             else
             {
-                button9.Text += "*";
+                height = 0;
             }
-        }
+            //CaculatePixeldis();
 
-        //播放按钮
-        private void button10_Click(object sender, EventArgs e)
-        {
-            //string str = checkip(flag);
-            //showimage(str);
-            isopen = true;            
-            //deepstream.start();
-
-        }
-
-        //车长文本框
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            CaculatePixeldis();
         }
 
         //车长画线
         private void button11_Click(object sender, EventArgs e)
         {
-            if (button11.Text.Contains("*"))
-            {
-                button11.Text = button11.Text.Replace("*", "");
-                CaculatePixeldis();
-                this.drawPictureBoxVideo.mouseClickType = "";
-                this.drawPictureBoxVideo.drawCache.clearDrawLineList();
-                this.drawPictureBoxVideo.refresh();
-                this.drawPictureBoxVideo.mouseClickType = "";
-            }
-            else
-            {
-                button11.Text += "*";
-                this.drawPictureBoxVideo.mouseClickType = "drawLineX";
-            }
+            //if (button11.Text.Contains("*"))
+            //{
+            //    button11.Text = button11.Text.Replace("*", "");
+            //    CaculatePixeldis();
+            //    this.drawPictureBoxVideo.mouseClickType = "";
+            //    this.drawPictureBoxVideo.drawCache.clearDrawLineList();
+            //    this.drawPictureBoxVideo.refresh();
+            //    this.drawPictureBoxVideo.mouseClickType = "";
+            //}
+            //else
+            //{
+            //    button11.Text += "*";
+            //    this.drawPictureBoxVideo.mouseClickType = "drawLineX";
+            //}
 
         }
 
-        //计算水平像素距离
-        private void CaculatePixeldis()
-        {
-            int dis = 0;
-            if (drawPictureBoxVideo.drawCache.drawLineList.Count != 0)
-            {
-                DrawPictureCache.DrawLine line = (DrawPictureCache.DrawLine)drawPictureBoxVideo.drawCache.drawLineList[0];
-                dis = line.xMax - line.xMin;
-            }
-            if (File.Exists("config.json"))
-            {
-                var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-                if (extras.type.Contains("0"))
-                {
-                    flag--;//当没有应急车道的时候相机下标需要减一
-                    if (textBox1.Text != "")
-                    {
-                        extras.config[flag].length = double.Parse(textBox1.Text);
-                        extras.config[flag].pixeldis = dis;
-                        totalConfig = extras;
-                        convert(totalConfig);
-                    }
-                    flag++;
-                }
-                else
-                {
-                    if (textBox1.Text != "")
-                    {
-                        extras.config[flag].length = double.Parse(textBox1.Text);
-                        extras.config[flag].pixeldis = dis;
-                        totalConfig = extras;
-                        convert(totalConfig);
-                    }
-                }              
-            }
-        }
 
         //上传参数文件到/home
         private void button12_Click(object sender, EventArgs e)
@@ -889,6 +863,107 @@ namespace videocapture
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        //车道宽度文本框
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            landwidth = double.Parse(textBox2.Text);
+        }      
+
+        //视场角文本框
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            B = double.Parse(textBox3.Text);
+        }
+        private void caculate_tanα()
+        {
+            double landwidthpix = 0;
+            if (drawPictureBoxVideo.drawCache.drawLineList.Count != 0)
+            {
+                DrawPictureCache.DrawLine line = (DrawPictureCache.DrawLine)drawPictureBoxVideo.drawCache.drawLineList[0];
+                landwidthpix = line.yMax - line.yMin;
+            }
+            info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
+            info_box.AppendText("------------\r\n");
+            info_box.AppendText("车道像素宽：" + landwidthpix.ToString() + "\r\n");
+            double α = (landwidthpix / currBitmap.Height) * B;
+            info_box.AppendText("车道夹角：" + Math.Round(α, 1).ToString() + "\r\n");
+            double temp = α * Math.PI / 180;
+            Tanα = Math.Tan(temp);
+            string strNumber = Tanα.ToString("F2");
+            Tanα = double.Parse(strNumber);
+        }
+        private void caculate_tana()
+        {
+            double A = height * Tanα;
+            double B = landwidth * Tanα;
+            double C = height * Tanα - landwidth;
+            Tana = (Math.Sqrt(B * B - 4 * A * C) - B) / (2 * A);
+            double a = Math.Atan(Tana);
+            string strNumber = Tana.ToString("F2");
+            Tana = double.Parse(strNumber);
+            double angleInDegrees = a * 180 / Math.PI; // 将弧度转换为角度
+            info_box.AppendText("下车道线夹角：" + Math.Round(angleInDegrees, 1).ToString() + "\r\n");
+        }
+
+        private double caculate_downruler()
+        {
+            double placedown = height * Tana;
+            double j1 = Math.Atan((placedown - 0.5) / height);
+            j1 = j1 * 180 / Math.PI;
+            double j2 = Math.Atan((placedown + 0.5) / height);
+            j2 = j2 * 180 / Math.PI;
+            Downruler = (Math.Abs(j2 - j1)) / B * currBitmap.Height;
+            string strNumber = Downruler.ToString("F2");
+            Downruler = double.Parse(strNumber);
+            info_box.AppendText("下沿标尺：" + strNumber + "\r\n");
+            return Downruler;
+        }
+
+        private double caculate_upruler()
+        {
+            double placedown = height * Tana;
+            double placeup = placedown + landwidth;
+            double j1 = Math.Atan((placeup - 0.5) / height);
+            j1 = j1 * 180 / Math.PI;
+            double j2 = Math.Atan((placeup + 0.5) / height);
+            j2 = j2 * 180 / Math.PI;
+            Upruler = (Math.Abs(j2 - j1)) / B * currBitmap.Height;
+            string strNumber = Upruler.ToString("F2");
+            Upruler = double.Parse(strNumber);
+            info_box.AppendText("上沿标尺：" + strNumber + "\r\n");
+            return Upruler;
+        }
+
+        private void caculate_struler()
+        {
+            try
+            {
+                caculate_tanα();
+                caculate_tana();
+                double temp = 0.25 * caculate_upruler() + 0.75 * caculate_downruler();
+                Struler = Convert.ToInt32(temp);
+                
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.ToString() + "\r\n车道线参数有误");
+            }
+        }
+
+        //标尺计算
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (drawPictureBoxVideo.drawCache.drawLineList.Count == 0)
+            {             
+                MessageBox.Show("未画车道线");
+                return;               
+            }
+            caculate_struler();
+            //Struler = caculate_struler();
+            info_box.AppendText("最终标尺：" + Struler.ToString() + "\r\n");
+            info_box.AppendText("------------\r\n");
         }
 
     }

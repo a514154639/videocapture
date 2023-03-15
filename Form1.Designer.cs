@@ -30,13 +30,15 @@ namespace videocapture
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button9 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button10 = new System.Windows.Forms.Button();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button5 = new System.Windows.Forms.Button();
@@ -58,7 +60,7 @@ namespace videocapture
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.info_box = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -79,13 +81,15 @@ namespace videocapture
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.button9);
+            this.splitContainer1.Panel1.Controls.Add(this.textBox3);
+            this.splitContainer1.Panel1.Controls.Add(this.textBox2);
+            this.splitContainer1.Panel1.Controls.Add(this.label4);
+            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.button12);
-            this.splitContainer1.Panel1.Controls.Add(this.button11);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.textBox1);
-            this.splitContainer1.Panel1.Controls.Add(this.button10);
-            this.splitContainer1.Panel1.Controls.Add(this.checkBox6);
-            this.splitContainer1.Panel1.Controls.Add(this.button9);
             this.splitContainer1.Panel1.Controls.Add(this.button8);
             this.splitContainer1.Panel1.Controls.Add(this.comboBox1);
             this.splitContainer1.Panel1.Controls.Add(this.button5);
@@ -97,80 +101,96 @@ namespace videocapture
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(958, 824);
-            this.splitContainer1.SplitterDistance = 116;
+            this.splitContainer1.SplitterDistance = 115;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(804, 72);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(111, 34);
+            this.button9.TabIndex = 28;
+            this.button9.Text = "计算标尺";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(427, 77);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(49, 28);
+            this.textBox3.TabIndex = 23;
+            this.textBox3.Text = "104";
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(261, 78);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(47, 28);
+            this.textBox2.TabIndex = 22;
+            this.textBox2.Text = "3.75";
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(323, 82);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 18);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "纵向视场角";
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(801, 34);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 28);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "道路类型";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(175, 82);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 18);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "车道宽度";
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(632, 68);
+            this.button12.Location = new System.Drawing.Point(492, 16);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(104, 39);
+            this.button12.Size = new System.Drawing.Size(104, 46);
             this.button12.TabIndex = 18;
             this.button12.Text = "上传参数";
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
-            // button11
-            // 
-            this.button11.Location = new System.Drawing.Point(147, 16);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(96, 46);
-            this.button11.TabIndex = 17;
-            this.button11.Text = "车长定位";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(37, 80);
+            this.label2.Location = new System.Drawing.Point(25, 82);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 18);
             this.label2.TabIndex = 16;
-            this.label2.Text = "输入车长";
+            this.label2.Text = "相机高度";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(123, 76);
+            this.textBox1.Location = new System.Drawing.Point(111, 77);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(120, 28);
+            this.textBox1.Size = new System.Drawing.Size(49, 28);
             this.textBox1.TabIndex = 15;
+            this.textBox1.Text = "6.7";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // button10
-            // 
-            this.button10.Enabled = false;
-            this.button10.Location = new System.Drawing.Point(272, 68);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(86, 39);
-            this.button10.TabIndex = 14;
-            this.button10.Text = "播放";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(505, 76);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(106, 22);
-            this.checkBox6.TabIndex = 13;
-            this.checkBox6.Text = "标定模式";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(387, 68);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(91, 39);
-            this.button9.TabIndex = 12;
-            this.button9.Text = "中心线";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(632, 16);
+            this.button8.Location = new System.Drawing.Point(626, 16);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(104, 46);
             this.button8.TabIndex = 11;
@@ -186,7 +206,7 @@ namespace videocapture
             "2+1车道",
             "3+0车道",
             "3+1车道"});
-            this.comboBox1.Location = new System.Drawing.Point(789, 16);
+            this.comboBox1.Location = new System.Drawing.Point(791, 3);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(120, 26);
             this.comboBox1.TabIndex = 9;
@@ -194,7 +214,7 @@ namespace videocapture
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(505, 16);
+            this.button5.Location = new System.Drawing.Point(371, 16);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(91, 46);
             this.button5.TabIndex = 8;
@@ -214,7 +234,7 @@ namespace videocapture
             // 
             // setConfigToolStripMenuItem
             // 
-            this.setConfigToolStripMenuItem.Location = new System.Drawing.Point(387, 16);
+            this.setConfigToolStripMenuItem.Location = new System.Drawing.Point(261, 16);
             this.setConfigToolStripMenuItem.Name = "setConfigToolStripMenuItem";
             this.setConfigToolStripMenuItem.Size = new System.Drawing.Size(86, 46);
             this.setConfigToolStripMenuItem.TabIndex = 4;
@@ -224,7 +244,7 @@ namespace videocapture
             // 
             // readConfigToolStripMenuItem
             // 
-            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(272, 16);
+            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(147, 16);
             this.readConfigToolStripMenuItem.Name = "readConfigToolStripMenuItem";
             this.readConfigToolStripMenuItem.Size = new System.Drawing.Size(86, 46);
             this.readConfigToolStripMenuItem.TabIndex = 3;
@@ -257,17 +277,18 @@ namespace videocapture
             this.splitContainer2.Panel2.Controls.Add(this.button2);
             this.splitContainer2.Panel2.Controls.Add(this.button1);
             this.splitContainer2.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer2.Size = new System.Drawing.Size(958, 704);
-            this.splitContainer2.SplitterDistance = 454;
+            this.splitContainer2.Size = new System.Drawing.Size(958, 705);
+            this.splitContainer2.SplitterDistance = 452;
             this.splitContainer2.TabIndex = 0;
             // 
             // drawPictureBoxVideo
             // 
+            this.drawPictureBoxVideo.AutoSize = true;
             this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
             this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
             this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
-            this.drawPictureBoxVideo.Size = new System.Drawing.Size(454, 704);
+            this.drawPictureBoxVideo.Size = new System.Drawing.Size(452, 705);
             this.drawPictureBoxVideo.TabIndex = 0;
             // 
             // checkBox0
@@ -403,26 +424,24 @@ namespace videocapture
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(500, 704);
+            this.pictureBox1.Size = new System.Drawing.Size(502, 705);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // label1
+            // info_box
             // 
-            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(796, 58);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 28);
-            this.label1.TabIndex = 19;
-            this.label1.Text = "道路类型";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.info_box.Location = new System.Drawing.Point(683, 119);
+            this.info_box.Multiline = true;
+            this.info_box.Name = "info_box";
+            this.info_box.Size = new System.Drawing.Size(246, 241);
+            this.info_box.TabIndex = 13;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(958, 824);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.info_box);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -433,12 +452,14 @@ namespace videocapture
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -466,14 +487,16 @@ namespace videocapture
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.Button button10;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.TextBox info_box;
     }
 }
 

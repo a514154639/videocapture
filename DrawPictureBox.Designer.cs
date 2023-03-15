@@ -39,7 +39,7 @@ namespace videocapture
             this.pictureBoxMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBoxMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxMain.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBoxMain.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxMain.Name = "pictureBoxMain";
             this.pictureBoxMain.Size = new System.Drawing.Size(424, 288);
             this.pictureBoxMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -53,7 +53,7 @@ namespace videocapture
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pictureBoxMain);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DrawPictureBox";
             this.Size = new System.Drawing.Size(424, 288);
             this.Load += new System.EventHandler(this.DrawPictureBox_Load);
