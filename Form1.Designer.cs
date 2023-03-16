@@ -30,18 +30,18 @@ namespace videocapture
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button9 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.caculate_rl = new System.Windows.Forms.Button();
+            this.cam_angel = new System.Windows.Forms.TextBox();
+            this.landwidth_box = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
+            this.upload_json = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button8 = new System.Windows.Forms.Button();
+            this.cam_height = new System.Windows.Forms.TextBox();
+            this.read_roadtype = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button5 = new System.Windows.Forms.Button();
+            this.gridline = new System.Windows.Forms.Button();
             this.drawLineToolStripMenuItem = new System.Windows.Forms.Button();
             this.setConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.readConfigToolStripMenuItem = new System.Windows.Forms.Button();
@@ -53,12 +53,12 @@ namespace videocapture
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.cam_5 = new System.Windows.Forms.Button();
+            this.cam_4 = new System.Windows.Forms.Button();
+            this.cam_3 = new System.Windows.Forms.Button();
+            this.cam_2 = new System.Windows.Forms.Button();
+            this.cam_1 = new System.Windows.Forms.Button();
+            this.cam_0 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.info_box = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -81,18 +81,18 @@ namespace videocapture
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.button9);
-            this.splitContainer1.Panel1.Controls.Add(this.textBox3);
-            this.splitContainer1.Panel1.Controls.Add(this.textBox2);
+            this.splitContainer1.Panel1.Controls.Add(this.caculate_rl);
+            this.splitContainer1.Panel1.Controls.Add(this.cam_angel);
+            this.splitContainer1.Panel1.Controls.Add(this.landwidth_box);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
-            this.splitContainer1.Panel1.Controls.Add(this.button12);
+            this.splitContainer1.Panel1.Controls.Add(this.upload_json);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
-            this.splitContainer1.Panel1.Controls.Add(this.textBox1);
-            this.splitContainer1.Panel1.Controls.Add(this.button8);
+            this.splitContainer1.Panel1.Controls.Add(this.cam_height);
+            this.splitContainer1.Panel1.Controls.Add(this.read_roadtype);
             this.splitContainer1.Panel1.Controls.Add(this.comboBox1);
-            this.splitContainer1.Panel1.Controls.Add(this.button5);
+            this.splitContainer1.Panel1.Controls.Add(this.gridline);
             this.splitContainer1.Panel1.Controls.Add(this.drawLineToolStripMenuItem);
             this.splitContainer1.Panel1.Controls.Add(this.setConfigToolStripMenuItem);
             this.splitContainer1.Panel1.Controls.Add(this.readConfigToolStripMenuItem);
@@ -104,33 +104,33 @@ namespace videocapture
             this.splitContainer1.SplitterDistance = 115;
             this.splitContainer1.TabIndex = 2;
             // 
-            // button9
+            // caculate_rl
             // 
-            this.button9.Location = new System.Drawing.Point(804, 72);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(111, 34);
-            this.button9.TabIndex = 28;
-            this.button9.Text = "计算标尺";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.caculate_rl.Location = new System.Drawing.Point(804, 72);
+            this.caculate_rl.Name = "caculate_rl";
+            this.caculate_rl.Size = new System.Drawing.Size(111, 34);
+            this.caculate_rl.TabIndex = 28;
+            this.caculate_rl.Text = "计算标尺";
+            this.caculate_rl.UseVisualStyleBackColor = true;
+            this.caculate_rl.Click += new System.EventHandler(this.caculate_Click);
             // 
-            // textBox3
+            // cam_angel
             // 
-            this.textBox3.Location = new System.Drawing.Point(427, 77);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(49, 28);
-            this.textBox3.TabIndex = 23;
-            this.textBox3.Text = "104";
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.cam_angel.Location = new System.Drawing.Point(427, 77);
+            this.cam_angel.Name = "cam_angel";
+            this.cam_angel.Size = new System.Drawing.Size(49, 28);
+            this.cam_angel.TabIndex = 23;
+            this.cam_angel.Text = "104";
+            this.cam_angel.TextChanged += new System.EventHandler(this.camangel_TextChanged);
             // 
-            // textBox2
+            // landwidth_box
             // 
-            this.textBox2.Location = new System.Drawing.Point(261, 78);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(47, 28);
-            this.textBox2.TabIndex = 22;
-            this.textBox2.Text = "3.75";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.landwidth_box.Location = new System.Drawing.Point(261, 78);
+            this.landwidth_box.Name = "landwidth_box";
+            this.landwidth_box.Size = new System.Drawing.Size(47, 28);
+            this.landwidth_box.TabIndex = 22;
+            this.landwidth_box.Text = "3.75";
+            this.landwidth_box.TextChanged += new System.EventHandler(this.landwidth_TextChanged);
             // 
             // label4
             // 
@@ -160,15 +160,15 @@ namespace videocapture
             this.label3.TabIndex = 19;
             this.label3.Text = "车道宽度";
             // 
-            // button12
+            // upload_json
             // 
-            this.button12.Location = new System.Drawing.Point(492, 16);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(104, 46);
-            this.button12.TabIndex = 18;
-            this.button12.Text = "上传参数";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.upload_json.Location = new System.Drawing.Point(492, 16);
+            this.upload_json.Name = "upload_json";
+            this.upload_json.Size = new System.Drawing.Size(104, 46);
+            this.upload_json.TabIndex = 18;
+            this.upload_json.Text = "上传参数";
+            this.upload_json.UseVisualStyleBackColor = true;
+            this.upload_json.Click += new System.EventHandler(this.uploadjson_Click);
             // 
             // label2
             // 
@@ -179,24 +179,24 @@ namespace videocapture
             this.label2.TabIndex = 16;
             this.label2.Text = "相机高度";
             // 
-            // textBox1
+            // cam_height
             // 
-            this.textBox1.Location = new System.Drawing.Point(111, 77);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(49, 28);
-            this.textBox1.TabIndex = 15;
-            this.textBox1.Text = "6.7";
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.cam_height.Location = new System.Drawing.Point(111, 77);
+            this.cam_height.Name = "cam_height";
+            this.cam_height.Size = new System.Drawing.Size(49, 28);
+            this.cam_height.TabIndex = 15;
+            this.cam_height.Text = "6.7";
+            this.cam_height.TextChanged += new System.EventHandler(this.camheight_TextChanged);
             // 
-            // button8
+            // read_roadtype
             // 
-            this.button8.Location = new System.Drawing.Point(626, 16);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(104, 46);
-            this.button8.TabIndex = 11;
-            this.button8.Text = "车道配置";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.read_roadtype.Location = new System.Drawing.Point(626, 16);
+            this.read_roadtype.Name = "read_roadtype";
+            this.read_roadtype.Size = new System.Drawing.Size(104, 46);
+            this.read_roadtype.TabIndex = 11;
+            this.read_roadtype.Text = "车道配置";
+            this.read_roadtype.UseVisualStyleBackColor = true;
+            this.read_roadtype.Click += new System.EventHandler(this.roadtype_Click);
             // 
             // comboBox1
             // 
@@ -212,15 +212,15 @@ namespace videocapture
             this.comboBox1.TabIndex = 9;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // button5
+            // gridline
             // 
-            this.button5.Location = new System.Drawing.Point(371, 16);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(91, 46);
-            this.button5.TabIndex = 8;
-            this.button5.Text = "网格线";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.Flip_Click);
+            this.gridline.Location = new System.Drawing.Point(371, 16);
+            this.gridline.Name = "gridline";
+            this.gridline.Size = new System.Drawing.Size(91, 46);
+            this.gridline.TabIndex = 8;
+            this.gridline.Text = "网格线";
+            this.gridline.UseVisualStyleBackColor = true;
+            this.gridline.Click += new System.EventHandler(this.grid_Click);
             // 
             // drawLineToolStripMenuItem
             // 
@@ -270,12 +270,12 @@ namespace videocapture
             this.splitContainer2.Panel2.Controls.Add(this.checkBox3);
             this.splitContainer2.Panel2.Controls.Add(this.checkBox4);
             this.splitContainer2.Panel2.Controls.Add(this.checkBox5);
-            this.splitContainer2.Panel2.Controls.Add(this.button7);
-            this.splitContainer2.Panel2.Controls.Add(this.button6);
-            this.splitContainer2.Panel2.Controls.Add(this.button4);
-            this.splitContainer2.Panel2.Controls.Add(this.button3);
-            this.splitContainer2.Panel2.Controls.Add(this.button2);
-            this.splitContainer2.Panel2.Controls.Add(this.button1);
+            this.splitContainer2.Panel2.Controls.Add(this.cam_5);
+            this.splitContainer2.Panel2.Controls.Add(this.cam_4);
+            this.splitContainer2.Panel2.Controls.Add(this.cam_3);
+            this.splitContainer2.Panel2.Controls.Add(this.cam_2);
+            this.splitContainer2.Panel2.Controls.Add(this.cam_1);
+            this.splitContainer2.Panel2.Controls.Add(this.cam_0);
             this.splitContainer2.Panel2.Controls.Add(this.pictureBox1);
             this.splitContainer2.Size = new System.Drawing.Size(958, 705);
             this.splitContainer2.SplitterDistance = 452;
@@ -357,66 +357,66 @@ namespace videocapture
             this.checkBox5.TabIndex = 7;
             this.checkBox5.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // cam_5
             // 
-            this.button7.Location = new System.Drawing.Point(105, 27);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(129, 66);
-            this.button7.TabIndex = 6;
-            this.button7.Text = "相机5";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.cam_5.Location = new System.Drawing.Point(105, 27);
+            this.cam_5.Name = "cam_5";
+            this.cam_5.Size = new System.Drawing.Size(129, 66);
+            this.cam_5.TabIndex = 6;
+            this.cam_5.Text = "相机5";
+            this.cam_5.UseVisualStyleBackColor = true;
+            this.cam_5.Click += new System.EventHandler(this.cam_5_Click);
             // 
-            // button6
+            // cam_4
             // 
-            this.button6.Location = new System.Drawing.Point(105, 136);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(129, 67);
-            this.button6.TabIndex = 5;
-            this.button6.Text = "相机4";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.cam_4.Location = new System.Drawing.Point(105, 136);
+            this.cam_4.Name = "cam_4";
+            this.cam_4.Size = new System.Drawing.Size(129, 67);
+            this.cam_4.TabIndex = 5;
+            this.cam_4.Text = "相机4";
+            this.cam_4.UseVisualStyleBackColor = true;
+            this.cam_4.Click += new System.EventHandler(this.cam_4_Click);
             // 
-            // button4
+            // cam_3
             // 
-            this.button4.Location = new System.Drawing.Point(105, 247);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(129, 67);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "相机3";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.cam_3.Location = new System.Drawing.Point(105, 247);
+            this.cam_3.Name = "cam_3";
+            this.cam_3.Size = new System.Drawing.Size(129, 67);
+            this.cam_3.TabIndex = 4;
+            this.cam_3.Text = "相机3";
+            this.cam_3.UseVisualStyleBackColor = true;
+            this.cam_3.Click += new System.EventHandler(this.cam_3_Click);
             // 
-            // button3
+            // cam_2
             // 
-            this.button3.Location = new System.Drawing.Point(105, 358);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(129, 67);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "相机2";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.cam_2.Location = new System.Drawing.Point(105, 358);
+            this.cam_2.Name = "cam_2";
+            this.cam_2.Size = new System.Drawing.Size(129, 67);
+            this.cam_2.TabIndex = 3;
+            this.cam_2.Text = "相机2";
+            this.cam_2.UseVisualStyleBackColor = true;
+            this.cam_2.Click += new System.EventHandler(this.cam_2_Click);
             // 
-            // button2
+            // cam_1
             // 
-            this.button2.Location = new System.Drawing.Point(105, 482);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(129, 67);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "相机1";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.cam_1.Location = new System.Drawing.Point(105, 482);
+            this.cam_1.Name = "cam_1";
+            this.cam_1.Size = new System.Drawing.Size(129, 67);
+            this.cam_1.TabIndex = 2;
+            this.cam_1.Text = "相机1";
+            this.cam_1.UseVisualStyleBackColor = true;
+            this.cam_1.Click += new System.EventHandler(this.cam_1_Click);
             // 
-            // button1
+            // cam_0
             // 
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(105, 597);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(129, 67);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "相机0";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.cam_0.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cam_0.Location = new System.Drawing.Point(105, 597);
+            this.cam_0.Name = "cam_0";
+            this.cam_0.Size = new System.Drawing.Size(129, 67);
+            this.cam_0.TabIndex = 1;
+            this.cam_0.Text = "相机0";
+            this.cam_0.UseVisualStyleBackColor = true;
+            this.cam_0.Click += new System.EventHandler(this.cam_0_Click);
             // 
             // pictureBox1
             // 
@@ -472,30 +472,30 @@ namespace videocapture
         private System.Windows.Forms.SplitContainer splitContainer2;
         public DrawPictureBox drawPictureBoxVideo = new DrawPictureBox();
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button cam_2;
+        private System.Windows.Forms.Button cam_1;
+        private System.Windows.Forms.Button cam_0;
+        private System.Windows.Forms.Button gridline;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button cam_4;
+        private System.Windows.Forms.Button cam_3;
+        private System.Windows.Forms.Button cam_5;
+        private System.Windows.Forms.Button read_roadtype;
         private System.Windows.Forms.CheckBox checkBox0;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox cam_height;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button upload_json;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox cam_angel;
+        private System.Windows.Forms.TextBox landwidth_box;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button caculate_rl;
         private System.Windows.Forms.TextBox info_box;
     }
 }
