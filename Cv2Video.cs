@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using System.Threading;
 
 namespace videocapture
 {
@@ -23,7 +24,10 @@ namespace videocapture
         public double zoom = 0;//缩放
         public int posMsec = 0;//当前时间戳 毫秒
 
-        private VideoCapture capture = null;
+        //private VideoCapture capture = null;
+        private static VideoCapture capture;
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        //private static SemaphoreSlim captureSemaphore = new SemaphoreSlim(1, 1);
         private Mat currImage = new Mat();
         /// <summary>
         /// 开启视频文件
@@ -60,13 +64,57 @@ namespace videocapture
             try
             {
                 capture = new VideoCapture(rtspPath);
+                return capture.IsOpened();
             }
             catch
             {
                 return false;
             }
-            return true;
+            //return capture;
         }
+        public bool openRtsp1(string rtspPath)
+        {
+            try
+            {
+                _cancellationTokenSource?.Cancel();
+                capture?.Dispose();
+                _cancellationTokenSource = new CancellationTokenSource();
+                capture = new VideoCapture();
+
+                var task = Task.Run(() =>
+                {
+                    capture.Open(rtspPath);
+                }, _cancellationTokenSource.Token);
+
+                if (task.Wait(TimeSpan.FromSeconds(3)))
+                {
+                    if (capture.IsOpened())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        capture.Release();
+                        return false;
+                    }
+                }
+                else
+                {
+                    _cancellationTokenSource.Cancel();
+                    capture.Release();
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+
+
+
 
         /// <summary>
         /// 取摄像头数据
@@ -328,7 +376,7 @@ namespace videocapture
         {
             if (capture != null)
             {
-                capture.Release();
+                //capture.Release();
                 capture.Dispose();
             }
         }

@@ -40,7 +40,7 @@ namespace videocapture
             this.label2 = new System.Windows.Forms.Label();
             this.cam_height = new System.Windows.Forms.TextBox();
             this.read_roadtype = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.roadtype_box = new System.Windows.Forms.ComboBox();
             this.gridline = new System.Windows.Forms.Button();
             this.drawLineToolStripMenuItem = new System.Windows.Forms.Button();
             this.setConfigToolStripMenuItem = new System.Windows.Forms.Button();
@@ -91,7 +91,7 @@ namespace videocapture
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.cam_height);
             this.splitContainer1.Panel1.Controls.Add(this.read_roadtype);
-            this.splitContainer1.Panel1.Controls.Add(this.comboBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.roadtype_box);
             this.splitContainer1.Panel1.Controls.Add(this.gridline);
             this.splitContainer1.Panel1.Controls.Add(this.drawLineToolStripMenuItem);
             this.splitContainer1.Panel1.Controls.Add(this.setConfigToolStripMenuItem);
@@ -101,18 +101,18 @@ namespace videocapture
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(958, 824);
-            this.splitContainer1.SplitterDistance = 115;
+            this.splitContainer1.SplitterDistance = 109;
             this.splitContainer1.TabIndex = 2;
             // 
             // caculate_rl
             // 
-            this.caculate_rl.Location = new System.Drawing.Point(804, 72);
+            this.caculate_rl.Location = new System.Drawing.Point(492, 72);
             this.caculate_rl.Name = "caculate_rl";
-            this.caculate_rl.Size = new System.Drawing.Size(111, 34);
+            this.caculate_rl.Size = new System.Drawing.Size(104, 33);
             this.caculate_rl.TabIndex = 28;
             this.caculate_rl.Text = "计算标尺";
             this.caculate_rl.UseVisualStyleBackColor = true;
-            this.caculate_rl.Click += new System.EventHandler(this.caculate_Click);
+            this.caculate_rl.Click += new System.EventHandler(this.Caculate_Click);
             // 
             // cam_angel
             // 
@@ -121,16 +121,16 @@ namespace videocapture
             this.cam_angel.Size = new System.Drawing.Size(49, 28);
             this.cam_angel.TabIndex = 23;
             this.cam_angel.Text = "104";
-            this.cam_angel.TextChanged += new System.EventHandler(this.camangel_TextChanged);
+            this.cam_angel.TextChanged += new System.EventHandler(this.Camangel_TextChanged);
             // 
             // landwidth_box
             // 
-            this.landwidth_box.Location = new System.Drawing.Point(261, 78);
+            this.landwidth_box.Location = new System.Drawing.Point(261, 76);
             this.landwidth_box.Name = "landwidth_box";
             this.landwidth_box.Size = new System.Drawing.Size(47, 28);
             this.landwidth_box.TabIndex = 22;
             this.landwidth_box.Text = "3.75";
-            this.landwidth_box.TextChanged += new System.EventHandler(this.landwidth_TextChanged);
+            this.landwidth_box.TextChanged += new System.EventHandler(this.Landwidth_TextChanged);
             // 
             // label4
             // 
@@ -144,7 +144,7 @@ namespace videocapture
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(801, 34);
+            this.label1.Location = new System.Drawing.Point(813, 54);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 28);
             this.label1.TabIndex = 19;
@@ -168,7 +168,7 @@ namespace videocapture
             this.upload_json.TabIndex = 18;
             this.upload_json.Text = "上传参数";
             this.upload_json.UseVisualStyleBackColor = true;
-            this.upload_json.Click += new System.EventHandler(this.uploadjson_Click);
+            this.upload_json.Click += new System.EventHandler(this.Uploadjson_Click);
             // 
             // label2
             // 
@@ -186,7 +186,7 @@ namespace videocapture
             this.cam_height.Size = new System.Drawing.Size(49, 28);
             this.cam_height.TabIndex = 15;
             this.cam_height.Text = "6.7";
-            this.cam_height.TextChanged += new System.EventHandler(this.camheight_TextChanged);
+            this.cam_height.TextChanged += new System.EventHandler(this.Camheight_TextChanged);
             // 
             // read_roadtype
             // 
@@ -196,21 +196,21 @@ namespace videocapture
             this.read_roadtype.TabIndex = 11;
             this.read_roadtype.Text = "车道配置";
             this.read_roadtype.UseVisualStyleBackColor = true;
-            this.read_roadtype.Click += new System.EventHandler(this.roadtype_Click);
+            this.read_roadtype.Click += new System.EventHandler(this.Roadtype_Click);
             // 
-            // comboBox1
+            // roadtype_box
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.roadtype_box.FormattingEnabled = true;
+            this.roadtype_box.Items.AddRange(new object[] {
             "2+0车道",
             "2+1车道",
             "3+0车道",
             "3+1车道"});
-            this.comboBox1.Location = new System.Drawing.Point(791, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(120, 26);
-            this.comboBox1.TabIndex = 9;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.roadtype_box.Location = new System.Drawing.Point(792, 16);
+            this.roadtype_box.Name = "roadtype_box";
+            this.roadtype_box.Size = new System.Drawing.Size(120, 26);
+            this.roadtype_box.TabIndex = 9;
+            this.roadtype_box.SelectedIndexChanged += new System.EventHandler(this.Roadtypebox_SelectedIndexChanged);
             // 
             // gridline
             // 
@@ -220,7 +220,7 @@ namespace videocapture
             this.gridline.TabIndex = 8;
             this.gridline.Text = "网格线";
             this.gridline.UseVisualStyleBackColor = true;
-            this.gridline.Click += new System.EventHandler(this.grid_Click);
+            this.gridline.Click += new System.EventHandler(this.Grid_Click);
             // 
             // drawLineToolStripMenuItem
             // 
@@ -230,7 +230,7 @@ namespace videocapture
             this.drawLineToolStripMenuItem.TabIndex = 5;
             this.drawLineToolStripMenuItem.Text = "画线";
             this.drawLineToolStripMenuItem.UseVisualStyleBackColor = true;
-            this.drawLineToolStripMenuItem.Click += new System.EventHandler(this.drawLineToolStripMenuItem_Click);
+            this.drawLineToolStripMenuItem.Click += new System.EventHandler(this.DrawLineToolStripMenuItem_Click);
             // 
             // setConfigToolStripMenuItem
             // 
@@ -240,7 +240,7 @@ namespace videocapture
             this.setConfigToolStripMenuItem.TabIndex = 4;
             this.setConfigToolStripMenuItem.Text = "写配置";
             this.setConfigToolStripMenuItem.UseVisualStyleBackColor = true;
-            this.setConfigToolStripMenuItem.Click += new System.EventHandler(this.setConfigToolStripMenuItem_Click);
+            this.setConfigToolStripMenuItem.Click += new System.EventHandler(this.SetConfigToolStripMenuItem_Click);
             // 
             // readConfigToolStripMenuItem
             // 
@@ -250,7 +250,7 @@ namespace videocapture
             this.readConfigToolStripMenuItem.TabIndex = 3;
             this.readConfigToolStripMenuItem.Text = "读配置";
             this.readConfigToolStripMenuItem.UseVisualStyleBackColor = true;
-            this.readConfigToolStripMenuItem.Click += new System.EventHandler(this.readConfigToolStripMenuItem_Click);
+            this.readConfigToolStripMenuItem.Click += new System.EventHandler(this.ReadConfigToolStripMenuItem_Click);
             // 
             // splitContainer2
             // 
@@ -264,6 +264,7 @@ namespace videocapture
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.info_box);
             this.splitContainer2.Panel2.Controls.Add(this.checkBox0);
             this.splitContainer2.Panel2.Controls.Add(this.checkBox1);
             this.splitContainer2.Panel2.Controls.Add(this.checkBox2);
@@ -277,18 +278,19 @@ namespace videocapture
             this.splitContainer2.Panel2.Controls.Add(this.cam_1);
             this.splitContainer2.Panel2.Controls.Add(this.cam_0);
             this.splitContainer2.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer2.Size = new System.Drawing.Size(958, 705);
-            this.splitContainer2.SplitterDistance = 452;
+            this.splitContainer2.Size = new System.Drawing.Size(958, 711);
+            this.splitContainer2.SplitterDistance = 449;
             this.splitContainer2.TabIndex = 0;
             // 
             // drawPictureBoxVideo
             // 
             this.drawPictureBoxVideo.AutoSize = true;
+            this.drawPictureBoxVideo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
             this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
             this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
-            this.drawPictureBoxVideo.Size = new System.Drawing.Size(452, 705);
+            this.drawPictureBoxVideo.Size = new System.Drawing.Size(449, 711);
             this.drawPictureBoxVideo.TabIndex = 0;
             // 
             // checkBox0
@@ -365,7 +367,7 @@ namespace videocapture
             this.cam_5.TabIndex = 6;
             this.cam_5.Text = "相机5";
             this.cam_5.UseVisualStyleBackColor = true;
-            this.cam_5.Click += new System.EventHandler(this.cam_5_Click);
+            this.cam_5.Click += new System.EventHandler(this.Cam_5_Click);
             // 
             // cam_4
             // 
@@ -375,7 +377,7 @@ namespace videocapture
             this.cam_4.TabIndex = 5;
             this.cam_4.Text = "相机4";
             this.cam_4.UseVisualStyleBackColor = true;
-            this.cam_4.Click += new System.EventHandler(this.cam_4_Click);
+            this.cam_4.Click += new System.EventHandler(this.Cam_4_Click);
             // 
             // cam_3
             // 
@@ -385,7 +387,7 @@ namespace videocapture
             this.cam_3.TabIndex = 4;
             this.cam_3.Text = "相机3";
             this.cam_3.UseVisualStyleBackColor = true;
-            this.cam_3.Click += new System.EventHandler(this.cam_3_Click);
+            this.cam_3.Click += new System.EventHandler(this.Cam_3_Click);
             // 
             // cam_2
             // 
@@ -395,7 +397,7 @@ namespace videocapture
             this.cam_2.TabIndex = 3;
             this.cam_2.Text = "相机2";
             this.cam_2.UseVisualStyleBackColor = true;
-            this.cam_2.Click += new System.EventHandler(this.cam_2_Click);
+            this.cam_2.Click += new System.EventHandler(this.Cam_2_Click);
             // 
             // cam_1
             // 
@@ -405,7 +407,7 @@ namespace videocapture
             this.cam_1.TabIndex = 2;
             this.cam_1.Text = "相机1";
             this.cam_1.UseVisualStyleBackColor = true;
-            this.cam_1.Click += new System.EventHandler(this.cam_1_Click);
+            this.cam_1.Click += new System.EventHandler(this.Cam_1_Click);
             // 
             // cam_0
             // 
@@ -416,7 +418,7 @@ namespace videocapture
             this.cam_0.TabIndex = 1;
             this.cam_0.Text = "相机0";
             this.cam_0.UseVisualStyleBackColor = true;
-            this.cam_0.Click += new System.EventHandler(this.cam_0_Click);
+            this.cam_0.Click += new System.EventHandler(this.Cam_0_Click);
             // 
             // pictureBox1
             // 
@@ -424,16 +426,18 @@ namespace videocapture
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(502, 705);
+            this.pictureBox1.Size = new System.Drawing.Size(505, 711);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // info_box
             // 
-            this.info_box.Location = new System.Drawing.Point(683, 119);
+            this.info_box.Dock = System.Windows.Forms.DockStyle.Top;
+            this.info_box.Location = new System.Drawing.Point(0, 0);
             this.info_box.Multiline = true;
             this.info_box.Name = "info_box";
-            this.info_box.Size = new System.Drawing.Size(246, 241);
+            this.info_box.Size = new System.Drawing.Size(505, 241);
             this.info_box.TabIndex = 13;
             // 
             // Form1
@@ -441,7 +445,6 @@ namespace videocapture
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(958, 824);
-            this.Controls.Add(this.info_box);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -459,7 +462,6 @@ namespace videocapture
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -476,7 +478,7 @@ namespace videocapture
         private System.Windows.Forms.Button cam_1;
         private System.Windows.Forms.Button cam_0;
         private System.Windows.Forms.Button gridline;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox roadtype_box;
         private System.Windows.Forms.Button cam_4;
         private System.Windows.Forms.Button cam_3;
         private System.Windows.Forms.Button cam_5;
