@@ -72,48 +72,7 @@ namespace videocapture
             }
             //return capture;
         }
-        public bool openRtsp1(string rtspPath)
-        {
-            try
-            {
-                _cancellationTokenSource?.Cancel();
-                capture?.Dispose();
-                _cancellationTokenSource = new CancellationTokenSource();
-                capture = new VideoCapture();
-
-                var task = Task.Run(() =>
-                {
-                    capture.Open(rtspPath);
-                }, _cancellationTokenSource.Token);
-
-                if (task.Wait(TimeSpan.FromSeconds(3)))
-                {
-                    if (capture.IsOpened())
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        capture.Release();
-                        return false;
-                    }
-                }
-                else
-                {
-                    _cancellationTokenSource.Cancel();
-                    capture.Release();
-                    return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-
-
-
+        
 
 
         /// <summary>

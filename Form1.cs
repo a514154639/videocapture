@@ -41,6 +41,7 @@ namespace videocapture
         public int Struler = 0;
         public double Downruler = 0;
         public double Upruler = 0;
+        public double angleInDegrees = 0;
         private int skipFramesCount = 0; // 跳过的帧数
         private int skipFramesInterval = 3; // 跳帧的间隔
 
@@ -82,11 +83,13 @@ namespace videocapture
             //public bool flip = false;
             public int lane;
             public double height;
-            public double landwidth;
-            public int landwidthpix;
+            public double A;
             public double B;
+            
             public double tanα;
             public double tana;
+            public double landwidth;
+            public int landwidthpix;                  
             public double downruler;
             public double upruler;
             public int struler;
@@ -182,6 +185,7 @@ namespace videocapture
                         extras.config[flag].height = height;
                         extras.config[flag].landwidth = landwidth;
                         extras.config[flag].B = B;
+                        extras.config[flag].A = Math.Round(angleInDegrees, 1);
                         extras.config[flag].tana = Tana;
                         extras.config[flag].tanα = Tanα;
                         extras.config[flag].struler = Struler;
@@ -196,6 +200,7 @@ namespace videocapture
                         extras.config[flag].height = height;
                         extras.config[flag].landwidth = landwidth;
                         extras.config[flag].B = B;
+                        extras.config[flag].A = Math.Round(angleInDegrees, 1);
                         extras.config[flag].tana = Tana;
                         extras.config[flag].tanα = Tanα;
                         extras.config[flag].struler = Struler;
@@ -377,6 +382,7 @@ namespace videocapture
             }));
         }
 
+        //显示图片
         private void Showimage(string str)
         {
             isopen = false;
@@ -385,18 +391,28 @@ namespace videocapture
                 cv2Video.dispose();
             }
             cv2Video = new Cv2Video();
-
             info_box.AppendText("连接中，请稍后...\r\n");
 
-            //isopen = cv2Video.openVideoFile(@"demo.mp4");
-            isopen = cv2Video.openRtsp(str + ":554 ");
-              
-            if(!isopen)
-            {
-                cv2Video = null;
-                return;
+            try
+            {             
+                //isopen = cv2Video.openVideoFile(@"demo.mp4");
+                //isopen = cv2Video.openCamera();
+                isopen = cv2Video.openRtsp(str + ":554 ");
+
+                if (!isopen)
+                {
+                    cv2Video = null;
+                    return;
+                }
+                
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString()); 
+            }
+
             isopen = true;
+
         }
 
         //检查ip是否能通
@@ -757,9 +773,6 @@ namespace videocapture
             return str;
         }
 
- 
-
-
         //检查ip是否合法
         private bool CheckIp(string ip)
         {
@@ -823,8 +836,7 @@ namespace videocapture
             }
             //CaculatePixeldis();
 
-        }
-      
+        }    
 
         //上传参数文件到/home
         private void Uploadjson_Click(object sender, EventArgs e)
@@ -844,7 +856,7 @@ namespace videocapture
                             info_box.AppendText("文件上传中，请稍后...\r\n");
                             sftpClient.Connect();
                             string localFilePath = "config.json";
-                            string remoteFilePath = "/home/code/config.json";
+                            string remoteFilePath = "/home/config.json";
                             using (var fileStream = new FileStream(localFilePath, FileMode.Open))
                             {
                                 try
@@ -928,7 +940,7 @@ namespace videocapture
             double a = Math.Atan(Tana);
             string strNumber = Tana.ToString("F2");
             Tana = double.Parse(strNumber);
-            double angleInDegrees = a * 180 / Math.PI; // 将弧度转换为角度
+            angleInDegrees = a * 180 / Math.PI; // 将弧度转换为角度
             info_box.AppendText("下车道线夹角：" + Math.Round(angleInDegrees, 1).ToString() + "\r\n");
         }
 
