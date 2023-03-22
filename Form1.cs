@@ -42,8 +42,6 @@ namespace videocapture
         public double Downruler = 0;
         public double Upruler = 0;
         public double angleInDegrees = 0;
-        private int skipFramesCount = 0; // 跳过的帧数
-        private int skipFramesInterval = 3; // 跳帧的间隔
 
         // 定义IP地址和密码的成员变量
         private string ipAddress;
@@ -159,10 +157,6 @@ namespace videocapture
             }
             catch (Exception ex)
             {
-                // 记录日志
-                //var logger = NLog.LogManager.GetCurrentClassLogger();
-                //logger.Error(ex, "ReadConfig 发生异常");
-
                 MessageBox.Show(ex + "参数读取失败");
             }
         }
@@ -295,82 +289,84 @@ namespace videocapture
                 {
                     if (isopen)
                     {
-                        if (skipFramesCount == 0)
+                        
+                        if (currBitmap != null)
                         {
-                            if (currBitmap != null)
-                            {
-                                currBitmap.Dispose();
-                            }
-                            currBitmap = null;
-                            currBitmap = cv2Video.currFrameGetImage();//当前帧
-
-                            if (currBitmap != null)
-                            {
-                                using (Graphics g = Graphics.FromImage(currBitmap))
-                                {
-                                    #region 中心线
-                                    var pen = new Pen(Color.Red, 10);
-                                    //垂直中线
-                                    g.DrawLine(pen, new System.Drawing.Point(currBitmap.Width / 2, 0), new System.Drawing.Point(currBitmap.Width / 2, currBitmap.Height));
-                                    //水平中线
-                                    g.DrawLine(pen, new System.Drawing.Point(0, currBitmap.Height / 2), new System.Drawing.Point(currBitmap.Width, currBitmap.Height / 2));
-                                    #endregion
-                                    #region 网格线
-                                    if (gridline.Text.Contains("*"))
-                                    {
-                                        pen = new Pen(Color.Red, 2);
-                                        //垂直
-                                        for (int i = 0; i < currBitmap.Width; i += 60)
-                                        {
-                                            if (i > 0)
-                                            {
-                                                g.DrawLine(pen, new System.Drawing.Point(i, currBitmap.Height / 2), new System.Drawing.Point(i, currBitmap.Height));
-                                            }
-                                        }
-                                        //水平
-                                        for (int i = 0; i < currBitmap.Height / 2; i += 60)
-                                        {
-                                            if (i > 0)
-                                            {
-                                                g.DrawLine(pen, new System.Drawing.Point(0, i + currBitmap.Height / 2 - 60), new System.Drawing.Point(currBitmap.Width, i + currBitmap.Height / 2 - 60));
-                                            }
-                                        }
-                                    }
-                                    #endregion
-
-                                }
-
-                                //显示
-                                this.Invoke(new ThreadStart(delegate
-                                {
-
-                                    drawPictureBoxVideo.setImage(currBitmap);//显示                                  
-
-                                }));
-                                
-                                //Cv2.WaitKey(1);
-                            }
-                            else
-                            {
-                                if (cv2Video.getCurrFrameIndex() == -1)
-                                {
-                                    isopen = false;
-                                }
-
-                            }
-                            // 重置跳帧计数器
-                            skipFramesCount = skipFramesInterval;
-
+                            currBitmap.Dispose();
+                        }
+                        currBitmap = null;
+                        //旋转
+                        if (rotate_btn.Text.Contains("*"))
+                        {
+                            currBitmap = cv2Video.currFrameGetImageRotate();//当前帧
+                                                                                                                      
                         }
                         else
                         {
-                            //cv2Video.nextFrameGetImage();
-                            //GC.Collect();
-                            // 更新跳帧计数器
-                            skipFramesCount--;
+                            currBitmap = cv2Video.currFrameGetImage();//当前帧
+                        }
+                            
+                        if (currBitmap != null)
+                        {
+                            using (Graphics g = Graphics.FromImage(currBitmap))
+                            {
+                                #region 中心线
+                                var pen = new Pen(Color.Red, 10);
+                                //垂直中线
+                                g.DrawLine(pen, new System.Drawing.Point(currBitmap.Width / 2, 0), new System.Drawing.Point(currBitmap.Width / 2, currBitmap.Height));
+                                //水平中线
+                                g.DrawLine(pen, new System.Drawing.Point(0, currBitmap.Height / 2), new System.Drawing.Point(currBitmap.Width, currBitmap.Height / 2));
+                                #endregion
+                                #region 网格线
+                                if (gridline.Text.Contains("*"))
+                                {
+                                    pen = new Pen(Color.Red, 2);
+                                    //垂直
+                                    for (int i = 0; i < currBitmap.Width; i += 60)
+                                    {
+                                        if (i > 0)
+                                        {
+                                            g.DrawLine(pen, new System.Drawing.Point(i, currBitmap.Height / 2), new System.Drawing.Point(i, currBitmap.Height));
+                                        }
+                                    }
+                                    //水平
+                                    for (int i = 0; i < currBitmap.Height / 2; i += 60)
+                                    {
+                                        if (i > 0)
+                                        {
+                                            g.DrawLine(pen, new System.Drawing.Point(0, i + currBitmap.Height / 2 - 60), new System.Drawing.Point(currBitmap.Width, i + currBitmap.Height / 2 - 60));
+                                        }
+                                    }
+                                }
+                                #endregion
+
+                            }
+
+                            //显示
+                            this.Invoke(new ThreadStart(delegate
+                            {
+
+                                drawPictureBoxVideo.setImage(currBitmap);//显示                                  
+
+                            }));
+                                
+                            //Cv2.WaitKey(1);
+                        }
+                        else
+                        {
+                            if (cv2Video.getCurrFrameIndex() == -1)
+                            {
+                                isopen = false;
+                            }
 
                         }
-                        
+                        // 实现跳帧播放
+                        int frameIndex = cv2Video.getCurrFrameIndex();
+                        if (frameIndex % 3 == 0)
+                        {
+                            cv2Video.setCurrFrameIndex(frameIndex + 3);
+                        }
+
                     }
                     
                 }
@@ -1011,5 +1007,17 @@ namespace videocapture
             info_box.AppendText("------------\r\n");
         }
 
+        //旋转
+        private void Rotate_btn_Click(object sender, EventArgs e)
+        {
+            if (rotate_btn.Text.Contains("*"))
+            {
+                rotate_btn.Text = rotate_btn.Text.Replace("*", "");
+            }
+            else
+            {
+                rotate_btn.Text += "*";
+            }
+        }
     }
 }

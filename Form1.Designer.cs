@@ -46,7 +46,7 @@ namespace videocapture
             this.setConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.readConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
+            this.info_box = new System.Windows.Forms.TextBox();
             this.checkBox0 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -60,7 +60,8 @@ namespace videocapture
             this.cam_1 = new System.Windows.Forms.Button();
             this.cam_0 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.info_box = new System.Windows.Forms.TextBox();
+            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
+            this.rotate_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -81,6 +82,7 @@ namespace videocapture
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.rotate_btn);
             this.splitContainer1.Panel1.Controls.Add(this.caculate_rl);
             this.splitContainer1.Panel1.Controls.Add(this.cam_angel);
             this.splitContainer1.Panel1.Controls.Add(this.landwidth_box);
@@ -282,16 +284,14 @@ namespace videocapture
             this.splitContainer2.SplitterDistance = 449;
             this.splitContainer2.TabIndex = 0;
             // 
-            // drawPictureBoxVideo
+            // info_box
             // 
-            this.drawPictureBoxVideo.AutoSize = true;
-            this.drawPictureBoxVideo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
-            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
-            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
-            this.drawPictureBoxVideo.Size = new System.Drawing.Size(449, 711);
-            this.drawPictureBoxVideo.TabIndex = 0;
+            this.info_box.Dock = System.Windows.Forms.DockStyle.Top;
+            this.info_box.Location = new System.Drawing.Point(0, 0);
+            this.info_box.Multiline = true;
+            this.info_box.Name = "info_box";
+            this.info_box.Size = new System.Drawing.Size(505, 241);
+            this.info_box.TabIndex = 13;
             // 
             // checkBox0
             // 
@@ -431,14 +431,26 @@ namespace videocapture
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // info_box
+            // drawPictureBoxVideo
             // 
-            this.info_box.Dock = System.Windows.Forms.DockStyle.Top;
-            this.info_box.Location = new System.Drawing.Point(0, 0);
-            this.info_box.Multiline = true;
-            this.info_box.Name = "info_box";
-            this.info_box.Size = new System.Drawing.Size(505, 241);
-            this.info_box.TabIndex = 13;
+            this.drawPictureBoxVideo.AutoSize = true;
+            this.drawPictureBoxVideo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
+            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
+            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
+            this.drawPictureBoxVideo.Size = new System.Drawing.Size(449, 711);
+            this.drawPictureBoxVideo.TabIndex = 0;
+            // 
+            // rotate_btn
+            // 
+            this.rotate_btn.Location = new System.Drawing.Point(626, 71);
+            this.rotate_btn.Name = "rotate_btn";
+            this.rotate_btn.Size = new System.Drawing.Size(104, 33);
+            this.rotate_btn.TabIndex = 29;
+            this.rotate_btn.Text = "旋转";
+            this.rotate_btn.UseVisualStyleBackColor = true;
+            this.rotate_btn.Click += new System.EventHandler(this.Rotate_btn_Click);
             // 
             // Form1
             // 
@@ -499,6 +511,7 @@ namespace videocapture
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button caculate_rl;
         private System.Windows.Forms.TextBox info_box;
+        private System.Windows.Forms.Button rotate_btn;
     }
 }
 

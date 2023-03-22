@@ -272,6 +272,11 @@ namespace videocapture
             return capture.PosFrames;
         }
 
+        public void setCurrFrameIndex(int index)
+        {
+            capture.Set(VideoCaptureProperties.PosFrames, index);
+        }
+
         /// <summary>
         /// 读取当前百分比
         /// </summary>
