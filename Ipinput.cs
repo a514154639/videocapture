@@ -17,11 +17,13 @@ namespace videocapture
             InitializeComponent();
         }
         public delegate void SendMesg(string str);
-        public event SendMesg send;
+        public event SendMesg sendip;
+        public event SendMesg sendpassward;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            send(this.textBox1.Text);
+            sendip(this.textBox1.Text);
+            sendpassward(this.textBox2.Text);
             DialogResult = DialogResult.OK;
         }
 
@@ -29,5 +31,6 @@ namespace videocapture
         {
             DialogResult = DialogResult.Cancel;
         }
+
     }
 }

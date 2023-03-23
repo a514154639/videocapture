@@ -31,6 +31,7 @@ namespace videocapture
         public Cv2Video cv2Video = null;//实例
         private Ipinput ipinput = new Ipinput();
         public string IP = "";
+        public string ipPsw = "";
         public int stopframe = 0;
         public double height = 6.7;
         public double landwidth = 3.75;
@@ -49,12 +50,13 @@ namespace videocapture
         private string ipAddress;
         private string password;
         private string username;
-        private const string BaseUrl = "rtsp://admin:wanji168@";
+        private const string BaseUrl = "rtsp://admin:";
 
         public Form1()
         {
             InitializeComponent();
-            ipinput.send += new Ipinput.SendMesg(Receive);
+            ipinput.sendip += new Ipinput.SendMesg(Receiveip);
+            ipinput.sendpassward += new Ipinput.SendMesg(Receivepsw);
         }
         private void VideoForm_Load(object sender, EventArgs e)
         {
@@ -76,6 +78,7 @@ namespace videocapture
         public class ExtraConfig
         {
             public string ip;
+            public string psw;
             public DrawPictureCache.DrawLine line;
             public bool state = false;
             //public double length;
@@ -85,20 +88,26 @@ namespace videocapture
             public double height;
             public double A;
             public double B;
-            
+
             public double tanα;
             public double tana;
             public double landwidth;
-            public int landwidthpix;                  
+            public int landwidthpix;
             public double downruler;
             public double upruler;
             public int struler;
 
         }
-        
-        private void Receive(string str)
+
+        private void Receiveip(string str)
         {
             IP = str;
+        }
+
+        private void Receivepsw(string str)
+        {
+            ipPsw = str;
+            ipPsw += "@";
         }
         private void ReadConfig()
         {
@@ -203,8 +212,8 @@ namespace videocapture
                         extras.config[flag].downruler = Downruler;
                         extras.config[flag].upruler = Upruler;
                         extras.config[flag].landwidthpix = (int)landwidthpix;
-                    }                  
-                    totalConfig = extras;                  
+                    }
+                    totalConfig = extras;
                     Convert(totalConfig);
                 }
                 MessageBox.Show("参数保存成功");
@@ -279,7 +288,7 @@ namespace videocapture
                 catch { }
                 Thread.Sleep(1);
             }
-        }  
+        }
 
         //获取当前帧
         //onnx
@@ -370,7 +379,7 @@ namespace videocapture
                         {
                             skipFramesCount--;
                         }
-                        
+
                         // 实现跳帧播放
                         //int frameIndex = cv2Video.getCurrFrameIndex();
                         //if (frameIndex % 3 == 0)
@@ -379,7 +388,7 @@ namespace videocapture
                         //}
 
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -392,7 +401,7 @@ namespace videocapture
         //显示图片
         private void Showimage(string str)
         {
-            isopen = false;
+            //isopen = false;
             if (cv2Video != null)
             {
                 cv2Video.dispose();
@@ -401,7 +410,7 @@ namespace videocapture
             info_box.AppendText("连接中，请稍后...\r\n");
 
             try
-            {             
+            {
                 //isopen = cv2Video.openVideoFile(@"demo.mp4");
                 //isopen = cv2Video.openCamera();
                 isopen = cv2Video.openRtsp(str + ":554 ");
@@ -409,13 +418,15 @@ namespace videocapture
                 if (!isopen)
                 {
                     cv2Video = null;
+                    MessageBox.Show("无法连接，请检查ip密码");
+                    //ipinput.ShowDialog();
                     return;
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString()); 
+                MessageBox.Show(ex.ToString());
             }
 
             isopen = true;
@@ -505,7 +516,7 @@ namespace videocapture
                 MessageBox.Show("相机未启用");
                 return;
             }
-           
+
         }
 
         //相机1
@@ -590,10 +601,11 @@ namespace videocapture
             ButtonColor(splitContainer2.Panel2);
             CheckLine();
             string str = Writeip(index);
-            if (str == "rtsp://admin:wanji168@") 
+            string ipstr = BaseUrl + ipPsw;
+            if (str == ipstr)
             {
                 return;
-            } 
+            }
             Showimage(str);
             info_box.Clear();
             press = index;
@@ -725,7 +737,7 @@ namespace videocapture
         //检查并写入相机ip 
         private string Writeip(int camnum)
         {
-            String str = BaseUrl;           
+            String str = BaseUrl;
             if (File.Exists("config.json"))
             {
                 var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
@@ -736,9 +748,9 @@ namespace videocapture
                 if (string.IsNullOrWhiteSpace(extras.config[camnum].ip))//ip为空则输入
                 {
                     ipinput.ShowDialog();
-                    if (string.IsNullOrWhiteSpace(IP)) 
-                    { 
-                        return str; 
+                    if (string.IsNullOrWhiteSpace(IP))
+                    {
+                        return str;
                     }
                     if (!CheckIp(IP))
                     {
@@ -750,9 +762,11 @@ namespace videocapture
                         MessageBox.Show("输入ip无法连通");
                         return str;
                     }
+                    str += ipPsw;
                     str += IP;
                     extras.config[camnum].ip = IP;
-                    extras.config[camnum].state = true;                 
+                    extras.config[camnum].psw = ipPsw;
+                    extras.config[camnum].state = true;
                     totalConfig = extras;
                     Convert(totalConfig);
 
@@ -768,6 +782,17 @@ namespace videocapture
                         Convert(totalConfig);
                         return str;
                     }
+                    else if(isopen == false)
+                    {
+                        ipinput.ShowDialog();
+                        extras.config[camnum].ip = IP;
+                        extras.config[camnum].psw = ipPsw;
+                        extras.config[camnum].state = true;
+                        totalConfig = extras;
+                        Convert(totalConfig);
+
+                    }
+                    str += extras.config[camnum].psw;
                     str += extras.config[camnum].ip;
 
                 }
@@ -833,7 +858,7 @@ namespace videocapture
         //相机高度文本框
         private void Camheight_TextChanged(object sender, EventArgs e)
         {
-            if(cam_height.Text != "")
+            if (cam_height.Text != "")
             {
                 height = double.Parse(cam_height.Text);
             }
@@ -843,7 +868,7 @@ namespace videocapture
             }
             //CaculatePixeldis();
 
-        }    
+        }
 
         //上传参数文件到/home
         private void Uploadjson_Click(object sender, EventArgs e)
@@ -882,7 +907,7 @@ namespace videocapture
                         }
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -902,7 +927,7 @@ namespace videocapture
                 landwidth = 0;
             }
             //landwidth = double.Parse(landwidth_box.Text);
-        }      
+        }
 
         //视场角文本框
         private void Camangel_TextChanged(object sender, EventArgs e)
@@ -917,7 +942,7 @@ namespace videocapture
             }
             //B = double.Parse(cam_angel.Text);
         }
-        
+
         //计算车道夹角
         private void Caculate_tanα()
         {
@@ -936,7 +961,7 @@ namespace videocapture
             string strNumber = Tanα.ToString("F2");
             Tanα = double.Parse(strNumber);
         }
-        
+
         //计算下车道线夹角
         private void Caculate_tana()
         {
@@ -991,9 +1016,9 @@ namespace videocapture
                 Caculate_tana();
                 double temp = 0.25 * Caculate_upruler() + 0.75 * Caculate_downruler();
                 Struler = System.Convert.ToInt32(temp);
-                
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.ToString() + "\r\n车道线参数有误");
             }
@@ -1003,9 +1028,9 @@ namespace videocapture
         private void Caculate_Click(object sender, EventArgs e)
         {
             if (drawPictureBoxVideo.drawCache.drawLineList.Count == 0)
-            {             
+            {
                 MessageBox.Show("未画车道线");
-                return;               
+                return;
             }
             if (drawPictureBoxVideo.drawCache.drawLineList.Count > 1)
             {

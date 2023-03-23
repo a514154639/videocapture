@@ -24,9 +24,9 @@ namespace videocapture
         public double zoom = 0;//缩放
         public int posMsec = 0;//当前时间戳 毫秒
 
-        //private VideoCapture capture = null;
-        private static VideoCapture capture;
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private VideoCapture capture = null;
+        //private static VideoCapture capture;
+        //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         //private static SemaphoreSlim captureSemaphore = new SemaphoreSlim(1, 1);
         private Mat currImage = new Mat();
         /// <summary>
