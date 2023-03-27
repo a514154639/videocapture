@@ -22,6 +22,7 @@ namespace videocapture
         public int flag = 99;//相机标志
         public int press = 99;
         public static bool isopen = false;//是否播放 视频线程用 opencv
+        public static bool flagpsw = true;
         public int rotate = 0;
         public bool isrotate = false;
         private Thread videoThr = null;//视频线程
@@ -401,7 +402,7 @@ namespace videocapture
         //显示图片
         private void Showimage(string str)
         {
-            //isopen = false;
+            
             if (cv2Video != null)
             {
                 cv2Video.dispose();
@@ -419,6 +420,7 @@ namespace videocapture
                 {
                     cv2Video = null;
                     MessageBox.Show("无法连接，请检查ip密码");
+                    flagpsw = false;
                     //ipinput.ShowDialog();
                     return;
                 }
@@ -430,6 +432,7 @@ namespace videocapture
             }
 
             isopen = true;
+            flagpsw = true;
 
         }
 
@@ -782,7 +785,7 @@ namespace videocapture
                         Convert(totalConfig);
                         return str;
                     }
-                    else if(isopen == false)
+                    else if(flagpsw == false)
                     {
                         ipinput.ShowDialog();
                         extras.config[camnum].ip = IP;

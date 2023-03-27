@@ -64,6 +64,7 @@ namespace videocapture
             try
             {
                 capture = new VideoCapture(rtspPath);
+                //capture.Set(VideoCaptureProperties.BufferSize, 50);
                 return capture.IsOpened();
             }
             catch

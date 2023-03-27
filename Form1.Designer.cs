@@ -47,21 +47,21 @@ namespace videocapture
             this.setConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.readConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.cam_2 = new System.Windows.Forms.Button();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.cam_3 = new System.Windows.Forms.Button();
             this.info_box = new System.Windows.Forms.TextBox();
             this.checkBox0 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.cam_5 = new System.Windows.Forms.Button();
             this.cam_4 = new System.Windows.Forms.Button();
-            this.cam_3 = new System.Windows.Forms.Button();
-            this.cam_2 = new System.Windows.Forms.Button();
             this.cam_1 = new System.Windows.Forms.Button();
             this.cam_0 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -102,16 +102,16 @@ namespace videocapture
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(958, 824);
-            this.splitContainer1.SplitterDistance = 109;
+            this.splitContainer1.Size = new System.Drawing.Size(1122, 1428);
+            this.splitContainer1.SplitterDistance = 199;
             this.splitContainer1.TabIndex = 2;
             // 
             // rotate_btn
             // 
             this.rotate_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.rotate_btn.Location = new System.Drawing.Point(626, 71);
+            this.rotate_btn.Location = new System.Drawing.Point(755, 131);
             this.rotate_btn.Name = "rotate_btn";
-            this.rotate_btn.Size = new System.Drawing.Size(104, 33);
+            this.rotate_btn.Size = new System.Drawing.Size(108, 64);
             this.rotate_btn.TabIndex = 29;
             this.rotate_btn.Text = "旋转";
             this.rotate_btn.UseVisualStyleBackColor = true;
@@ -120,9 +120,9 @@ namespace videocapture
             // caculate_rl
             // 
             this.caculate_rl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.caculate_rl.Location = new System.Drawing.Point(492, 72);
+            this.caculate_rl.Location = new System.Drawing.Point(188, 58);
             this.caculate_rl.Name = "caculate_rl";
-            this.caculate_rl.Size = new System.Drawing.Size(104, 33);
+            this.caculate_rl.Size = new System.Drawing.Size(115, 64);
             this.caculate_rl.TabIndex = 28;
             this.caculate_rl.Text = "计算标尺";
             this.caculate_rl.UseVisualStyleBackColor = true;
@@ -131,7 +131,7 @@ namespace videocapture
             // cam_angel
             // 
             this.cam_angel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cam_angel.Location = new System.Drawing.Point(427, 77);
+            this.cam_angel.Location = new System.Drawing.Point(486, 151);
             this.cam_angel.Name = "cam_angel";
             this.cam_angel.Size = new System.Drawing.Size(49, 28);
             this.cam_angel.TabIndex = 23;
@@ -141,7 +141,7 @@ namespace videocapture
             // landwidth_box
             // 
             this.landwidth_box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.landwidth_box.Location = new System.Drawing.Point(261, 76);
+            this.landwidth_box.Location = new System.Drawing.Point(307, 151);
             this.landwidth_box.Name = "landwidth_box";
             this.landwidth_box.Size = new System.Drawing.Size(47, 28);
             this.landwidth_box.TabIndex = 22;
@@ -152,19 +152,20 @@ namespace videocapture
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(323, 82);
+            this.label4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(370, 154);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 18);
+            this.label4.Size = new System.Drawing.Size(120, 21);
             this.label4.TabIndex = 21;
             this.label4.Text = "纵向视场角";
             // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(813, 54);
+            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(957, 110);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 28);
+            this.label1.Size = new System.Drawing.Size(120, 28);
             this.label1.TabIndex = 19;
             this.label1.Text = "道路类型";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -173,18 +174,19 @@ namespace videocapture
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(175, 82);
+            this.label3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(205, 154);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 18);
+            this.label3.Size = new System.Drawing.Size(98, 21);
             this.label3.TabIndex = 19;
             this.label3.Text = "车道宽度";
             // 
             // upload_json
             // 
             this.upload_json.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.upload_json.Location = new System.Drawing.Point(492, 16);
+            this.upload_json.Location = new System.Drawing.Point(609, 58);
             this.upload_json.Name = "upload_json";
-            this.upload_json.Size = new System.Drawing.Size(104, 46);
+            this.upload_json.Size = new System.Drawing.Size(108, 64);
             this.upload_json.TabIndex = 18;
             this.upload_json.Text = "上传参数";
             this.upload_json.UseVisualStyleBackColor = true;
@@ -194,16 +196,17 @@ namespace videocapture
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 82);
+            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(53, 154);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 18);
+            this.label2.Size = new System.Drawing.Size(98, 21);
             this.label2.TabIndex = 16;
             this.label2.Text = "相机高度";
             // 
             // cam_height
             // 
             this.cam_height.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cam_height.Location = new System.Drawing.Point(111, 77);
+            this.cam_height.Location = new System.Drawing.Point(150, 151);
             this.cam_height.Name = "cam_height";
             this.cam_height.Size = new System.Drawing.Size(49, 28);
             this.cam_height.TabIndex = 15;
@@ -213,9 +216,9 @@ namespace videocapture
             // read_roadtype
             // 
             this.read_roadtype.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.read_roadtype.Location = new System.Drawing.Point(626, 16);
+            this.read_roadtype.Location = new System.Drawing.Point(755, 58);
             this.read_roadtype.Name = "read_roadtype";
-            this.read_roadtype.Size = new System.Drawing.Size(104, 46);
+            this.read_roadtype.Size = new System.Drawing.Size(108, 64);
             this.read_roadtype.TabIndex = 11;
             this.read_roadtype.Text = "车道配置";
             this.read_roadtype.UseVisualStyleBackColor = true;
@@ -230,7 +233,7 @@ namespace videocapture
             "2+1车道",
             "3+0车道",
             "3+1车道"});
-            this.roadtype_box.Location = new System.Drawing.Point(792, 16);
+            this.roadtype_box.Location = new System.Drawing.Point(957, 58);
             this.roadtype_box.Name = "roadtype_box";
             this.roadtype_box.Size = new System.Drawing.Size(120, 26);
             this.roadtype_box.TabIndex = 9;
@@ -239,9 +242,9 @@ namespace videocapture
             // gridline
             // 
             this.gridline.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridline.Location = new System.Drawing.Point(371, 16);
+            this.gridline.Location = new System.Drawing.Point(474, 58);
             this.gridline.Name = "gridline";
-            this.gridline.Size = new System.Drawing.Size(91, 46);
+            this.gridline.Size = new System.Drawing.Size(106, 64);
             this.gridline.TabIndex = 8;
             this.gridline.Text = "网格线";
             this.gridline.UseVisualStyleBackColor = true;
@@ -250,9 +253,9 @@ namespace videocapture
             // drawLineToolStripMenuItem
             // 
             this.drawLineToolStripMenuItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.drawLineToolStripMenuItem.Location = new System.Drawing.Point(28, 16);
+            this.drawLineToolStripMenuItem.Location = new System.Drawing.Point(56, 58);
             this.drawLineToolStripMenuItem.Name = "drawLineToolStripMenuItem";
-            this.drawLineToolStripMenuItem.Size = new System.Drawing.Size(89, 46);
+            this.drawLineToolStripMenuItem.Size = new System.Drawing.Size(107, 64);
             this.drawLineToolStripMenuItem.TabIndex = 5;
             this.drawLineToolStripMenuItem.Text = "画线";
             this.drawLineToolStripMenuItem.UseVisualStyleBackColor = true;
@@ -261,9 +264,9 @@ namespace videocapture
             // setConfigToolStripMenuItem
             // 
             this.setConfigToolStripMenuItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.setConfigToolStripMenuItem.Location = new System.Drawing.Point(261, 16);
+            this.setConfigToolStripMenuItem.Location = new System.Drawing.Point(328, 58);
             this.setConfigToolStripMenuItem.Name = "setConfigToolStripMenuItem";
-            this.setConfigToolStripMenuItem.Size = new System.Drawing.Size(86, 46);
+            this.setConfigToolStripMenuItem.Size = new System.Drawing.Size(111, 64);
             this.setConfigToolStripMenuItem.TabIndex = 4;
             this.setConfigToolStripMenuItem.Text = "写配置";
             this.setConfigToolStripMenuItem.UseVisualStyleBackColor = true;
@@ -272,9 +275,9 @@ namespace videocapture
             // readConfigToolStripMenuItem
             // 
             this.readConfigToolStripMenuItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(147, 16);
+            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(609, 131);
             this.readConfigToolStripMenuItem.Name = "readConfigToolStripMenuItem";
-            this.readConfigToolStripMenuItem.Size = new System.Drawing.Size(86, 46);
+            this.readConfigToolStripMenuItem.Size = new System.Drawing.Size(111, 64);
             this.readConfigToolStripMenuItem.TabIndex = 3;
             this.readConfigToolStripMenuItem.Text = "读配置";
             this.readConfigToolStripMenuItem.UseVisualStyleBackColor = true;
@@ -306,27 +309,67 @@ namespace videocapture
             this.splitContainer2.Panel2.Controls.Add(this.cam_1);
             this.splitContainer2.Panel2.Controls.Add(this.cam_0);
             this.splitContainer2.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer2.Size = new System.Drawing.Size(958, 711);
-            this.splitContainer2.SplitterDistance = 449;
+            this.splitContainer2.Size = new System.Drawing.Size(1122, 1225);
+            this.splitContainer2.SplitterDistance = 525;
             this.splitContainer2.TabIndex = 0;
             // 
-            // drawPictureBoxVideo
+            // checkBox2
             // 
-            this.drawPictureBoxVideo.AutoSize = true;
-            this.drawPictureBoxVideo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
-            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
-            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
-            this.drawPictureBoxVideo.Size = new System.Drawing.Size(449, 711);
-            this.drawPictureBoxVideo.TabIndex = 0;
+            this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(47, 425);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(22, 21);
+            this.checkBox2.TabIndex = 10;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // cam_2
+            // 
+            this.cam_2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cam_2.Location = new System.Drawing.Point(122, 401);
+            this.cam_2.Name = "cam_2";
+            this.cam_2.Size = new System.Drawing.Size(335, 81);
+            this.cam_2.TabIndex = 3;
+            this.cam_2.Text = "相机2";
+            this.cam_2.UseVisualStyleBackColor = true;
+            this.cam_2.Click += new System.EventHandler(this.Cam_2_Click);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = true;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox3.Location = new System.Drawing.Point(47, 268);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(22, 21);
+            this.checkBox3.TabIndex = 9;
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // cam_3
+            // 
+            this.cam_3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cam_3.Location = new System.Drawing.Point(122, 244);
+            this.cam_3.Name = "cam_3";
+            this.cam_3.Size = new System.Drawing.Size(335, 84);
+            this.cam_3.TabIndex = 4;
+            this.cam_3.Text = "相机3";
+            this.cam_3.UseVisualStyleBackColor = true;
+            this.cam_3.Click += new System.EventHandler(this.Cam_3_Click);
             // 
             // info_box
             // 
+            this.info_box.Dock = System.Windows.Forms.DockStyle.Top;
             this.info_box.Location = new System.Drawing.Point(0, 0);
             this.info_box.Multiline = true;
             this.info_box.Name = "info_box";
-            this.info_box.Size = new System.Drawing.Size(505, 241);
+            this.info_box.Size = new System.Drawing.Size(593, 268);
             this.info_box.TabIndex = 13;
             // 
             // checkBox0
@@ -336,7 +379,7 @@ namespace videocapture
             this.checkBox0.AutoSize = true;
             this.checkBox0.Checked = true;
             this.checkBox0.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox0.Location = new System.Drawing.Point(47, 399);
+            this.checkBox0.Location = new System.Drawing.Point(47, 736);
             this.checkBox0.Name = "checkBox0";
             this.checkBox0.Size = new System.Drawing.Size(22, 21);
             this.checkBox0.TabIndex = 12;
@@ -349,37 +392,11 @@ namespace videocapture
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(47, 287);
+            this.checkBox1.Location = new System.Drawing.Point(47, 574);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(22, 21);
             this.checkBox1.TabIndex = 11;
             this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = true;
-            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(47, 171);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(22, 21);
-            this.checkBox2.TabIndex = 10;
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = true;
-            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox3.Location = new System.Drawing.Point(47, 50);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(22, 21);
-            this.checkBox3.TabIndex = 9;
-            this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // checkBox4
             // 
@@ -423,37 +440,13 @@ namespace videocapture
             this.cam_4.UseVisualStyleBackColor = true;
             this.cam_4.Click += new System.EventHandler(this.Cam_4_Click);
             // 
-            // cam_3
-            // 
-            this.cam_3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cam_3.Location = new System.Drawing.Point(105, 26);
-            this.cam_3.Name = "cam_3";
-            this.cam_3.Size = new System.Drawing.Size(264, 67);
-            this.cam_3.TabIndex = 4;
-            this.cam_3.Text = "相机3";
-            this.cam_3.UseVisualStyleBackColor = true;
-            this.cam_3.Click += new System.EventHandler(this.Cam_3_Click);
-            // 
-            // cam_2
-            // 
-            this.cam_2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cam_2.Location = new System.Drawing.Point(105, 147);
-            this.cam_2.Name = "cam_2";
-            this.cam_2.Size = new System.Drawing.Size(264, 67);
-            this.cam_2.TabIndex = 3;
-            this.cam_2.Text = "相机2";
-            this.cam_2.UseVisualStyleBackColor = true;
-            this.cam_2.Click += new System.EventHandler(this.Cam_2_Click);
-            // 
             // cam_1
             // 
             this.cam_1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cam_1.Location = new System.Drawing.Point(105, 263);
+            this.cam_1.Location = new System.Drawing.Point(122, 550);
             this.cam_1.Name = "cam_1";
-            this.cam_1.Size = new System.Drawing.Size(264, 67);
+            this.cam_1.Size = new System.Drawing.Size(335, 81);
             this.cam_1.TabIndex = 2;
             this.cam_1.Text = "相机1";
             this.cam_1.UseVisualStyleBackColor = true;
@@ -464,9 +457,9 @@ namespace videocapture
             this.cam_0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cam_0.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.cam_0.Location = new System.Drawing.Point(105, 375);
+            this.cam_0.Location = new System.Drawing.Point(122, 712);
             this.cam_0.Name = "cam_0";
-            this.cam_0.Size = new System.Drawing.Size(264, 67);
+            this.cam_0.Size = new System.Drawing.Size(335, 79);
             this.cam_0.TabIndex = 1;
             this.cam_0.Text = "相机0";
             this.cam_0.UseVisualStyleBackColor = true;
@@ -478,16 +471,27 @@ namespace videocapture
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(505, 711);
+            this.pictureBox1.Size = new System.Drawing.Size(593, 1225);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // drawPictureBoxVideo
+            // 
+            this.drawPictureBoxVideo.AutoSize = true;
+            this.drawPictureBoxVideo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
+            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
+            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
+            this.drawPictureBoxVideo.Size = new System.Drawing.Size(525, 1225);
+            this.drawPictureBoxVideo.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(958, 824);
+            this.ClientSize = new System.Drawing.Size(1122, 1428);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Form1";
