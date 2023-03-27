@@ -341,7 +341,7 @@ namespace videocapture
         {
             if (capture != null)
             {
-                //capture.Release();
+                capture.Release();
                 capture.Dispose();
             }
         }

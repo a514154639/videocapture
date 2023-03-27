@@ -305,9 +305,10 @@ namespace videocapture
                         {
                             if (currBitmap != null)
                             {
-                                currBitmap.Dispose();
+                                currBitmap.Dispose(); 
+                                currBitmap = null;
                             }
-                            currBitmap = null;
+                            
                             //旋转
                             if (rotate_btn.Text.Contains("*"))
                             {

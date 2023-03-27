@@ -369,7 +369,7 @@ namespace videocapture
             this.info_box.Location = new System.Drawing.Point(0, 0);
             this.info_box.Multiline = true;
             this.info_box.Name = "info_box";
-            this.info_box.Size = new System.Drawing.Size(593, 268);
+            this.info_box.Size = new System.Drawing.Size(593, 289);
             this.info_box.TabIndex = 13;
             // 
             // checkBox0
@@ -494,7 +494,7 @@ namespace videocapture
             this.ClientSize = new System.Drawing.Size(1122, 1428);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "相机标定程序";
             this.Load += new System.EventHandler(this.VideoForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
