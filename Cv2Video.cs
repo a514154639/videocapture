@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
-using System.Threading;
 
 namespace videocapture
 {
@@ -24,11 +22,12 @@ namespace videocapture
         public double zoom = 0;//缩放
         public int posMsec = 0;//当前时间戳 毫秒
 
-        private VideoCapture capture = null;
+        private OpenCvSharp.VideoCapture capture = null;
         //private static VideoCapture capture;
         //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         //private static SemaphoreSlim captureSemaphore = new SemaphoreSlim(1, 1);
-        private Mat currImage = new Mat();
+        private OpenCvSharp.Mat currImage = new OpenCvSharp.Mat();
+
         /// <summary>
         /// 开启视频文件
         /// </summary>
@@ -37,7 +36,7 @@ namespace videocapture
         {
             try
             {
-                capture = new VideoCapture(videoPath);
+                capture = new OpenCvSharp.VideoCapture(videoPath);
                 videoFrameCount = capture.FrameCount;
                 videoWidth = capture.FrameWidth;
                 videoHeight = capture.FrameHeight;
@@ -63,15 +62,14 @@ namespace videocapture
         {
             try
             {
+                //capture = new VideoCapture(rtspPath,VideoCaptureAPIs.FFMPEG);
                 capture = new VideoCapture(rtspPath);
-                //capture.Set(VideoCaptureProperties.BufferSize, 50);
-                return capture.IsOpened();
             }
             catch
             {
                 return false;
             }
-            //return capture;
+            return true;
         }
         
 
@@ -85,7 +83,7 @@ namespace videocapture
         {
             try
             {
-                capture = new VideoCapture(0);
+                capture = new OpenCvSharp.VideoCapture(0);
             }
             catch
             {
@@ -163,44 +161,20 @@ namespace videocapture
 
         public Bitmap currFrameGetImageRotate()
         {
-
-            //if (Form1.frameList.Count > 0)
-            //{
-            //    if (Form1.frameList.Count % 5 == 0 && capture.PosFrames == Form1.frameList[0][0])//每5辆调整一次视频帧，调整触发帧
-            //    {
-            //        positionFrameByIndex(capture.PosFrames);
-            //    }
-            //}
-            int framepos = capture.PosFrames;
             capture.Read(currImage);
-            if (capture.PosFrames != framepos + 1)
-            {
-                positionFrameByIndex(capture.PosFrames + 1);//视频异常时，无法读取时，跳过该帧
-            }
+            //sleep(1);
+            //capture.Read(currImage);
             currImage = Cv2Flip.rotate90(currImage);
-
+            //sleep(1);
+            //currImage = Cv2Flip.rotate90(currImage);
             if (currImage.Empty())
             {
+                positionFrameByIndex(capture.PosFrames + 1);
                 return null;
             }
             return currImage.ToBitmap();
         }
 
-        public Bitmap nextFrameGetImage()
-        {
-            int framepos = capture.PosFrames;
-            capture.Read(currImage);
-            if (capture.PosFrames != framepos + 1)
-            {
-                positionFrameByIndex(capture.PosFrames + 1);//视频异常时，无法读取时，跳过该帧
-            }
-
-            if (currImage.Empty())
-            {
-                return null;
-            }
-            return currImage.ToBitmap();
-        }
 
         /// <summary>
         /// 读取当前帧
@@ -208,14 +182,36 @@ namespace videocapture
         /// </summary>
         /// <returns></returns>
         public Bitmap currFrameGetImage()
-        {
+        {        
             capture.Read(currImage);
-
+            //sleep(1);
+            //capture.Read(currImage);
+            if (currImage.Height < currImage.Width)
+            {
+                currImage = Cv2Flip.rotate90(currImage);
+                //sleep(1);
+            }
             if (currImage.Empty())
             {
+                positionFrameByIndex(capture.PosFrames + 1);
                 return null;
-            }
+            }           
+            
             return currImage.ToBitmap();
+
+        }
+
+        public double currFrameGetdiff()
+        {
+            //capture.Read(currImage);
+            //currImage.CopyTo(lastFrame);
+            //sleep(1);
+            //capture.Read(currImage);
+            //positionFrameByIndex(capture.PosFrames + 1);
+            //Cv2.Absdiff(currImage, lastFrame, diffFrame);
+            //Scalar mean = Cv2.Mean(diffFrame);
+            //double count = mean.Val0;
+            return 0;
         }
 
         /// <summary>

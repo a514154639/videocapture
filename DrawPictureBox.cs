@@ -50,11 +50,21 @@ namespace videocapture
 
         public void setImage(Bitmap bt)
         {
-            this.pictureBoxMain.Image = bt;
-            imageWidth = this.pictureBoxMain.Image.Width;
-            imageHeight = this.pictureBoxMain.Image.Height;
-            picboxWidth = this.pictureBoxMain.Width;
-            picboxHeight = this.pictureBoxMain.Height;
+            try
+            {
+                //Bitmap bitmap = new Bitmap(bt);
+                this.pictureBoxMain.Image = bt;
+                imageWidth = this.pictureBoxMain.Image.Width;
+                imageHeight = this.pictureBoxMain.Image.Height;
+                picboxWidth = this.pictureBoxMain.Width;
+                picboxHeight = this.pictureBoxMain.Height;
+                //GC.Collect();
+            }
+            catch
+            {
+
+            }
+            
         }
 
         public Image getImage()
@@ -67,7 +77,7 @@ namespace videocapture
         /// </summary>
         public void refresh()
         {
-            this.pictureBoxMain.Refresh();
+            //this.pictureBoxMain.Refresh();
         }
 
         public int imageWidth = 0;//图片原始值
@@ -180,7 +190,7 @@ namespace videocapture
 
         private void DrawPictureBox_SizeChanged(object sender, EventArgs e)
         {
-            //refresh();
+            refresh();
         }
 
         /// <summary>
@@ -217,6 +227,12 @@ namespace videocapture
         /// 鼠标点击类型 如drawLine drawRectangle drawPolygon
         /// </summary>
         public string mouseClickType = "";//drawRectangle drawLine 等
+
+        /// <summary>
+        /// 画线
+        /// </summary>
+        private int drawPointX = -1;
+        private int drawPointY = -1;
 
         /// <summary>
         /// 画线
@@ -381,6 +397,30 @@ namespace videocapture
                     drawRectangleXmax = -1;
                     drawRectangleYmax = -1;
                 }
+            }
+            else if ("drawPoint" == mouseClickType)
+            {
+                drawPointX = e.Location.X;
+                drawPointY = e.Location.Y;
+                int[] res = currXY2OriXY(drawPointX, drawPointY);
+                this.drawCache.addDrawPointList(res[0], res[1], 3, Color.Blue);
+                refresh();
+                //if (drawPointX == -1 || drawPointY == -1)
+                //{
+                //    drawPointX = x;
+                //    drawPointY = y;
+                //}
+                //else
+                //{
+                //    drawPointX = x;
+                //    drawPointY = y;
+                //    int[] res = currXY2OriXY(drawPointX, drawPointY);
+                //    this.drawCache.addDrawPointList(res[0], res[1], 3, Color.Blue);
+                //    refresh();
+                //    drawPointX = -1;
+                //    drawPointY = -1;
+                //}
+
             }
             
         }
