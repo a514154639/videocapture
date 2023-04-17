@@ -113,7 +113,7 @@ namespace videocapture
             // drawcombainframe
             // 
             this.drawcombainframe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.drawcombainframe.Location = new System.Drawing.Point(841, 58);
+            this.drawcombainframe.Location = new System.Drawing.Point(705, 58);
             this.drawcombainframe.Name = "drawcombainframe";
             this.drawcombainframe.Size = new System.Drawing.Size(108, 64);
             this.drawcombainframe.TabIndex = 31;
@@ -124,7 +124,7 @@ namespace videocapture
             // Concatenate_frames
             // 
             this.Concatenate_frames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Concatenate_frames.Location = new System.Drawing.Point(841, 128);
+            this.Concatenate_frames.Location = new System.Drawing.Point(705, 128);
             this.Concatenate_frames.Name = "Concatenate_frames";
             this.Concatenate_frames.Size = new System.Drawing.Size(108, 64);
             this.Concatenate_frames.TabIndex = 30;
@@ -135,12 +135,13 @@ namespace videocapture
             // rotate_btn
             // 
             this.rotate_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.rotate_btn.Location = new System.Drawing.Point(705, 131);
+            this.rotate_btn.Location = new System.Drawing.Point(833, 128);
             this.rotate_btn.Name = "rotate_btn";
             this.rotate_btn.Size = new System.Drawing.Size(108, 64);
             this.rotate_btn.TabIndex = 29;
             this.rotate_btn.Text = "旋转";
             this.rotate_btn.UseVisualStyleBackColor = true;
+            this.rotate_btn.Visible = false;
             this.rotate_btn.Click += new System.EventHandler(this.Rotate_btn_Click);
             // 
             // caculate_rl
@@ -242,7 +243,7 @@ namespace videocapture
             // read_roadtype
             // 
             this.read_roadtype.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.read_roadtype.Location = new System.Drawing.Point(705, 58);
+            this.read_roadtype.Location = new System.Drawing.Point(833, 58);
             this.read_roadtype.Name = "read_roadtype";
             this.read_roadtype.Size = new System.Drawing.Size(108, 64);
             this.read_roadtype.TabIndex = 11;
@@ -520,7 +521,7 @@ namespace videocapture
             this.Controls.Add(this.splitContainer1);
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "相机标定程序";
+            this.Text = "车型相机标定程序v1.0";
             this.Load += new System.EventHandler(this.VideoForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

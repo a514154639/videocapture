@@ -42,8 +42,6 @@ namespace videocapture
         public double Downruler = 0;
         public double Upruler = 0;
         public double angleInDegrees = 0;
-        //private int skipFramesCount = 0; // 跳过的帧数
-        //private int skipFramesInterval = 5; // 跳帧的间隔
 
         // 定义IP地址和密码的成员变量
         private string ipAddress;
@@ -231,7 +229,7 @@ namespace videocapture
 
         private void Cleanline()
         {
-            //清除线
+            //清除线和点
             drawLineToolStripMenuItem.Text = drawLineToolStripMenuItem.Text.Replace("*", "");
             drawcombainframe.Text = drawcombainframe.Text.Replace("*", "");
             this.drawPictureBoxVideo.mouseClickType = "";
@@ -310,17 +308,7 @@ namespace videocapture
                             
                         }
                         currBitmap = null;
-                        //旋转
-                        if (rotate_btn.Text.Contains("*"))
-                        {
-                            currBitmap = cv2Video.currFrameGetImageRotate();//当前帧                              
-                        }
-
-                        else
-                        {
-                            currBitmap = cv2Video.currFrameGetImage();//当前帧
-                        }
-
+                        currBitmap = cv2Video.currFrameGetImage();//当前帧
                         if (currBitmap != null)
                         {
                             using (Graphics g = Graphics.FromImage(currBitmap))
@@ -358,9 +346,6 @@ namespace videocapture
                                 #endregion
 
                             }
-
-                            //drawPictureBoxVideo.setImage(currBitmap);//显示
-                            //Cv2.WaitKey(1);
                             //显示
                             this.Invoke(new ThreadStart(delegate
                             {
@@ -373,10 +358,6 @@ namespace videocapture
                         }
                         else
                         {
-                            //if (cv2Video.getCurrFrameIndex() == -1)
-                            //{
-
-                            //}
                             currBitmap = cv2Video.currFrameGetImage();
                             //isopen = false;
 
