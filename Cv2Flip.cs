@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenCvSharp;
+﻿using OpenCvSharp;
 
 namespace videocapture
 {
@@ -49,7 +44,7 @@ namespace videocapture
             Cv2.Transpose(image, image);
             //Cv2.Flip(image, image, FlipMode.Y);
             return image;
-            
+
         }
 
         public static Mat rotate180(Mat image)

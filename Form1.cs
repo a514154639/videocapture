@@ -1,16 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Renci.SshNet;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Threading;
 using System.IO;
-using Newtonsoft.Json;
-using Renci.SshNet;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Net.NetworkInformation;
-using OpenCvSharp;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace videocapture
 {
@@ -305,7 +304,7 @@ namespace videocapture
                         if (currBitmap != null)
                         {
                             currBitmap.Dispose();
-                            
+
                         }
                         currBitmap = null;
                         currBitmap = cv2Video.currFrameGetImage();//当前帧
@@ -361,7 +360,7 @@ namespace videocapture
                             currBitmap = cv2Video.currFrameGetImage();
                             //isopen = false;
 
-                        }                      
+                        }
 
                     }
 
@@ -377,7 +376,7 @@ namespace videocapture
         //显示图片
         private void Showimage(string str)
         {
-            
+
             if (cv2Video != null)
             {
                 cv2Video.dispose();
@@ -552,7 +551,7 @@ namespace videocapture
                 return;
             }
         }
-       
+
 
         //相机操作
         private void Cam_op(int index)
@@ -750,7 +749,7 @@ namespace videocapture
                         Convert(totalConfig);
                         return str;
                     }
-                    else if(flagpsw == false)
+                    else if (flagpsw == false)
                     {
                         ipinput.ShowDialog();
                         extras.config[camnum].ip = IP;
@@ -914,7 +913,8 @@ namespace videocapture
         //计算车道夹角
         private void Caculate_tanα()
         {
-            try {
+            try
+            {
 
                 if (drawPictureBoxVideo.drawCache.drawLineList.Count != 0)
                 {
@@ -932,11 +932,11 @@ namespace videocapture
                 Tanα = double.Parse(strNumber);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-            
+
         }
 
         //计算下车道线夹角
@@ -1063,11 +1063,11 @@ namespace videocapture
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-                     
+
         }
 
         static Bitmap CombineFrames(List<Bitmap> frames)
@@ -1175,6 +1175,6 @@ namespace videocapture
             return false;
         }
 
-        
+
     }
 }

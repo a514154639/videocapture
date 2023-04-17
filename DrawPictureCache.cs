@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace videocapture
 {
@@ -98,7 +93,7 @@ namespace videocapture
             //LineList.Add(drawOne);
             //LineList = LineList.OrderBy(o => o.yMax).ToList();
             return drawLineList.Add(drawOne);
-        }           
+        }
 
         public ArrayList drawRectangleList = new ArrayList();//要绘制的所有矩形
         public class DrawRectangle

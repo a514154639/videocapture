@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace videocapture
@@ -64,7 +58,7 @@ namespace videocapture
             {
 
             }
-            
+
         }
 
         public Image getImage()
@@ -149,9 +143,9 @@ namespace videocapture
                     Pen pen = new Pen(brush);
                     pen.Width = 3;
                     g.DrawLine(pen, one.xMin * xZoom, one.yMin * yZoom, one.xMax * xZoom, one.yMax * yZoom);
-                }              
+                }
 
-              
+
 
                 //画所有的矩形框               
                 for (int index = 0; index < drawCache.drawRectangleList.Count; index++)
@@ -276,7 +270,7 @@ namespace videocapture
             {
                 return;
             }
-  
+
             if ("drawLine" == mouseClickType)
             {
                 if (this.drawCache.drawLineList.Count >= drawLineMaxNum)
@@ -365,7 +359,7 @@ namespace videocapture
                     drawLineYmin = -1;
                     drawLineXmax = -1;
                     drawLineYmax = -1;
-                    
+
                 }
             }
             else if ("drawRectangle" == mouseClickType)
@@ -422,7 +416,7 @@ namespace videocapture
                 //}
 
             }
-            
+
         }
 
     }

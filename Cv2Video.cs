@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using OpenCvSharp;
+﻿using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using System;
+using System.Drawing;
 
 namespace videocapture
 {
@@ -71,7 +68,7 @@ namespace videocapture
             }
             return true;
         }
-        
+
 
 
         /// <summary>
@@ -114,7 +111,7 @@ namespace videocapture
             {
                 positionFrameByIndex(capture.PosFrames + 1);//视频异常时，无法读取时，跳过该帧
             }
-            
+
             if (flipY && rotate == 0)
             {
                 currImage = Cv2Flip.flipY(currImage);//水平翻转
@@ -140,12 +137,12 @@ namespace videocapture
             //if (rotate == 1)
             //{
             //    currImage = Cv2Flip.rotate90(currImage);//顺时针旋转
-                
+
             //}
             //if (rotate == 2)
             //{
             //    currImage = Cv2Flip.rotate180(currImage);//顺时针旋转
-                
+
             //}
             //if (rotate == 3)
             //{
@@ -182,7 +179,7 @@ namespace videocapture
         /// </summary>
         /// <returns></returns>
         public Bitmap currFrameGetImage()
-        {        
+        {
             capture.Read(currImage);
             //sleep(1);
             //capture.Read(currImage);
@@ -195,8 +192,8 @@ namespace videocapture
             {
                 positionFrameByIndex(capture.PosFrames + 1);
                 return null;
-            }           
-            
+            }
+
             return currImage.ToBitmap();
 
         }
