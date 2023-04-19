@@ -259,7 +259,8 @@ namespace videocapture
             "2+0车道",
             "2+1车道",
             "3+0车道",
-            "3+1车道"});
+            "3+1车道",
+            "服务区"});
             this.roadtype_box.Location = new System.Drawing.Point(978, 58);
             this.roadtype_box.Name = "roadtype_box";
             this.roadtype_box.Size = new System.Drawing.Size(120, 26);

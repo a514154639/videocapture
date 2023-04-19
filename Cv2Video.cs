@@ -19,11 +19,11 @@ namespace videocapture
         public double zoom = 0;//缩放
         public int posMsec = 0;//当前时间戳 毫秒
 
-        private OpenCvSharp.VideoCapture capture = null;
+        private VideoCapture capture = null;
         //private static VideoCapture capture;
         //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         //private static SemaphoreSlim captureSemaphore = new SemaphoreSlim(1, 1);
-        private OpenCvSharp.Mat currImage = new OpenCvSharp.Mat();
+        private Mat currImage = new Mat();
 
         /// <summary>
         /// 开启视频文件
@@ -188,7 +188,7 @@ namespace videocapture
                 currImage = Cv2Flip.rotate90(currImage);
                 //sleep(1);
             }
-            if (currImage.Empty())
+            if (currImage.Empty() || currImage == null)
             {
                 positionFrameByIndex(capture.PosFrames + 1);
                 return null;
@@ -198,18 +198,6 @@ namespace videocapture
 
         }
 
-        public double currFrameGetdiff()
-        {
-            //capture.Read(currImage);
-            //currImage.CopyTo(lastFrame);
-            //sleep(1);
-            //capture.Read(currImage);
-            //positionFrameByIndex(capture.PosFrames + 1);
-            //Cv2.Absdiff(currImage, lastFrame, diffFrame);
-            //Scalar mean = Cv2.Mean(diffFrame);
-            //double count = mean.Val0;
-            return 0;
-        }
 
         /// <summary>
         /// 获取当前时间戳

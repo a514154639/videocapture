@@ -303,7 +303,7 @@ namespace videocapture
                     {
                         if (currBitmap != null)
                         {
-                            currBitmap.Dispose();
+                            currBitmap.Dispose();                         
 
                         }
                         currBitmap = null;
@@ -347,16 +347,16 @@ namespace videocapture
                             }
                             //显示
                             this.Invoke(new ThreadStart(delegate
-                            {
-
+                            {                             
                                 drawPictureBoxVideo.setImage(currBitmap);//显示
 
-
                             }));
+                            
                             //Cv2.WaitKey(1);
                         }
                         else
                         {
+                            info_box.AppendText("当前帧为空\r\n");
                             currBitmap = cv2Video.currFrameGetImage();
                             //isopen = false;
 
@@ -388,9 +388,13 @@ namespace videocapture
             {
                 //isopen = cv2Video.openVideoFile(@"demo.mp4");
                 //isopen = cv2Video.openCamera();
-                isopen = cv2Video.openRtsp(str + ":554/h265/ch1/main");
-                info_box.AppendText("连接成功\r\n");
-                if (!isopen)
+                isopen = cv2Video.openRtsp(str + ":554");             
+                if (isopen)
+                {
+                    info_box.AppendText("连接成功\r\n");
+                    
+                }
+                else
                 {
                     cv2Video = null;
                     info_box.AppendText("无法连接，请检查ip密码\r\n");
@@ -614,7 +618,8 @@ namespace videocapture
                 { "2+0车道", 2 },
                 { "2+1车道", 3 },
                 { "3+0车道", 3 },
-                { "3+1车道", 4 }
+                { "3+1车道", 4 },
+                { "服务区", 2 }
             };
             int laneNums = laneNumsDict[selectedValue];
             string[] cameraNames = { "相机1", "相机2", "相机3", "相机4", "相机5", "相机6" };
@@ -628,6 +633,16 @@ namespace videocapture
                     this.cam_2.Visible = true;
                     this.cam_2.Text = cameraNames[cameraIndexes[1]];
                     this.pictureBox1.Load(@"road_2.jpeg");
+                    break;
+                case "服务区":
+                    cameraIndexes = new int[] { 1, 0 };
+                    this.cam_0.Visible = true;
+                    this.cam_0.Text = cameraNames[cameraIndexes[0]];
+                    this.cam_1.Visible = true;
+                    this.cam_1.Text = cameraNames[cameraIndexes[1]];
+                    this.checkBox0.Visible = true;
+                    this.checkBox2.Visible = false;
+                    this.pictureBox1.Load(@"road.jpg");
                     break;
                 case "2+1车道":
                     cameraIndexes = new int[] { 2, 1, 0 };
