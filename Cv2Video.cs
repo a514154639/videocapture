@@ -24,6 +24,8 @@ namespace videocapture
         //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         //private static SemaphoreSlim captureSemaphore = new SemaphoreSlim(1, 1);
         private Mat currImage = new Mat();
+        private Mat lastFrame = new Mat();
+        private Mat diffFrame = new Mat();
 
         /// <summary>
         /// 开启视频文件
@@ -181,12 +183,9 @@ namespace videocapture
         public Bitmap currFrameGetImage()
         {
             capture.Read(currImage);
-            //sleep(1);
-            //capture.Read(currImage);
             if (currImage.Height < currImage.Width)
             {
                 currImage = Cv2Flip.rotate90(currImage);
-                //sleep(1);
             }
             if (currImage.Empty() || currImage == null)
             {
@@ -196,6 +195,19 @@ namespace videocapture
 
             return currImage.ToBitmap();
 
+        }
+
+        public double currFrameGetdiff()
+        {
+            capture.Read(currImage);
+            currImage.CopyTo(lastFrame);
+            sleep(1);
+            capture.Read(currImage);
+            //positionFrameByIndex(capture.PosFrames + 1);
+            Cv2.Absdiff(currImage, lastFrame, diffFrame);
+            Scalar mean = Cv2.Mean(diffFrame);
+            double count = mean.Val0;
+            return count;
         }
 
 

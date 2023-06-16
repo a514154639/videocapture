@@ -30,9 +30,10 @@ namespace videocapture
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.check_cover_mode = new System.Windows.Forms.CheckBox();
+            this.check_line_mode = new System.Windows.Forms.CheckBox();
             this.drawcombainframe = new System.Windows.Forms.Button();
             this.Concatenate_frames = new System.Windows.Forms.Button();
-            this.rotate_btn = new System.Windows.Forms.Button();
             this.caculate_rl = new System.Windows.Forms.Button();
             this.cam_angel = new System.Windows.Forms.TextBox();
             this.landwidth_box = new System.Windows.Forms.TextBox();
@@ -84,9 +85,10 @@ namespace videocapture
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.check_cover_mode);
+            this.splitContainer1.Panel1.Controls.Add(this.check_line_mode);
             this.splitContainer1.Panel1.Controls.Add(this.drawcombainframe);
             this.splitContainer1.Panel1.Controls.Add(this.Concatenate_frames);
-            this.splitContainer1.Panel1.Controls.Add(this.rotate_btn);
             this.splitContainer1.Panel1.Controls.Add(this.caculate_rl);
             this.splitContainer1.Panel1.Controls.Add(this.cam_angel);
             this.splitContainer1.Panel1.Controls.Add(this.landwidth_box);
@@ -110,6 +112,28 @@ namespace videocapture
             this.splitContainer1.SplitterDistance = 199;
             this.splitContainer1.TabIndex = 2;
             // 
+            // check_cover_mode
+            // 
+            this.check_cover_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.check_cover_mode.AutoSize = true;
+            this.check_cover_mode.Location = new System.Drawing.Point(988, 150);
+            this.check_cover_mode.Name = "check_cover_mode";
+            this.check_cover_mode.Size = new System.Drawing.Size(106, 22);
+            this.check_cover_mode.TabIndex = 33;
+            this.check_cover_mode.Text = "车道覆盖";
+            this.check_cover_mode.UseVisualStyleBackColor = true;
+            // 
+            // check_line_mode
+            // 
+            this.check_line_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.check_line_mode.AutoSize = true;
+            this.check_line_mode.Location = new System.Drawing.Point(835, 150);
+            this.check_line_mode.Name = "check_line_mode";
+            this.check_line_mode.Size = new System.Drawing.Size(106, 22);
+            this.check_line_mode.TabIndex = 32;
+            this.check_line_mode.Text = "门架拼帧";
+            this.check_line_mode.UseVisualStyleBackColor = true;
+            // 
             // drawcombainframe
             // 
             this.drawcombainframe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -131,18 +155,6 @@ namespace videocapture
             this.Concatenate_frames.Text = "拼帧测试";
             this.Concatenate_frames.UseVisualStyleBackColor = true;
             this.Concatenate_frames.Click += new System.EventHandler(this.Concatenate_frames_Click);
-            // 
-            // rotate_btn
-            // 
-            this.rotate_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.rotate_btn.Location = new System.Drawing.Point(833, 128);
-            this.rotate_btn.Name = "rotate_btn";
-            this.rotate_btn.Size = new System.Drawing.Size(108, 64);
-            this.rotate_btn.TabIndex = 29;
-            this.rotate_btn.Text = "旋转";
-            this.rotate_btn.UseVisualStyleBackColor = true;
-            this.rotate_btn.Visible = false;
-            this.rotate_btn.Click += new System.EventHandler(this.Rotate_btn_Click);
             // 
             // caculate_rl
             // 
@@ -303,7 +315,7 @@ namespace videocapture
             // readConfigToolStripMenuItem
             // 
             this.readConfigToolStripMenuItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(561, 131);
+            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(561, 128);
             this.readConfigToolStripMenuItem.Name = "readConfigToolStripMenuItem";
             this.readConfigToolStripMenuItem.Size = new System.Drawing.Size(111, 64);
             this.readConfigToolStripMenuItem.TabIndex = 3;
@@ -574,9 +586,10 @@ namespace videocapture
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button caculate_rl;
         private System.Windows.Forms.TextBox info_box;
-        private System.Windows.Forms.Button rotate_btn;
         private System.Windows.Forms.Button Concatenate_frames;
         private System.Windows.Forms.Button drawcombainframe;
+        private System.Windows.Forms.CheckBox check_cover_mode;
+        private System.Windows.Forms.CheckBox check_line_mode;
     }
 }
 
