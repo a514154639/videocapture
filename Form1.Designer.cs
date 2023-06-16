@@ -116,22 +116,22 @@ namespace videocapture
             // 
             this.check_cover_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.check_cover_mode.AutoSize = true;
-            this.check_cover_mode.Location = new System.Drawing.Point(988, 150);
+            this.check_cover_mode.Location = new System.Drawing.Point(845, 164);
             this.check_cover_mode.Name = "check_cover_mode";
-            this.check_cover_mode.Size = new System.Drawing.Size(106, 22);
+            this.check_cover_mode.Size = new System.Drawing.Size(178, 22);
             this.check_cover_mode.TabIndex = 33;
-            this.check_cover_mode.Text = "车道覆盖";
+            this.check_cover_mode.Text = "车道易被大车遮挡";
             this.check_cover_mode.UseVisualStyleBackColor = true;
             // 
             // check_line_mode
             // 
             this.check_line_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.check_line_mode.AutoSize = true;
-            this.check_line_mode.Location = new System.Drawing.Point(835, 150);
+            this.check_line_mode.Location = new System.Drawing.Point(845, 136);
             this.check_line_mode.Name = "check_line_mode";
-            this.check_line_mode.Size = new System.Drawing.Size(106, 22);
+            this.check_line_mode.Size = new System.Drawing.Size(142, 22);
             this.check_line_mode.TabIndex = 32;
-            this.check_line_mode.Text = "门架拼帧";
+            this.check_line_mode.Text = "画线右侧拼帧";
             this.check_line_mode.UseVisualStyleBackColor = true;
             // 
             // drawcombainframe

@@ -51,11 +51,13 @@ namespace videocapture
         private string username;
         private const string BaseUrl = "rtsp://admin:";
 
+        private ManualResetEvent pauseEvent = new ManualResetEvent(true);
+
         public Form1()
         {
             InitializeComponent();
-            ipinput.sendip += new Ipinput.SendMesg(Receiveip);
-            ipinput.sendpassward += new Ipinput.SendMesg(Receivepsw);
+            //ipinput.sendip += new Ipinput.SendMesg(Receiveip);
+            //ipinput.sendpassward += new Ipinput.SendMesg(Receivepsw);
         }
         private void VideoForm_Load(object sender, EventArgs e)
         {
@@ -126,19 +128,14 @@ namespace videocapture
                         extraConfig = extras.config[flag];
                         if (extras.config[flag].line == null)
                         {
-                            MessageBox.Show("未配置参数");
+                            info_box.AppendText("未配置参数\r\n");
+                            //MessageBox.Show("未配置参数");
                             return;
                         }
                         info_box.AppendText("------------\r\n");
                         info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
-                        info_box.AppendText("------------\r\n");
-                        //info_box.AppendText("车道像素宽：" + extraConfig.landwidthpix + "\r\n");
-                        //info_box.AppendText("上沿标尺：" + extraConfig.upruler + "\r\n");
-                        //info_box.AppendText("下沿标尺：" + extraConfig.downruler + "\r\n");
                         info_box.AppendText("最终标尺：" + extraConfig.struler + "\r\n");
                         info_box.AppendText("------------\r\n");
-                        //cam_angel.Text = extraConfig.B.ToString();
-                        //cam_height.Text = extraConfig.height.ToString();
                         flag++;
                     }
                     else
@@ -146,26 +143,23 @@ namespace videocapture
                         extraConfig = extras.config[flag];
                         if (extras.config[flag].line == null)
                         {
-                            MessageBox.Show("未配置参数");
+                            info_box.AppendText("未配置参数\r\n");
+                            //MessageBox.Show("未配置参数");
                             return;
                         }
                         info_box.AppendText("------------\r\n");
                         info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
-                        info_box.AppendText("------------\r\n");
-                        //info_box.AppendText("车道像素宽：" + extraConfig.landwidthpix + "\r\n");
-                        //info_box.AppendText("上沿标尺：" + extraConfig.upruler + "\r\n");
-                        //info_box.AppendText("下沿标尺：" + extraConfig.downruler + "\r\n");
                         info_box.AppendText("最终标尺：" + extraConfig.struler + "\r\n");
                         info_box.AppendText("------------\r\n");
-                        //cam_angel.Text = extraConfig.B.ToString();
-                        //cam_height.Text = extraConfig.height.ToString();
                     }
                     this.drawPictureBoxVideo.drawCache.addDrawLineList(extraConfig.line.xMin, extraConfig.line.yMin, extraConfig.line.xMax, extraConfig.line.yMax, 3, Color.Blue);
-                    MessageBox.Show("参数读取成功");
+                    //MessageBox.Show("参数读取成功");
+                    info_box.AppendText("参数读取成功\r\n");
                 }
                 else
                 {
-                    MessageBox.Show("参数文件不存在");
+                    info_box.AppendText("参数文件不存在\r\n");
+                    //MessageBox.Show("参数文件不存在");
                 }
                 //this.drawPictureBoxVideo.refresh();
 
@@ -186,10 +180,19 @@ namespace videocapture
                 {
                     line_mode = true;
                 }
+                else
+                {
+                    line_mode = false;
+                }
                 if (check_cover_mode.Checked)
                 {
                     cover_mode = true;
                 }
+                else
+                {
+                    cover_mode = false;
+                }
+
                 extraConfig.line = DrawPictureCache.gGetDrawLine;
                 if (File.Exists("config.json"))
                 {
@@ -199,16 +202,7 @@ namespace videocapture
                     {
                         flag--;
                         extras.config[flag].line = DrawPictureCache.gGetDrawLine;
-                        //extras.config[flag].height = height;
-                        //extras.config[flag].landwidth = landwidth;
-                        //extras.config[flag].B = B;
-                        //extras.config[flag].A = Math.Round(angleInDegrees, 1);
-                        //extras.config[flag].tana = Tana;
-                        //extras.config[flag].tanα = Tanα;
                         extras.config[flag].struler = Struler;
-                        //extras.config[flag].downruler = Downruler;
-                        //extras.config[flag].upruler = Upruler;
-                        //extras.config[flag].landwidthpix = (int)landwidthpix;
                         extras.config[flag].line_x_mode = line_mode;
                         extras.config[flag].cover_mode = cover_mode;
                         flag++;
@@ -216,16 +210,7 @@ namespace videocapture
                     else
                     {
                         extras.config[flag].line = DrawPictureCache.gGetDrawLine;
-                        //extras.config[flag].height = height;
-                        //extras.config[flag].landwidth = landwidth;
-                        //extras.config[flag].B = B;
-                        //extras.config[flag].A = Math.Round(angleInDegrees, 1);
-                        //extras.config[flag].tana = Tana;
-                        //extras.config[flag].tanα = Tanα;
                         extras.config[flag].struler = Struler;
-                        //extras.config[flag].downruler = Downruler;
-                        //extras.config[flag].upruler = Upruler;
-                        //extras.config[flag].landwidthpix = (int)landwidthpix;
                         extras.config[flag].line_x_mode = line_mode;
                         extras.config[flag].cover_mode = cover_mode;
                     }
@@ -400,8 +385,6 @@ namespace videocapture
         }
 
 
-
-
         //显示图片
         private void Showimage(string str)
         {
@@ -423,7 +406,8 @@ namespace videocapture
                     info_box.AppendText("连接成功\r\n");
                     isopen = true;
                     flagpsw = true;
-                    return;
+                    //ipinput.Close();
+                    //return;
 
                 }
                 else
@@ -432,7 +416,7 @@ namespace videocapture
                     info_box.AppendText("无法连接，请检查ip密码\r\n");
                     flagpsw = false;
                     //ipinput.ShowDialog();
-                    return;
+                    //return;
                 }
 
             }
@@ -483,12 +467,13 @@ namespace videocapture
                     var line2 = extras.config[press].line;
                     int ans3 = line1.xMax + line1.xMin + line1.yMax + line1.yMin;
                     int ans4 = line2.xMax + line2.xMin + line2.yMax + line2.yMin;
-                    if (ans3 != ans4) { MessageBox.Show("当前配置未保存"); }
+                    if (ans3 != ans4) { info_box.AppendText("当前配置未保存\r\n"); }
 
                 }
                 else
                 {
-                    MessageBox.Show("当前配置未保存");
+                    info_box.AppendText("当前配置未保存\r\n");
+                    //MessageBox.Show("当前配置未保存");
                 }
 
             }
@@ -522,7 +507,8 @@ namespace videocapture
             }
             else
             {
-                MessageBox.Show("相机未启用");
+                info_box.AppendText("相机未启用\r\n");
+                //MessageBox.Show("相机未启用");
                 return;
             }
 
@@ -537,7 +523,8 @@ namespace videocapture
             }
             else
             {
-                MessageBox.Show("相机未启用");
+                info_box.AppendText("相机未启用\r\n");
+                //MessageBox.Show("相机未启用");
                 return;
             }
         }
@@ -551,7 +538,8 @@ namespace videocapture
             }
             else
             {
-                MessageBox.Show("相机未启用");
+                info_box.AppendText("相机未启用\r\n");
+                //MessageBox.Show("相机未启用");
                 return;
             }
         }
@@ -565,7 +553,8 @@ namespace videocapture
             }
             else
             {
-                MessageBox.Show("相机未启用");
+                info_box.AppendText("相机未启用\r\n");
+                //MessageBox.Show("相机未启用");
                 return;
             }
         }
@@ -579,7 +568,8 @@ namespace videocapture
             }
             else
             {
-                MessageBox.Show("相机未启用");
+                info_box.AppendText("相机未启用\r\n");
+                //MessageBox.Show("相机未启用");
                 return;
             }
         }
@@ -588,23 +578,32 @@ namespace videocapture
         //相机操作
         private void Cam_op(int index)
         {
-            flag = index;
-            if (string.IsNullOrWhiteSpace(roadtype_box.Text))
+            try
             {
-                MessageBox.Show("请先选择车道");
-                return;
+                flag = index;
+                if (string.IsNullOrWhiteSpace(roadtype_box.Text))
+                {
+                    info_box.AppendText("请先选择车道\r\n");
+                    //MessageBox.Show("请先选择车道");
+                    return;
+                }
+                ButtonColor(splitContainer2.Panel2, index);
+                CheckLine();
+                string str = Writeip(index);
+                string ipstr = BaseUrl + ipPsw;
+                if (str == ipstr)
+                {
+                    return;
+                }
+                Showimage(str);
+                info_box.Clear();
+                press = index;
             }
-            ButtonColor(splitContainer2.Panel2, index);        
-            CheckLine();
-            string str = Writeip(index);
-            string ipstr = BaseUrl + ipPsw;
-            if (str == ipstr)
+            catch(Exception e)
             {
-                return;
+                MessageBox.Show(e.ToString());
             }
-            Showimage(str);
-            info_box.Clear();
-            press = index;
+            
         }
 
         //网格线
@@ -755,31 +754,41 @@ namespace videocapture
                 }
                 if (string.IsNullOrWhiteSpace(extras.config[camnum].ip))//ip为空则输入
                 {
-                    ipinput.ShowDialog();
-                    if (string.IsNullOrWhiteSpace(IP))
+                    using (Ipinput ipinput = new Ipinput())
                     {
-                        return str;
-                    }
-                    if (!CheckIp(IP))
-                    {
-                        info_box.AppendText("输入ip有误\r\n");
-                        //MessageBox.Show("输入ip有误");
-                        return str;
-                    }
-                    if (!IsPingable(IP))
-                    {
-                        info_box.AppendText("输入ip无法连通\r\n");
-                        //MessageBox.Show("输入ip无法连通");
-                        return str;
-                    }
-                    str += ipPsw;
-                    str += IP;
-                    extras.config[camnum].ip = IP;
-                    extras.config[camnum].psw = ipPsw;
-                    extras.config[camnum].state = true;
-                    totalConfig = extras;
-                    Convert(totalConfig);
+                        ipinput.sendip += new Ipinput.SendMesg(Receiveip);
+                        ipinput.sendpassward += new Ipinput.SendMesg(Receivepsw);
+                        ipinput.ShowDialog();
+                        if (ipinput.DialogResult == DialogResult.Cancel) // 判断是否点击了取消按钮
+                        {
+                            // 清空图像
+                            drawPictureBoxVideo.setImage(null);
 
+                        }
+                        if (string.IsNullOrWhiteSpace(IP))
+                        {
+                            return str;
+                        }
+                        if (!CheckIp(IP))
+                        {
+                            info_box.AppendText("输入ip有误\r\n");
+                            //MessageBox.Show("输入ip有误");
+                            return str;
+                        }
+                        if (!IsPingable(IP))
+                        {
+                            info_box.AppendText("输入ip无法连通\r\n");
+                            //MessageBox.Show("输入ip无法连通");
+                            return str;
+                        }
+                        str += ipPsw;
+                        str += IP;
+                        extras.config[camnum].ip = IP;
+                        extras.config[camnum].psw = ipPsw;
+                        extras.config[camnum].state = true;
+                        totalConfig = extras;
+                        Convert(totalConfig);
+                    }
                 }
                 else
                 {
@@ -795,26 +804,41 @@ namespace videocapture
                     }
                     else if (flagpsw == false)
                     {
-                        ipinput.ShowDialog();
-                        extras.config[camnum].ip = IP;
-                        extras.config[camnum].psw = ipPsw;
-                        extras.config[camnum].state = true;
-                        totalConfig = extras;
-                        Convert(totalConfig);
+                        using (Ipinput ipinput = new Ipinput())
+                        {
+                            ipinput.sendip += new Ipinput.SendMesg(Receiveip);
+                            ipinput.sendpassward += new Ipinput.SendMesg(Receivepsw);
+                            ipinput.ShowDialog();
+                            if (ipinput.DialogResult == DialogResult.Cancel) // 判断是否点击了取消按钮
+                            {
+                                // 清空图像
+                                drawPictureBoxVideo.setImage(null);
 
+                            }
+                            if (string.IsNullOrWhiteSpace(IP))
+                            {
+                                return str;
+                            }
+                            extras.config[camnum].ip = IP;
+                            extras.config[camnum].psw = ipPsw;
+                            extras.config[camnum].state = true;
+                            totalConfig = extras;
+                            Convert(totalConfig);
+                        }
                     }
                     str += extras.config[camnum].psw;
                     str += extras.config[camnum].ip;
-
                 }
             }
             else
             {
-                MessageBox.Show("配置文件不存在");
+                info_box.AppendText("配置文件不存在\r\n");
+                //MessageBox.Show("配置文件不存在");
             }
             IP = "";
             return str;
         }
+        
 
         //检查ip是否合法
         private bool CheckIp(string ip)
@@ -1085,7 +1109,8 @@ namespace videocapture
             {
                 if (isopen == false)
                 {
-                    MessageBox.Show("相机未连接");
+                    info_box.AppendText("相机未连接\r\n");
+                    //MessageBox.Show("相机未连接");
                     return;
                 }
                 while (true)

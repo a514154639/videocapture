@@ -47,6 +47,10 @@ namespace videocapture
             try
             {
                 //Bitmap bitmap = new Bitmap(bt);
+                if(bt == null)
+                {
+                    return;
+                }
                 this.pictureBoxMain.Image = bt;
                 imageWidth = this.pictureBoxMain.Image.Width;
                 imageHeight = this.pictureBoxMain.Image.Height;

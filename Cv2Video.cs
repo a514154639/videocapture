@@ -63,12 +63,16 @@ namespace videocapture
             {
                 //capture = new VideoCapture(rtspPath,VideoCaptureAPIs.FFMPEG);
                 capture = new VideoCapture(rtspPath);
+                if(capture.Fps != 0)
+                {
+                    return true;
+                }
             }
             catch
             {
                 return false;
             }
-            return true;
+            return false;
         }
 
 
