@@ -50,7 +50,6 @@ namespace videocapture
             this.setConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.readConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.cam_2 = new System.Windows.Forms.Button();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
@@ -65,6 +64,7 @@ namespace videocapture
             this.cam_1 = new System.Windows.Forms.Button();
             this.cam_0 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -272,7 +272,8 @@ namespace videocapture
             "2+1车道",
             "3+0车道",
             "3+1车道",
-            "服务区"});
+            "服务区_入口",
+            "服务区_出口"});
             this.roadtype_box.Location = new System.Drawing.Point(978, 58);
             this.roadtype_box.Name = "roadtype_box";
             this.roadtype_box.Size = new System.Drawing.Size(120, 26);
@@ -352,17 +353,6 @@ namespace videocapture
             this.splitContainer2.Size = new System.Drawing.Size(1122, 1225);
             this.splitContainer2.SplitterDistance = 525;
             this.splitContainer2.TabIndex = 0;
-            // 
-            // drawPictureBoxVideo
-            // 
-            this.drawPictureBoxVideo.AutoSize = true;
-            this.drawPictureBoxVideo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
-            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
-            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
-            this.drawPictureBoxVideo.Size = new System.Drawing.Size(525, 1225);
-            this.drawPictureBoxVideo.TabIndex = 0;
             // 
             // checkBox2
             // 
@@ -525,6 +515,17 @@ namespace videocapture
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // drawPictureBoxVideo
+            // 
+            this.drawPictureBoxVideo.AutoSize = true;
+            this.drawPictureBoxVideo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
+            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
+            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
+            this.drawPictureBoxVideo.Size = new System.Drawing.Size(525, 1225);
+            this.drawPictureBoxVideo.TabIndex = 0;
             // 
             // Form1
             // 
