@@ -47,7 +47,7 @@ namespace videocapture
             try
             {
                 //Bitmap bitmap = new Bitmap(bt);
-                if(bt == null)
+                if (bt == null)
                 {
                     return;
                 }

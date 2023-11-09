@@ -295,7 +295,7 @@ namespace videocapture
                     ShowCurrVideoFrame();
                 }
                 catch { }
-                Thread.Sleep(1);
+                Thread.Sleep(10);
             }
         }
 
@@ -312,12 +312,12 @@ namespace videocapture
                         if (currBitmap != null)
                         {
                             currBitmap.Dispose();
-                            
+
 
                         }
                         currBitmap = null;
                         currBitmap = cv2Video.currFrameGetImage();//当前帧
-                        
+
                         if (currBitmap != null)
                         {
                             using (Graphics g = Graphics.FromImage(currBitmap))
@@ -363,7 +363,7 @@ namespace videocapture
 
                             }));
 
-                            
+
                             //Cv2.WaitKey(1);
                         }
                         else
@@ -402,39 +402,14 @@ namespace videocapture
 
                         if (currBitmap != null)
                         {
-                            using (Graphics g = Graphics.FromImage(currBitmap))
-                            {
-                                #region 中心线
-                                Pen pen = new Pen(Color.Red, 10);
-                                // 垂直中线
-                                g.DrawLine(pen, new Point(currBitmap.Width / 2, 0), new Point(currBitmap.Width / 2, currBitmap.Height));
-                                // 水平中线
-                                g.DrawLine(pen, new Point(0, currBitmap.Height / 2), new Point(currBitmap.Width, currBitmap.Height / 2));
-                                #endregion
-
-                                #region 网格线
-                                if (gridline.Text.Contains("*"))
-                                {
-                                    pen = new Pen(Color.Red, 2);
-                                    // 垂直
-                                    for (int i = 0; i < currBitmap.Width; i += 60)
-                                    {                                                                         
-                                        g.DrawLine(pen, new System.Drawing.Point(i, currBitmap.Height / 2), new System.Drawing.Point(i, currBitmap.Height));                                       
-                                    }
-                                    // 水平
-                                    for (int i = 0; i < currBitmap.Height / 2; i += 60)
-                                    {                                                                            
-                                        g.DrawLine(pen, new System.Drawing.Point(0, i + currBitmap.Height / 2 - 60), new System.Drawing.Point(currBitmap.Width, i + currBitmap.Height / 2 - 60));                                      
-                                    }
-                                }
-                                #endregion
-                            }
+                            graphicsUpdate(currBitmap);
 
                             // 显示
-                            this.Invoke(new ThreadStart(delegate
+                            this.BeginInvoke(new Action(() =>  // 异步UI更新
                             {
                                 drawPictureBoxVideo.setImage(currBitmap); // 显示
                             }));
+
                         }
                         else
                         {
@@ -450,6 +425,92 @@ namespace videocapture
             }));
         }
 
+
+        private void ShowCurrVideoFrame1()
+        {
+            if (!isopen) return;  // 如果视频没有打开，就直接返回。
+            //graphicsUpdate(currBitmap);
+
+            Bitmap tempBitmap = cv2Video.currFrameGetImage(); // 获取当前帧
+            if (tempBitmap == null)
+            {
+                this.BeginInvoke(new Action(() =>
+                {
+                    info_box.AppendText("当前帧为空\r\n");
+                    Cam_op(flag);
+                }));
+
+                return;
+            }
+
+            currBitmap?.Dispose(); // 释放旧的位图资源
+            currBitmap = tempBitmap; // 更新当前位图
+            
+
+            this.BeginInvoke(new Action(() =>  // 异步UI更新
+            {
+                drawPictureBoxVideo.setImage(currBitmap); // 显示
+            }));
+        }
+
+
+        private void DrawGrid(Graphics g, int cellSize)
+        {
+            using (var pen = new Pen(Color.Red, 1))
+            {
+                // 绘制垂直线
+                for (int i = 0; i < currBitmap.Width; i += cellSize)
+                {
+                    g.DrawLine(pen, new Point(i, 0), new Point(i, currBitmap.Height));
+                }
+
+                // 绘制水平线
+                for (int i = 0; i < currBitmap.Height; i += cellSize)
+                {
+                    g.DrawLine(pen, new Point(0, i), new Point(currBitmap.Width, i));
+                }
+            }
+        }
+
+        private void DrawCrosshair(Graphics g)
+        {
+            using (var pen = new Pen(Color.Red, 10))
+            {
+                // 绘制垂直中线
+                g.DrawLine(pen, new Point(currBitmap.Width / 2, 0), new Point(currBitmap.Width / 2, currBitmap.Height));
+
+                // 绘制水平中线
+                g.DrawLine(pen, new Point(0, currBitmap.Height / 2), new Point(currBitmap.Width, currBitmap.Height / 2));
+            }
+        }
+
+        //中心线网格线
+        private void graphicsUpdate(Bitmap currBitmap)
+        {
+            // 在当前的位图上绘制
+            using (Graphics g = Graphics.FromImage(currBitmap))
+            {
+                // 绘制中心线
+                DrawCrosshair(g);
+
+                // 检查是否需要绘制网格线
+                if (gridline.Text.Contains("*"))
+                {
+                    // 假设网格线的间距是60px，你可以根据需要修改
+                    DrawGrid(g, 60);
+                }
+
+                // TODO: 在这里可以添加更多自定义的绘图代码
+            }
+
+            // 必须在UI线程上执行pictureBox的Image更新
+            this.Invoke(new Action(() =>  // 异步UI更新
+            {
+                drawPictureBoxVideo.setImage(currBitmap); // 显示
+            }));
+        }
+
+        //显示图片
         private void ShowImage(string str)
         {
             cv2Video?.dispose();
@@ -458,7 +519,7 @@ namespace videocapture
 
             try
             {
-                isopen = cv2Video.openRtsp($"{str}:554");
+                isopen = cv2Video.openRtsp($"{str}:554/test");
 
                 if (isopen)
                 {
@@ -477,47 +538,8 @@ namespace videocapture
                 MessageBox.Show(ex.ToString());
             }
         }
-
-        //显示图片
-        private void Showimage_old(string str)
-        {
-
-            if (cv2Video != null)
-            {
-                cv2Video.dispose();
-            }
-            cv2Video = new Cv2Video();
-            info_box.AppendText("连接中，请稍后...\r\n");
-
-            try
-            {
-                //isopen = cv2Video.openVideoFile(@"demo.mp4");
-                //isopen = cv2Video.openCamera();
-                isopen = cv2Video.openRtsp(str + ":554/test");             
-                if (isopen)
-                {
-                    info_box.AppendText("连接成功\r\n");
-                    isopen = true;
-                    flagpsw = true;
-                    //ipinput.Close();
-                    //return;
-
-                }
-                else
-                {
-                    cv2Video = null;
-                    info_box.AppendText("无法连接，请检查ip密码\r\n");
-                    flagpsw = false;
-                    //ipinput.ShowDialog();
-                    //return;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }         
-        }
+      
+       
 
         //检查ip是否能通
         public bool IsPingable(string ipAddress)
@@ -581,7 +603,7 @@ namespace videocapture
             foreach (Button button in collection.OfType<Button>())
             {
                 if (buttonNames.Contains(button.Name) && button.Name == buttonNames[num])
-                {                  
+                {
                     button.BackColor = Color.Green;//显示
                 }
                 else
@@ -718,11 +740,11 @@ namespace videocapture
                 info_box.Clear();
                 press = index;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
             }
-            
+
         }
 
         private void Cam_op(int index)
@@ -882,7 +904,7 @@ namespace videocapture
             for (int i = 0; i < laneNums; i++)
             {
                 //configs.Add(new ExtraConfig { ip = "", lane = laneNums - i, height = 6.7, landwidth = 3.75, B = 104 });
-                configs.Add(new ExtraConfig { ip = "", lane = laneNums - i});
+                configs.Add(new ExtraConfig { ip = "", lane = laneNums - i });
             }
             if (selectedValue == "服务区_入口") selectedValue = "service_in";
             if (selectedValue == "服务区_出口") selectedValue = "service_out";
@@ -950,7 +972,7 @@ namespace videocapture
                         {
                             return str;
                         }
-                        
+
                         if (!CheckIp(IP) || !IsPingable(IP))
                         {
                             info_box.AppendText("输入ip有误或无法连通\r\n");
@@ -1407,24 +1429,5 @@ namespace videocapture
             return false;
         }
 
-        private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
-
-        private void splitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void splitContainer3_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void splitContainer3_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-
-        }
     }
 }
