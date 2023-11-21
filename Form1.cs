@@ -29,6 +29,7 @@ namespace videocapture
         public Cv2Video cv2Video = null;//实例
         private Ipinput ipinput = new Ipinput();
         public string IP = "";
+        public string CAM_IP = "";
         public string ipPsw = "";
         public int stopframe = 0;
         public double height = 6.7;
@@ -396,18 +397,20 @@ namespace videocapture
                 try
                 {
                     if (isopen)
-                    {
+                    {                     
                         currBitmap?.Dispose();
                         currBitmap = cv2Video.currFrameGetImage(); // 当前帧
 
                         if (currBitmap != null)
                         {
-                            graphicsUpdate(currBitmap);
+                            //网格线
+                            graphicsUpdate(currBitmap);                        
 
                             // 显示
                             this.BeginInvoke(new Action(() =>  // 异步UI更新
-                            {
+                            {                            
                                 drawPictureBoxVideo.setImage(currBitmap); // 显示
+                                
                             }));
 
                         }
@@ -515,28 +518,31 @@ namespace videocapture
         {
             cv2Video?.dispose();
             cv2Video = new Cv2Video();
-            info_box.AppendText("连接中，请稍后...\r\n");
-
+            info_box.AppendText("连接中，请稍后...\r\n");          
             try
             {
-                isopen = cv2Video.openRtsp($"{str}:554/test");
-
+                isopen = cv2Video.openRtsp($"{str}:554"); // 显示
                 if (isopen)
                 {
-                    info_box.AppendText("连接成功\r\n");
+                    info_box.AppendText("相机" + CAM_IP);
+                    info_box.AppendText("连接成功\r\n");              
                     flagpsw = true;
+                    return;
                 }
                 else
                 {
                     cv2Video = null;
                     info_box.AppendText("无法连接，请检查ip密码\r\n");
                     flagpsw = false;
+                    return;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+
+
         }
       
        
@@ -596,44 +602,33 @@ namespace videocapture
         }
 
         //相机按钮背景颜色设置      
-        private void ButtonColor_old(Control control, int num)
-        {
-            Control.ControlCollection collection = control.Controls;
-            string[] buttonNames = { "cam_0", "cam_1", "cam_2", "cam_3", "cam_4", "cam_5" };
-            foreach (Button button in collection.OfType<Button>())
-            {
-                if (buttonNames.Contains(button.Name) && button.Name == buttonNames[num])
-                {
-                    button.BackColor = Color.Green;//显示
-                }
-                else
-                {
-                    button.BackColor = Color.White;
-                }
-            }
-        }
-
         private void ButtonColor(Control control, int num)
         {
-            if (control.InvokeRequired)
-            {
-                control.Invoke(new Action(() => ButtonColor(control, num)));
-                return;
-            }
+            //if (control.InvokeRequired)
+            //{
+            //    control.Invoke(new Action(() => ButtonColor(control, num)));
+            //    return;
+            //}
 
             Control.ControlCollection collection = control.Controls;
             string[] buttonNames = { "cam_0", "cam_1", "cam_2", "cam_3", "cam_4", "cam_5" };
+
             foreach (Button button in collection.OfType<Button>())
             {
-                if (buttonNames.Contains(button.Name) && button.Name == buttonNames[num])
+                if (button.Name == buttonNames[num])
                 {
-                    button.BackColor = Color.Green; // 显示
+ 
+                    button.BackColor = Color.Green; // 显示  
+                                 
                 }
                 else
                 {
-                    button.BackColor = Color.White;
+
+                    button.BackColor = Color.White; // 显示 
+
                 }
             }
+            
         }
 
 
@@ -656,8 +651,9 @@ namespace videocapture
         private void Cam_1_Click(object sender, EventArgs e)
         {
             if (this.checkBox0.Checked == true)
-            {
+            {              
                 Cam_op(1);
+                
             }
             else
             {
@@ -671,8 +667,9 @@ namespace videocapture
         private void Cam_2_Click(object sender, EventArgs e)
         {
             if (this.checkBox1.Checked == true)
-            {
+            {             
                 Cam_op(2);
+                
             }
             else
             {
@@ -712,8 +709,10 @@ namespace videocapture
             }
         }
 
-
-        //相机操作
+        /// <summary>
+        /// 相机操作
+        /// </summary>
+        /// <param name="index"></param>
         private void Cam_op_old(int index)
         {
             try
@@ -748,7 +747,7 @@ namespace videocapture
         }
 
         private void Cam_op(int index)
-        {
+        {       
             try
             {
                 flag = index;
@@ -759,8 +758,8 @@ namespace videocapture
                 }
 
                 check_line_mode.Checked = false;
-                check_cover_mode.Checked = false;
-                ButtonColor(splitContainer2.Panel2, index);
+                check_cover_mode.Checked = false;                         
+
                 CheckLine();
                 Cleanline();
 
@@ -772,14 +771,21 @@ namespace videocapture
                     return;
                 }
 
-                ShowImage(str);
-                info_box.Clear();
+                this.Invoke(new MethodInvoker(delegate ()
+                {
+                    ButtonColor(splitContainer2.Panel2, index);
+                    ShowImage(str);
+                }));
+               //ShowImage(str);
+
+
                 press = index;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.ToString());
             }
+
         }
 
         //网格线
@@ -983,8 +989,10 @@ namespace videocapture
                         extras.config[camnum].ip = IP;
                         extras.config[camnum].psw = ipPsw;
                         extras.config[camnum].state = true;
+                        CAM_IP = extras.config[camnum].ip;
                         totalConfig = extras;
                         Convert(totalConfig);
+                      
                     }
                 }
                 else
@@ -1018,18 +1026,21 @@ namespace videocapture
                             extras.config[camnum].ip = IP;
                             extras.config[camnum].psw = ipPsw;
                             extras.config[camnum].state = true;
+                            CAM_IP = extras.config[camnum].ip;
                             totalConfig = extras;
                             Convert(totalConfig);
                         }
                     }
                     str += extras.config[camnum].psw;
                     str += extras.config[camnum].ip;
+                    CAM_IP = extras.config[camnum].ip;
                 }
             }
             else
             {
                 info_box.AppendText("配置文件不存在\r\n");
             }
+            
             IP = "";
             return str;
         }
@@ -1100,7 +1111,7 @@ namespace videocapture
 
         }
 
-        //上传参数文件到/home
+        //上传参数文件到/home/net5.0
         private void Uploadjson_Click(object sender, EventArgs e)
         {
             try
@@ -1118,14 +1129,14 @@ namespace videocapture
                             info_box.AppendText("文件上传中，请稍后...\r\n");
                             sftpClient.Connect();
                             string localFilePath = "config.json";
-                            string remoteFilePath = "/home/config.json";
+                            string remoteFilePath = "/home/net5.0/config.json";
                             using (var fileStream = new FileStream(localFilePath, FileMode.Open))
                             {
                                 try
                                 {
                                     sftpClient.UploadFile(fileStream, remoteFilePath);
                                     info_box.AppendText("上传成功\r\n");
-                                    info_box.AppendText("------------\r\n");
+                                    info_box.AppendText("------------\r\n");                                  
                                 }
                                 catch (Exception ex)
                                 {
@@ -1135,6 +1146,24 @@ namespace videocapture
 
                             sftpClient.Disconnect();
                         }
+                        using (var sshClient = new SshClient(ipAddress, 22, username, password))
+                        {
+                            sshClient.Connect();
+                            try
+                            {
+                                // 执行脚本 kill当前进程
+                                SshCommand command = sshClient.RunCommand("ps -ef | grep arm_video_net5.dll | grep -v grep | awk '{print $2}' | xargs kill -9");
+
+
+                                info_box.AppendText("进程更新命令执行完成!\r\n");
+                            }
+                            catch (Exception ex)
+                            {
+                                info_box.AppendText("命令执行失败：" + ex.Message);
+                            }
+                            sshClient.Disconnect();
+                        }
+
                     }
                 }
 
