@@ -35,14 +35,10 @@ namespace videocapture
             this.drawcombainframe = new System.Windows.Forms.Button();
             this.Concatenate_frames = new System.Windows.Forms.Button();
             this.caculate_rl = new System.Windows.Forms.Button();
-            this.cam_angel = new System.Windows.Forms.TextBox();
             this.landwidth_box = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.upload_json = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cam_height = new System.Windows.Forms.TextBox();
             this.read_roadtype = new System.Windows.Forms.Button();
             this.roadtype_box = new System.Windows.Forms.ComboBox();
             this.gridline = new System.Windows.Forms.Button();
@@ -90,14 +86,10 @@ namespace videocapture
             this.splitContainer1.Panel1.Controls.Add(this.drawcombainframe);
             this.splitContainer1.Panel1.Controls.Add(this.Concatenate_frames);
             this.splitContainer1.Panel1.Controls.Add(this.caculate_rl);
-            this.splitContainer1.Panel1.Controls.Add(this.cam_angel);
             this.splitContainer1.Panel1.Controls.Add(this.landwidth_box);
-            this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.upload_json);
-            this.splitContainer1.Panel1.Controls.Add(this.label2);
-            this.splitContainer1.Panel1.Controls.Add(this.cam_height);
             this.splitContainer1.Panel1.Controls.Add(this.read_roadtype);
             this.splitContainer1.Panel1.Controls.Add(this.roadtype_box);
             this.splitContainer1.Panel1.Controls.Add(this.gridline);
@@ -116,7 +108,7 @@ namespace videocapture
             // 
             this.check_cover_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.check_cover_mode.AutoSize = true;
-            this.check_cover_mode.Location = new System.Drawing.Point(845, 164);
+            this.check_cover_mode.Location = new System.Drawing.Point(748, 164);
             this.check_cover_mode.Name = "check_cover_mode";
             this.check_cover_mode.Size = new System.Drawing.Size(178, 22);
             this.check_cover_mode.TabIndex = 33;
@@ -127,17 +119,17 @@ namespace videocapture
             // 
             this.check_line_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.check_line_mode.AutoSize = true;
-            this.check_line_mode.Location = new System.Drawing.Point(845, 136);
+            this.check_line_mode.Location = new System.Drawing.Point(748, 136);
             this.check_line_mode.Name = "check_line_mode";
             this.check_line_mode.Size = new System.Drawing.Size(142, 22);
             this.check_line_mode.TabIndex = 32;
-            this.check_line_mode.Text = "画线右侧拼帧";
+            this.check_line_mode.Text = "中线右侧拼帧";
             this.check_line_mode.UseVisualStyleBackColor = true;
             // 
             // drawcombainframe
             // 
             this.drawcombainframe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.drawcombainframe.Location = new System.Drawing.Point(705, 58);
+            this.drawcombainframe.Location = new System.Drawing.Point(591, 58);
             this.drawcombainframe.Name = "drawcombainframe";
             this.drawcombainframe.Size = new System.Drawing.Size(108, 64);
             this.drawcombainframe.TabIndex = 31;
@@ -148,7 +140,7 @@ namespace videocapture
             // Concatenate_frames
             // 
             this.Concatenate_frames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Concatenate_frames.Location = new System.Drawing.Point(705, 128);
+            this.Concatenate_frames.Location = new System.Drawing.Point(591, 131);
             this.Concatenate_frames.Name = "Concatenate_frames";
             this.Concatenate_frames.Size = new System.Drawing.Size(108, 64);
             this.Concatenate_frames.TabIndex = 30;
@@ -167,36 +159,15 @@ namespace videocapture
             this.caculate_rl.UseVisualStyleBackColor = true;
             this.caculate_rl.Click += new System.EventHandler(this.Caculate_Click);
             // 
-            // cam_angel
-            // 
-            this.cam_angel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cam_angel.Location = new System.Drawing.Point(495, 151);
-            this.cam_angel.Name = "cam_angel";
-            this.cam_angel.Size = new System.Drawing.Size(49, 28);
-            this.cam_angel.TabIndex = 23;
-            this.cam_angel.Text = "104";
-            this.cam_angel.TextChanged += new System.EventHandler(this.Camangel_TextChanged);
-            // 
             // landwidth_box
             // 
             this.landwidth_box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.landwidth_box.Location = new System.Drawing.Point(307, 151);
+            this.landwidth_box.Location = new System.Drawing.Point(159, 151);
             this.landwidth_box.Name = "landwidth_box";
             this.landwidth_box.Size = new System.Drawing.Size(47, 28);
             this.landwidth_box.TabIndex = 22;
             this.landwidth_box.Text = "3.75";
             this.landwidth_box.TextChanged += new System.EventHandler(this.Landwidth_TextChanged);
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(369, 154);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(120, 21);
-            this.label4.TabIndex = 21;
-            this.label4.Text = "纵向视场角";
             // 
             // label1
             // 
@@ -213,17 +184,17 @@ namespace videocapture
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(203, 154);
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(41, 151);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 21);
+            this.label3.Size = new System.Drawing.Size(110, 24);
             this.label3.TabIndex = 19;
             this.label3.Text = "车道宽度";
             // 
             // upload_json
             // 
             this.upload_json.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.upload_json.Location = new System.Drawing.Point(561, 58);
+            this.upload_json.Location = new System.Drawing.Point(451, 131);
             this.upload_json.Name = "upload_json";
             this.upload_json.Size = new System.Drawing.Size(108, 64);
             this.upload_json.TabIndex = 18;
@@ -231,31 +202,10 @@ namespace videocapture
             this.upload_json.UseVisualStyleBackColor = true;
             this.upload_json.Click += new System.EventHandler(this.Uploadjson_Click);
             // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(34, 154);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 21);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "相机高度";
-            // 
-            // cam_height
-            // 
-            this.cam_height.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cam_height.Location = new System.Drawing.Point(138, 151);
-            this.cam_height.Name = "cam_height";
-            this.cam_height.Size = new System.Drawing.Size(49, 28);
-            this.cam_height.TabIndex = 15;
-            this.cam_height.Text = "6.7";
-            this.cam_height.TextChanged += new System.EventHandler(this.Camheight_TextChanged);
-            // 
             // read_roadtype
             // 
             this.read_roadtype.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.read_roadtype.Location = new System.Drawing.Point(833, 58);
+            this.read_roadtype.Location = new System.Drawing.Point(748, 58);
             this.read_roadtype.Name = "read_roadtype";
             this.read_roadtype.Size = new System.Drawing.Size(108, 64);
             this.read_roadtype.TabIndex = 11;
@@ -283,7 +233,7 @@ namespace videocapture
             // gridline
             // 
             this.gridline.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridline.Location = new System.Drawing.Point(437, 58);
+            this.gridline.Location = new System.Drawing.Point(453, 58);
             this.gridline.Name = "gridline";
             this.gridline.Size = new System.Drawing.Size(106, 64);
             this.gridline.TabIndex = 8;
@@ -316,7 +266,7 @@ namespace videocapture
             // readConfigToolStripMenuItem
             // 
             this.readConfigToolStripMenuItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(561, 128);
+            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(300, 131);
             this.readConfigToolStripMenuItem.Name = "readConfigToolStripMenuItem";
             this.readConfigToolStripMenuItem.Size = new System.Drawing.Size(111, 64);
             this.readConfigToolStripMenuItem.TabIndex = 3;
@@ -577,14 +527,10 @@ namespace videocapture
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.TextBox cam_height;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button upload_json;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox cam_angel;
         private System.Windows.Forms.TextBox landwidth_box;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button caculate_rl;
         private System.Windows.Forms.TextBox info_box;
         private System.Windows.Forms.Button Concatenate_frames;

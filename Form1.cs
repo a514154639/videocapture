@@ -426,36 +426,8 @@ namespace videocapture
                     MessageBox.Show(ex.ToString());
                 }
             }));
-        }
-
-
-        private void ShowCurrVideoFrame1()
-        {
-            if (!isopen) return;  // 如果视频没有打开，就直接返回。
-            //graphicsUpdate(currBitmap);
-
-            Bitmap tempBitmap = cv2Video.currFrameGetImage(); // 获取当前帧
-            if (tempBitmap == null)
-            {
-                this.BeginInvoke(new Action(() =>
-                {
-                    info_box.AppendText("当前帧为空\r\n");
-                    Cam_op(flag);
-                }));
-
-                return;
-            }
-
-            currBitmap?.Dispose(); // 释放旧的位图资源
-            currBitmap = tempBitmap; // 更新当前位图
-            
-
-            this.BeginInvoke(new Action(() =>  // 异步UI更新
-            {
-                drawPictureBoxVideo.setImage(currBitmap); // 显示
-            }));
-        }
-
+        }      
+       
 
         private void DrawGrid(Graphics g, int cellSize)
         {
@@ -525,7 +497,8 @@ namespace videocapture
                 if (isopen)
                 {
                     info_box.AppendText("相机" + CAM_IP);
-                    info_box.AppendText("连接成功\r\n");              
+                    info_box.AppendText("连接成功\r\n");
+                    info_box.AppendText("------------\r\n");
                     flagpsw = true;
                     return;
                 }
@@ -950,7 +923,11 @@ namespace videocapture
             }
         }
 
-        //检查并写入相机ip 
+        /// <summary>
+        /// 检查并写入相机ip
+        /// </summary>
+        /// <param name="camnum"></param>
+        /// <returns></returns>
         private string Writeip(int camnum)
         {
             String str = BaseUrl;
@@ -1097,21 +1074,25 @@ namespace videocapture
         }
 
         //相机高度文本框
-        private void Camheight_TextChanged(object sender, EventArgs e)
-        {
-            if (cam_height.Text != "")
-            {
-                height = double.Parse(cam_height.Text);
-            }
-            else
-            {
-                height = 0;
-            }
-            //CaculatePixeldis();
+        //private void Camheight_TextChanged(object sender, EventArgs e)
+        //{
+        //    if (cam_height.Text != "")
+        //    {
+        //        height = double.Parse(cam_height.Text);
+        //    }
+        //    else
+        //    {
+        //        height = 0;
+        //    }
+        //    //CaculatePixeldis();
 
-        }
+        //}
 
-        //上传参数文件到/home/net5.0
+        /// <summary>
+        /// 上传参数文件到/home/net5.0
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>      
         private void Uploadjson_Click(object sender, EventArgs e)
         {
             try
@@ -1153,9 +1134,8 @@ namespace videocapture
                             {
                                 // 执行脚本 kill当前进程
                                 SshCommand command = sshClient.RunCommand("ps -ef | grep arm_video_net5.dll | grep -v grep | awk '{print $2}' | xargs kill -9");
-
-
                                 info_box.AppendText("进程更新命令执行完成!\r\n");
+                                info_box.AppendText("------------\r\n");
                             }
                             catch (Exception ex)
                             {
@@ -1189,18 +1169,18 @@ namespace videocapture
         }
 
         //视场角文本框
-        private void Camangel_TextChanged(object sender, EventArgs e)
-        {
-            if (cam_angel.Text != "")
-            {
-                B = double.Parse(cam_angel.Text);
-            }
-            else
-            {
-                B = 0;
-            }
-            //B = double.Parse(cam_angel.Text);
-        }
+        //private void Camangel_TextChanged(object sender, EventArgs e)
+        //{
+        //    if (cam_angel.Text != "")
+        //    {
+        //        B = double.Parse(cam_angel.Text);
+        //    }
+        //    else
+        //    {
+        //        B = 0;
+        //    }
+        //    //B = double.Parse(cam_angel.Text);
+        //}
 
         //计算车道夹角
         private void Caculate_tanα()
@@ -1216,12 +1196,12 @@ namespace videocapture
                 info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
                 info_box.AppendText("------------\r\n");
                 info_box.AppendText("车道像素宽：" + landwidthpix.ToString() + "\r\n");
-                double α = (landwidthpix / currBitmap.Height) * B;
-                info_box.AppendText("车道夹角：" + Math.Round(α, 1).ToString() + "\r\n");
-                double temp = α * Math.PI / 180;
-                Tanα = Math.Tan(temp);
-                string strNumber = Tanα.ToString("F2");
-                Tanα = double.Parse(strNumber);
+                //double α = (landwidthpix / currBitmap.Height) * B;
+                //info_box.AppendText("车道夹角：" + Math.Round(α, 1).ToString() + "\r\n");
+                //double temp = α * Math.PI / 180;
+                //Tanα = Math.Tan(temp);
+                //string strNumber = Tanα.ToString("F2");
+                //Tanα = double.Parse(strNumber);
 
             }
             catch (Exception ex)
@@ -1282,8 +1262,9 @@ namespace videocapture
             try
             {
                 Caculate_tanα();
-                Caculate_tana();
-                double temp = 0.25 * Caculate_upruler() + 0.75 * Caculate_downruler();
+                //Caculate_tana();
+                //double temp = 0.25 * Caculate_upruler() + 0.75 * Caculate_downruler();
+                double temp = landwidthpix / landwidth;//为了方便操作 修改为像素长度÷车道宽
                 Struler = System.Convert.ToInt32(temp);
 
             }
