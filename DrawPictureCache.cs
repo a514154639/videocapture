@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace videocapture
@@ -41,7 +42,7 @@ namespace videocapture
 
         public ArrayList drawLineList = new ArrayList();//要绘制的所有线
 
-        //public static List<DrawLine> LineList = new List<DrawLine>();
+        public static List<DrawLine> LineList = new List<DrawLine>();
         //public static DrawLine LineList = new DrawLine();
         public static DrawLine gGetDrawLine = new DrawLine();
         public static DrawRectangle gGetDrawRectangle = new DrawRectangle();
@@ -90,7 +91,7 @@ namespace videocapture
             //drawOne.size = size;
             //drawOne.color = color;
             gGetDrawLine = drawOne;
-            //LineList.Add(drawOne);
+            LineList.Add(drawOne);
             //LineList = LineList.OrderBy(o => o.yMax).ToList();
             return drawLineList.Add(drawOne);
         }
