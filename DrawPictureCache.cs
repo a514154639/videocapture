@@ -84,10 +84,17 @@ namespace videocapture
         public int addDrawLineList(int xMin, int yMin, int xMax, int yMax, int size, Color color)
         {
             DrawLine drawOne = new DrawLine();
+            if (yMin > yMax)
+            {
+                var tmp = yMax;
+                yMax = yMin;
+                yMin = tmp;
+            }
             drawOne.xMin = xMin;
             drawOne.yMin = yMin;
             drawOne.xMax = xMax;
             drawOne.yMax = yMax;
+            
             //drawOne.size = size;
             //drawOne.color = color;
             gGetDrawLine = drawOne;
