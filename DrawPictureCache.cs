@@ -63,7 +63,7 @@ namespace videocapture
         public void clearDrawLineList()
         {
             drawLineList.Clear();
-            //LineList.Clear();
+            LineList.Clear();
         }
 
         public void removeDrawLineList(int index)

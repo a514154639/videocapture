@@ -311,6 +311,10 @@ namespace videocapture
                 {
                     return;
                 }
+                if(this.drawCache.drawLineList.Count > 2)
+                {
+                    this.drawCache.clearDrawLineList();
+                }
 
                 int x = e.Location.X;
                 int y = e.Location.Y;

@@ -60,6 +60,7 @@ namespace videocapture
             this.cam_1 = new System.Windows.Forms.Button();
             this.cam_0 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button_lane = new System.Windows.Forms.Button();
             this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -81,6 +82,7 @@ namespace videocapture
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.button_lane);
             this.splitContainer1.Panel1.Controls.Add(this.check_cover_mode);
             this.splitContainer1.Panel1.Controls.Add(this.check_line_mode);
             this.splitContainer1.Panel1.Controls.Add(this.drawcombainframe);
@@ -108,7 +110,7 @@ namespace videocapture
             // 
             this.check_cover_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.check_cover_mode.AutoSize = true;
-            this.check_cover_mode.Location = new System.Drawing.Point(748, 164);
+            this.check_cover_mode.Location = new System.Drawing.Point(920, 164);
             this.check_cover_mode.Name = "check_cover_mode";
             this.check_cover_mode.Size = new System.Drawing.Size(178, 22);
             this.check_cover_mode.TabIndex = 33;
@@ -119,7 +121,7 @@ namespace videocapture
             // 
             this.check_line_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.check_line_mode.AutoSize = true;
-            this.check_line_mode.Location = new System.Drawing.Point(748, 136);
+            this.check_line_mode.Location = new System.Drawing.Point(920, 136);
             this.check_line_mode.Name = "check_line_mode";
             this.check_line_mode.Size = new System.Drawing.Size(142, 22);
             this.check_line_mode.TabIndex = 32;
@@ -140,7 +142,7 @@ namespace videocapture
             // Concatenate_frames
             // 
             this.Concatenate_frames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Concatenate_frames.Location = new System.Drawing.Point(591, 131);
+            this.Concatenate_frames.Location = new System.Drawing.Point(748, 131);
             this.Concatenate_frames.Name = "Concatenate_frames";
             this.Concatenate_frames.Size = new System.Drawing.Size(108, 64);
             this.Concatenate_frames.TabIndex = 30;
@@ -194,7 +196,7 @@ namespace videocapture
             // upload_json
             // 
             this.upload_json.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.upload_json.Location = new System.Drawing.Point(451, 131);
+            this.upload_json.Location = new System.Drawing.Point(591, 131);
             this.upload_json.Name = "upload_json";
             this.upload_json.Size = new System.Drawing.Size(108, 64);
             this.upload_json.TabIndex = 18;
@@ -255,7 +257,7 @@ namespace videocapture
             // setConfigToolStripMenuItem
             // 
             this.setConfigToolStripMenuItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.setConfigToolStripMenuItem.Location = new System.Drawing.Point(300, 58);
+            this.setConfigToolStripMenuItem.Location = new System.Drawing.Point(310, 58);
             this.setConfigToolStripMenuItem.Name = "setConfigToolStripMenuItem";
             this.setConfigToolStripMenuItem.Size = new System.Drawing.Size(111, 64);
             this.setConfigToolStripMenuItem.TabIndex = 4;
@@ -266,7 +268,7 @@ namespace videocapture
             // readConfigToolStripMenuItem
             // 
             this.readConfigToolStripMenuItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(300, 131);
+            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(448, 131);
             this.readConfigToolStripMenuItem.Name = "readConfigToolStripMenuItem";
             this.readConfigToolStripMenuItem.Size = new System.Drawing.Size(111, 64);
             this.readConfigToolStripMenuItem.TabIndex = 3;
@@ -466,6 +468,17 @@ namespace videocapture
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // button_lane
+            // 
+            this.button_lane.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_lane.Location = new System.Drawing.Point(310, 128);
+            this.button_lane.Name = "button_lane";
+            this.button_lane.Size = new System.Drawing.Size(111, 64);
+            this.button_lane.TabIndex = 34;
+            this.button_lane.Text = "画线配置";
+            this.button_lane.UseVisualStyleBackColor = true;
+            this.button_lane.Click += new System.EventHandler(this.button_lane_Click);
+            // 
             // drawPictureBoxVideo
             // 
             this.drawPictureBoxVideo.AutoSize = true;
@@ -537,6 +550,7 @@ namespace videocapture
         private System.Windows.Forms.Button drawcombainframe;
         private System.Windows.Forms.CheckBox check_cover_mode;
         private System.Windows.Forms.CheckBox check_line_mode;
+        private System.Windows.Forms.Button button_lane;
     }
 }
 

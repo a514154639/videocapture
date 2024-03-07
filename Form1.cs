@@ -24,27 +24,28 @@ namespace videocapture
         public bool isrotate = false;
         private Thread videoThr = null;//视频线程
         public Bitmap currBitmap = null;//当前播放的帧 
+
         public static ExtraConfig extraConfig = new ExtraConfig();
+        public static ExtraConfig_new extraConfig_new = new ExtraConfig_new();
         public static TotalConfig totalConfig = new TotalConfig();
+        public static LineConfig lineConfig = new LineConfig();
+
         public Cv2Video cv2Video = null;//实例
         private Ipinput ipinput = new Ipinput();
+        private laneInput laneinput = new laneInput();
         public string IP = "";
         public string CAM_IP = "";
         public string ipPsw = "";
+        public string Lane_Num_str = "";
         public int stopframe = 0;
-        public double height = 6.7;
         public double landwidth = 3.75;
-        public double B = 104;
         public double landwidthpix = 0;
-        public double Tanα = 0;
-        public double Tana = 0;
+
         public int Struler = 0;
-        public double Downruler = 0;
-        public double Upruler = 0;
-        public double angleInDegrees = 0;
         public double count = 0;
         public bool line_mode = false;
         public bool cover_mode = false;
+        public bool main_cam_status = false;
 
         // 定义IP地址和密码的成员变量
         private string ipAddress;
@@ -76,17 +77,15 @@ namespace videocapture
             public int nums;
             public string type;
             public List<ExtraConfig> config = new List<ExtraConfig>();
+            public List<ExtraConfig_new> config_news = new List<ExtraConfig_new>();
         }
 
         public class ExtraConfig
         {
             public string ip;
             public string psw;
-            public DrawPictureCache.DrawLine line;
+            public DrawPictureCache.DrawLine line;//新的策略中line修改为List 其中包括车道号 相机信息
             public bool state = false;
-            //public double length;
-            //public int pixeldis;
-            //public bool flip = false;
             public int lane;
             public int struler;
 
@@ -94,6 +93,48 @@ namespace videocapture
             public bool cover_mode = false;
 
         }
+
+        //新配置文件结构
+        //line用list来表示，其中可能有多条线
+        public class ExtraConfig_new
+        {
+            public string ip;
+            public string psw;
+            public List<LineConfig> line = new List<LineConfig>();
+            public bool state = false;
+        }
+
+        //每条线的具体配置
+        public class LineConfig
+        {
+            //public DrawPictureCache.DrawLine line;
+            public int xMin;
+            public int yMin;
+            public int xMax;
+            public int yMax;
+            public int lane;
+            public int struler;
+            public bool line_x_mode = false;
+            public bool cover_mode = false;
+            public bool ismain_cam = false;
+        }
+        private void ReceiveLaneNum(string str)
+        {
+            if(str == "")
+            {
+                Lane_Num_str = "0";
+            }
+            else
+            {
+                Lane_Num_str = str;
+            }
+            
+        }
+        private void ReceiveMainCamStatus(bool sta)
+        {
+            main_cam_status = sta;
+        }
+
 
         private void Receiveip(string str)
         {
@@ -114,41 +155,29 @@ namespace videocapture
                 if (File.Exists("config.json"))
                 {
                     var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-                    if (extras.type.Contains("0"))
+                    
+                    extraConfig_new = extras.config_news[flag];
+                    if (extras.config_news[flag].line[0].xMin == 0)
                     {
-                        flag--;//当没有应急车道的时候相机下标需要减一
-                        extraConfig = extras.config[flag];
-                        if (extras.config[flag].line == null)
-                        {
-                            info_box.AppendText("未配置参数\r\n");
-                            //MessageBox.Show("未配置参数");
-                            return;
-                        }
-                        info_box.AppendText("------------\r\n");
-                        info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
-                        info_box.AppendText("最终标尺：" + extraConfig.struler + "\r\n");
-                        info_box.AppendText("------------\r\n");
-                        check_line_mode.Checked = extraConfig.line_x_mode;
-                        check_cover_mode.Checked = extraConfig.cover_mode;
-                        flag++;
+                        info_box.AppendText("未配置参数\r\n");
+                        //MessageBox.Show("未配置参数");
+                        return;
                     }
-                    else
+                    info_box.AppendText("------------\r\n");
+                    info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
+                    info_box.AppendText("最终标尺：" + extraConfig.struler + "\r\n");
+                    info_box.AppendText("------------\r\n");
+                    check_line_mode.Checked = extraConfig.line_x_mode;
+                    check_cover_mode.Checked = extraConfig.cover_mode;
+
+                    for (int i = 0; i < extraConfig_new.line.Count; i++)
                     {
-                        extraConfig = extras.config[flag];
-                        if (extras.config[flag].line == null)
-                        {
-                            info_box.AppendText("未配置参数\r\n");
-                            //MessageBox.Show("未配置参数");
-                            return;
-                        }
-                        info_box.AppendText("------------\r\n");
-                        info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
-                        info_box.AppendText("最终标尺：" + extraConfig.struler + "\r\n");
-                        info_box.AppendText("------------\r\n");
-                        check_line_mode.Checked = extraConfig.line_x_mode;
-                        check_cover_mode.Checked = extraConfig.cover_mode;
+                        this.drawPictureBoxVideo.drawCache.addDrawLineList(extraConfig_new.line[i].xMin, 
+                            extraConfig_new.line[i].yMin, 
+                            extraConfig_new.line[i].xMax, 
+                            extraConfig_new.line[i].yMax, 3, Color.Blue);
                     }
-                    this.drawPictureBoxVideo.drawCache.addDrawLineList(extraConfig.line.xMin, extraConfig.line.yMin, extraConfig.line.xMax, extraConfig.line.yMax, 3, Color.Blue);
+                        
                     //MessageBox.Show("参数读取成功");
                     info_box.AppendText("参数读取成功\r\n");
                 }
@@ -166,7 +195,7 @@ namespace videocapture
             }
         }
 
-        List<ExtraConfig> configs = new List<ExtraConfig>();
+        //List<ExtraConfig> configs = new List<ExtraConfig>();
 
         private void SetConfig()
         {
@@ -190,31 +219,35 @@ namespace videocapture
                 }
 
                 extraConfig.line = DrawPictureCache.gGetDrawLine;
+
                 if (File.Exists("config.json"))
                 {
                     var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-                    //extras.nums = this.comboBox1.SelectedIndex + 3;
-                    if (extras.type.Contains("0"))//2+0 3+0车道
+
+                    if (DrawPictureCache.LineList.Count > extras.config_news[flag].line.Count)
                     {
-                        flag--;
-                        extras.config[flag].line = DrawPictureCache.gGetDrawLine;
-                        extras.config[flag].struler = Struler;
-                        extras.config[flag].line_x_mode = line_mode;
-                        extras.config[flag].cover_mode = cover_mode;
-                        flag++;
+                        MessageBox.Show("未配置画线对应的车道号，请先进行画线配置");
+                        return;
                     }
-                    else
+                    var currentConfig = extras.config_news[flag];
+                    for (int i = 0; i < DrawPictureCache.LineList.Count; i++)
                     {
-                        extras.config[flag].line = DrawPictureCache.gGetDrawLine;
-                        extras.config[flag].struler = Struler;
-                        extras.config[flag].line_x_mode = line_mode;
-                        extras.config[flag].cover_mode = cover_mode;
+                        //extras.config_news[flag].line[i].line = DrawPictureCache.LineList[i];
+                        currentConfig.line[i].xMin = DrawPictureCache.LineList[i].xMin;
+                        currentConfig.line[i].yMin = DrawPictureCache.LineList[i].yMin;
+                        currentConfig.line[i].xMax = DrawPictureCache.LineList[i].xMax;
+                        currentConfig.line[i].yMax = DrawPictureCache.LineList[i].yMax;
+                        currentConfig.line[i].struler = Struler;
+                        currentConfig.line[i].line_x_mode = line_mode;
+                        currentConfig.line[i].cover_mode = cover_mode;
                     }
+
                     totalConfig = extras;
                     Convert(totalConfig);
                 }
+
+
                 info_box.AppendText("参数保存成功\r\n");
-                //MessageBox.Show("参数保存成功");
             }
             catch (Exception ex)
             {
@@ -224,6 +257,45 @@ namespace videocapture
             //CleanRectangle();
 
         }
+
+        //车道号配置
+        private void button_lane_Click(object sender, EventArgs e)
+        {
+            var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
+            using (laneInput laneinput = new laneInput())
+            {
+                laneinput.SendlaneNum += new laneInput.SendMesg(ReceiveLaneNum);
+                laneinput.SendisMainCam += new laneInput.SendStatus(ReceiveMainCamStatus);
+                laneinput.ShowDialog();
+                if (Lane_Num_str == "")
+                {
+                    Lane_Num_str = "0";
+                }
+                //一条线直接赋值
+                if (DrawPictureCache.LineList.Count == 1)
+                {
+                    extras.config_news[flag].line[0].lane = int.Parse(Lane_Num_str);
+                    extras.config_news[flag].line[0].ismain_cam = main_cam_status;
+                }
+                else
+                {
+                    //多条线添加
+                    extras.config_news[flag].line.Add(new LineConfig
+                    {
+                        // 在这里初始化LineConfig的属性
+                        lane = int.Parse(Lane_Num_str),
+                        ismain_cam = main_cam_status
+
+                    });
+
+                }              
+
+            }                
+            totalConfig = extras;
+            Convert(totalConfig);
+            info_box.AppendText("车道号配置成功\r\n");
+        }
+
 
         private void Cleanline()
         {
@@ -483,7 +555,8 @@ namespace videocapture
             info_box.AppendText("连接中，请稍后...\r\n");
             try
             {
-                isopen = cv2Video.openRtsp($"{str}:554"); // 显示
+                //isopen = cv2Video.openRtsp($"{str}:554"); // 显示
+                isopen = cv2Video.openVideoFile("demo.mp4");
                 if (isopen)
                 {
                     info_box.AppendText("相机" + CAM_IP);
@@ -541,14 +614,14 @@ namespace videocapture
             var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
             if (drawPictureBoxVideo.drawCache.drawLineList.Count != 0)
             {
-                if (extras.type.Contains("0"))
-                {
-                    press--;//当没有应急车道的时候相机下标需要减一 cam 1 2 3 -> confi 0 1 2
-                }
-                if (extras.config[press].line != null)
+                //if (extras.type.Contains("0"))
+                //{
+                //    press--;//当没有应急车道的时候相机下标需要减一 cam 1 2 3 -> confi 0 1 2
+                //}
+                if (extras.config_news[press].line[0] != null)
                 {
                     DrawPictureCache.DrawLine line1 = (DrawPictureCache.DrawLine)drawPictureBoxVideo.drawCache.drawLineList[0];
-                    var line2 = extras.config[press].line;
+                    var line2 = extras.config_news[press].line[0];
                     int ans3 = line1.xMax + line1.xMin + line1.yMax + line1.yMin;
                     int ans4 = line2.xMax + line2.xMin + line2.yMax + line2.yMin;
                     if (ans3 != ans4) { info_box.AppendText("当前配置未保存\r\n"); }
@@ -560,36 +633,6 @@ namespace videocapture
                     //MessageBox.Show("当前配置未保存");
                 }
 
-            }
-
-        }
-
-        //相机按钮背景颜色设置      
-        private void ButtonColor(Control control, int num)
-        {
-            //if (control.InvokeRequired)
-            //{
-            //    control.Invoke(new Action(() => ButtonColor(control, num)));
-            //    return;
-            //}
-
-            Control.ControlCollection collection = control.Controls;
-            string[] buttonNames = { "cam_0", "cam_1", "cam_2", "cam_3", "cam_4", "cam_5" };
-
-            foreach (Button button in collection.OfType<Button>())
-            {
-                if (button.Name == buttonNames[num])
-                {
-
-                    button.BackColor = Color.Green; // 显示  
-
-                }
-                else
-                {
-
-                    button.BackColor = Color.White; // 显示 
-
-                }
             }
 
         }
@@ -615,7 +658,34 @@ namespace videocapture
         {
             if (this.checkBox0.Checked == true)
             {
-                Cam_op(1);
+                string selectedValue = this.roadtype_box.SelectedItem.ToString();
+                switch (selectedValue)
+                {
+                    case "2+0车道":
+                        Cam_op(0);
+                        info_box.AppendText("选择相机2\r\n");
+                        break;
+                    case "服务区_入口":
+                        Cam_op(1);
+                        info_box.AppendText("选择相机1\r\n");
+                        break;
+                    case "服务区_出口":
+                        Cam_op(1);
+                        info_box.AppendText("选择相机1\r\n");
+                        break;
+                    case "2+1车道":
+                        Cam_op(1);
+                        info_box.AppendText("选择相机2\r\n");
+                        break;
+                    case "3+0车道":
+                        Cam_op(0);
+                        info_box.AppendText("选择相机3\r\n");
+                        break;
+                    case "3+1车道":
+                        Cam_op(1);
+                        info_box.AppendText("选择相机3\r\n");
+                        break;
+                }
 
             }
             else
@@ -631,7 +701,26 @@ namespace videocapture
         {
             if (this.checkBox1.Checked == true)
             {
-                Cam_op(2);
+                string selectedValue = this.roadtype_box.SelectedItem.ToString();
+                switch (selectedValue)
+                {
+                    case "2+0车道":
+                        Cam_op(1);
+                        info_box.AppendText("选择相机1\r\n");
+                        break;
+                    case "2+1车道":
+                        Cam_op(2);
+                        info_box.AppendText("选择相机1\r\n");
+                        break;
+                    case "3+0车道":
+                        Cam_op(1);
+                        info_box.AppendText("选择相机2\r\n");
+                        break;
+                    case "3+1车道":
+                        Cam_op(2);
+                        info_box.AppendText("选择相机2\r\n");
+                        break;
+                }
 
             }
             else
@@ -647,7 +736,19 @@ namespace videocapture
         {
             if (this.checkBox2.Checked == true)
             {
-                Cam_op(3);
+                string selectedValue = this.roadtype_box.SelectedItem.ToString();
+                
+                switch (selectedValue)
+                {
+                    case "3+0车道":
+                        Cam_op(2);
+                        info_box.AppendText("选择相机1\r\n");
+                        break;
+                    case "3+1车道":
+                        Cam_op(3);
+                        info_box.AppendText("选择相机1\r\n");
+                        break;
+                }
             }
             else
             {
@@ -676,39 +777,6 @@ namespace videocapture
         /// 相机操作
         /// </summary>
         /// <param name="index"></param>
-        private void Cam_op_old(int index)
-        {
-            try
-            {
-                flag = index;
-                if (string.IsNullOrWhiteSpace(roadtype_box.Text))
-                {
-                    info_box.AppendText("请先选择车道\r\n");
-                    //MessageBox.Show("请先选择车道");
-                    return;
-                }
-                check_line_mode.Checked = false;
-                check_cover_mode.Checked = false;
-                ButtonColor(splitContainer2.Panel2, index);
-                CheckLine();
-                Cleanline();
-                string str = Writeip(index);
-                string ipstr = BaseUrl + ipPsw;
-                if (str == ipstr)
-                {
-                    return;
-                }
-                ShowImage(str);
-                info_box.Clear();
-                press = index;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-
-        }
-
         private void Cam_op(int index)
         {
             try
@@ -733,13 +801,8 @@ namespace videocapture
                 {
                     return;
                 }
-
-                this.Invoke(new MethodInvoker(delegate ()
-                {
-                    ButtonColor(splitContainer2.Panel2, index);
-                    ShowImage(str);
-                }));
-                //ShowImage(str);
+                
+                ShowImage(str);
 
 
                 press = index;
@@ -782,7 +845,8 @@ namespace videocapture
             {
                 File.Delete("config.json");
             }
-            configs.Clear();
+            totalConfig.config_news.Clear();
+            //configs.Clear();
             Dictionary<string, int> laneNumsDict = new Dictionary<string, int>
             {
                 { "2+0车道", 2 },
@@ -873,13 +937,27 @@ namespace videocapture
             for (int i = 0; i < laneNums; i++)
             {
                 //configs.Add(new ExtraConfig { ip = "", lane = laneNums - i, height = 6.7, landwidth = 3.75, B = 104 });
-                configs.Add(new ExtraConfig { ip = "", lane = laneNums - i });
+                //totalConfig.config.Add(new ExtraConfig { ip = "", lane = laneNums - i });
+                totalConfig.config_news.Add(new ExtraConfig_new
+                {
+                    ip = "",
+                    line = new List<LineConfig>
+                    {
+                        new LineConfig
+                        {  
+                            // 在这里初始化LineConfig的属性                          
+                            lane = i,
+                            struler = 0
+                        }
+                    }
+                });
+
             }
             if (selectedValue == "服务区_入口") selectedValue = "service_in";
             if (selectedValue == "服务区_出口") selectedValue = "service_out";
             totalConfig.type = selectedValue;
             totalConfig.nums = laneNums;
-            totalConfig.config = configs;
+            //totalConfig.config = configs;
             Convert(totalConfig);
         }
 
@@ -924,11 +1002,8 @@ namespace videocapture
             if (File.Exists("config.json"))
             {
                 var extras = JsonConvert.DeserializeObject<TotalConfig>(File.ReadAllText("config.json"));
-                if (extras.type.Contains("0"))
-                {
-                    camnum--;//当没有应急车道的时候相机下标需要减一
-                }
-                if (string.IsNullOrWhiteSpace(extras.config[camnum].ip))//ip为空则输入
+
+                if (string.IsNullOrWhiteSpace(extras.config_news[camnum].ip))//ip为空则输入
                 {
                     using (Ipinput ipinput = new Ipinput())
                     {
@@ -953,10 +1028,10 @@ namespace videocapture
                         }
                         str += ipPsw;
                         str += IP;
-                        extras.config[camnum].ip = IP;
-                        extras.config[camnum].psw = ipPsw;
-                        extras.config[camnum].state = true;
-                        CAM_IP = extras.config[camnum].ip;
+                        extras.config_news[camnum].ip = IP;
+                        extras.config_news[camnum].psw = ipPsw;
+                        extras.config_news[camnum].state = true;
+                        CAM_IP = extras.config_news[camnum].ip;
                         totalConfig = extras;
                         Convert(totalConfig);
 
@@ -964,11 +1039,11 @@ namespace videocapture
                 }
                 else
                 {
-                    if (!IsPingable(extras.config[camnum].ip))//判断当前ip是否连通
+                    if (!IsPingable(extras.config_news[camnum].ip))//判断当前ip是否连通
                     {
                         isopen = false;
                         info_box.AppendText("输入ip无法连通\r\n");
-                        extras.config[camnum].ip = IP;//无法连通则置空
+                        extras.config_news[camnum].ip = IP;//无法连通则置空
                         totalConfig = extras;
                         Convert(totalConfig);
                         return str;
@@ -990,17 +1065,17 @@ namespace videocapture
                             {
                                 return str;
                             }
-                            extras.config[camnum].ip = IP;
-                            extras.config[camnum].psw = ipPsw;
-                            extras.config[camnum].state = true;
-                            CAM_IP = extras.config[camnum].ip;
+                            extras.config_news[camnum].ip = IP;
+                            extras.config_news[camnum].psw = ipPsw;
+                            extras.config_news[camnum].state = true;
+                            CAM_IP = extras.config_news[camnum].ip;
                             totalConfig = extras;
                             Convert(totalConfig);
                         }
                     }
-                    str += extras.config[camnum].psw;
-                    str += extras.config[camnum].ip;
-                    CAM_IP = extras.config[camnum].ip;
+                    str += extras.config_news[camnum].psw;
+                    str += extras.config_news[camnum].ip;
+                    CAM_IP = extras.config_news[camnum].ip;
                 }
             }
             else
@@ -1062,21 +1137,6 @@ namespace videocapture
             var res1 = JsonConvert.DeserializeObject(temp);
             File.WriteAllText("config.json", res1.ToString());
         }
-
-        //相机高度文本框
-        //private void Camheight_TextChanged(object sender, EventArgs e)
-        //{
-        //    if (cam_height.Text != "")
-        //    {
-        //        height = double.Parse(cam_height.Text);
-        //    }
-        //    else
-        //    {
-        //        height = 0;
-        //    }
-        //    //CaculatePixeldis();
-
-        //}
 
         /// <summary>
         /// 上传参数文件到/home/net5.0
@@ -1158,20 +1218,6 @@ namespace videocapture
             //landwidth = double.Parse(landwidth_box.Text);
         }
 
-        //视场角文本框
-        //private void Camangel_TextChanged(object sender, EventArgs e)
-        //{
-        //    if (cam_angel.Text != "")
-        //    {
-        //        B = double.Parse(cam_angel.Text);
-        //    }
-        //    else
-        //    {
-        //        B = 0;
-        //    }
-        //    //B = double.Parse(cam_angel.Text);
-        //}
-
         //计算车道夹角
         private void Caculate_tanα()
         {
@@ -1186,12 +1232,6 @@ namespace videocapture
                 info_box.AppendText("当前视频尺寸：" + currBitmap.Width.ToString() + "×" + currBitmap.Height.ToString() + "\r\n");
                 info_box.AppendText("------------\r\n");
                 info_box.AppendText("车道像素宽：" + landwidthpix.ToString() + "\r\n");
-                //double α = (landwidthpix / currBitmap.Height) * B;
-                //info_box.AppendText("车道夹角：" + Math.Round(α, 1).ToString() + "\r\n");
-                //double temp = α * Math.PI / 180;
-                //Tanα = Math.Tan(temp);
-                //string strNumber = Tanα.ToString("F2");
-                //Tanα = double.Parse(strNumber);
 
             }
             catch (Exception ex)
@@ -1199,51 +1239,6 @@ namespace videocapture
                 MessageBox.Show(ex.ToString());
             }
 
-        }
-
-        //计算下车道线夹角
-        private void Caculate_tana()
-        {
-            double A = height * Tanα;
-            double B = landwidth * Tanα;
-            double C = height * Tanα - landwidth;
-            Tana = (Math.Sqrt(B * B - 4 * A * C) - B) / (2 * A);
-            double a = Math.Atan(Tana);
-            string strNumber = Tana.ToString("F2");
-            Tana = double.Parse(strNumber);
-            angleInDegrees = a * 180 / Math.PI; // 将弧度转换为角度
-            info_box.AppendText("下车道线夹角：" + Math.Round(angleInDegrees, 1).ToString() + "\r\n");
-        }
-
-        //计算下车道线标尺
-        private double Caculate_downruler()
-        {
-            double placedown = height * Tana;
-            double j1 = Math.Atan((placedown - 0.5) / height);
-            j1 = j1 * 180 / Math.PI;
-            double j2 = Math.Atan((placedown + 0.5) / height);
-            j2 = j2 * 180 / Math.PI;
-            Downruler = (Math.Abs(j2 - j1)) / B * currBitmap.Height;
-            string strNumber = Downruler.ToString("F2");
-            Downruler = double.Parse(strNumber);
-            info_box.AppendText("下沿标尺：" + strNumber + "\r\n");
-            return Downruler;
-        }
-
-        //计算上车道线标尺
-        private double Caculate_upruler()
-        {
-            double placedown = height * Tana;
-            double placeup = placedown + landwidth;
-            double j1 = Math.Atan((placeup - 0.5) / height);
-            j1 = j1 * 180 / Math.PI;
-            double j2 = Math.Atan((placeup + 0.5) / height);
-            j2 = j2 * 180 / Math.PI;
-            Upruler = (Math.Abs(j2 - j1)) / B * currBitmap.Height;
-            string strNumber = Upruler.ToString("F2");
-            Upruler = double.Parse(strNumber);
-            info_box.AppendText("上沿标尺：" + strNumber + "\r\n");
-            return Upruler;
         }
 
         //计算最终标尺
@@ -1254,7 +1249,7 @@ namespace videocapture
                 Caculate_tanα();
                 //Caculate_tana();
                 //double temp = 0.25 * Caculate_upruler() + 0.75 * Caculate_downruler();
-                double temp = landwidthpix / landwidth;//为了方便操作 修改为像素长度÷车道宽
+                double temp = landwidthpix / landwidth;//为了方便操作 修改为像素长度/车道宽
                 Struler = System.Convert.ToInt32(temp);
 
             }
@@ -1429,5 +1424,7 @@ namespace videocapture
             return false;
         }
 
+
+        
     }
 }
