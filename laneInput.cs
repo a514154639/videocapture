@@ -15,6 +15,7 @@ namespace videocapture
         public laneInput()
         {
             InitializeComponent();
+            this.checkBox1.Checked = true;
         }
         public delegate void SendMesg(string str);
         public delegate void SendStatus(bool status);

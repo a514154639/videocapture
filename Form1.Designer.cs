@@ -30,11 +30,11 @@ namespace videocapture
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button_lane = new System.Windows.Forms.Button();
             this.check_cover_mode = new System.Windows.Forms.CheckBox();
             this.check_line_mode = new System.Windows.Forms.CheckBox();
             this.drawcombainframe = new System.Windows.Forms.Button();
             this.Concatenate_frames = new System.Windows.Forms.Button();
-            this.caculate_rl = new System.Windows.Forms.Button();
             this.landwidth_box = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,6 +46,7 @@ namespace videocapture
             this.setConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.readConfigToolStripMenuItem = new System.Windows.Forms.Button();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.cam_2 = new System.Windows.Forms.Button();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
@@ -60,8 +61,6 @@ namespace videocapture
             this.cam_1 = new System.Windows.Forms.Button();
             this.cam_0 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button_lane = new System.Windows.Forms.Button();
-            this.drawPictureBoxVideo = new videocapture.DrawPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -87,7 +86,6 @@ namespace videocapture
             this.splitContainer1.Panel1.Controls.Add(this.check_line_mode);
             this.splitContainer1.Panel1.Controls.Add(this.drawcombainframe);
             this.splitContainer1.Panel1.Controls.Add(this.Concatenate_frames);
-            this.splitContainer1.Panel1.Controls.Add(this.caculate_rl);
             this.splitContainer1.Panel1.Controls.Add(this.landwidth_box);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
@@ -106,11 +104,22 @@ namespace videocapture
             this.splitContainer1.SplitterDistance = 199;
             this.splitContainer1.TabIndex = 2;
             // 
+            // button_lane
+            // 
+            this.button_lane.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_lane.Location = new System.Drawing.Point(159, 58);
+            this.button_lane.Name = "button_lane";
+            this.button_lane.Size = new System.Drawing.Size(111, 64);
+            this.button_lane.TabIndex = 34;
+            this.button_lane.Text = "画线配置";
+            this.button_lane.UseVisualStyleBackColor = true;
+            this.button_lane.Click += new System.EventHandler(this.button_lane_Click);
+            // 
             // check_cover_mode
             // 
             this.check_cover_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.check_cover_mode.AutoSize = true;
-            this.check_cover_mode.Location = new System.Drawing.Point(920, 164);
+            this.check_cover_mode.Location = new System.Drawing.Point(748, 161);
             this.check_cover_mode.Name = "check_cover_mode";
             this.check_cover_mode.Size = new System.Drawing.Size(178, 22);
             this.check_cover_mode.TabIndex = 33;
@@ -121,7 +130,7 @@ namespace videocapture
             // 
             this.check_line_mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.check_line_mode.AutoSize = true;
-            this.check_line_mode.Location = new System.Drawing.Point(920, 136);
+            this.check_line_mode.Location = new System.Drawing.Point(748, 133);
             this.check_line_mode.Name = "check_line_mode";
             this.check_line_mode.Size = new System.Drawing.Size(142, 22);
             this.check_line_mode.TabIndex = 32;
@@ -142,24 +151,13 @@ namespace videocapture
             // Concatenate_frames
             // 
             this.Concatenate_frames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Concatenate_frames.Location = new System.Drawing.Point(748, 131);
+            this.Concatenate_frames.Location = new System.Drawing.Point(591, 133);
             this.Concatenate_frames.Name = "Concatenate_frames";
             this.Concatenate_frames.Size = new System.Drawing.Size(108, 64);
             this.Concatenate_frames.TabIndex = 30;
             this.Concatenate_frames.Text = "拼帧测试";
             this.Concatenate_frames.UseVisualStyleBackColor = true;
             this.Concatenate_frames.Click += new System.EventHandler(this.Concatenate_frames_Click);
-            // 
-            // caculate_rl
-            // 
-            this.caculate_rl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.caculate_rl.Location = new System.Drawing.Point(159, 58);
-            this.caculate_rl.Name = "caculate_rl";
-            this.caculate_rl.Size = new System.Drawing.Size(115, 64);
-            this.caculate_rl.TabIndex = 28;
-            this.caculate_rl.Text = "计算标尺";
-            this.caculate_rl.UseVisualStyleBackColor = true;
-            this.caculate_rl.Click += new System.EventHandler(this.Caculate_Click);
             // 
             // landwidth_box
             // 
@@ -196,7 +194,7 @@ namespace videocapture
             // upload_json
             // 
             this.upload_json.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.upload_json.Location = new System.Drawing.Point(591, 131);
+            this.upload_json.Location = new System.Drawing.Point(453, 131);
             this.upload_json.Name = "upload_json";
             this.upload_json.Size = new System.Drawing.Size(108, 64);
             this.upload_json.TabIndex = 18;
@@ -268,7 +266,7 @@ namespace videocapture
             // readConfigToolStripMenuItem
             // 
             this.readConfigToolStripMenuItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(448, 131);
+            this.readConfigToolStripMenuItem.Location = new System.Drawing.Point(310, 128);
             this.readConfigToolStripMenuItem.Name = "readConfigToolStripMenuItem";
             this.readConfigToolStripMenuItem.Size = new System.Drawing.Size(111, 64);
             this.readConfigToolStripMenuItem.TabIndex = 3;
@@ -305,6 +303,17 @@ namespace videocapture
             this.splitContainer2.Size = new System.Drawing.Size(1122, 1225);
             this.splitContainer2.SplitterDistance = 525;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // drawPictureBoxVideo
+            // 
+            this.drawPictureBoxVideo.AutoSize = true;
+            this.drawPictureBoxVideo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
+            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
+            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
+            this.drawPictureBoxVideo.Size = new System.Drawing.Size(525, 1225);
+            this.drawPictureBoxVideo.TabIndex = 0;
             // 
             // checkBox2
             // 
@@ -468,28 +477,6 @@ namespace videocapture
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // button_lane
-            // 
-            this.button_lane.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_lane.Location = new System.Drawing.Point(310, 128);
-            this.button_lane.Name = "button_lane";
-            this.button_lane.Size = new System.Drawing.Size(111, 64);
-            this.button_lane.TabIndex = 34;
-            this.button_lane.Text = "画线配置";
-            this.button_lane.UseVisualStyleBackColor = true;
-            this.button_lane.Click += new System.EventHandler(this.button_lane_Click);
-            // 
-            // drawPictureBoxVideo
-            // 
-            this.drawPictureBoxVideo.AutoSize = true;
-            this.drawPictureBoxVideo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.drawPictureBoxVideo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawPictureBoxVideo.Location = new System.Drawing.Point(0, 0);
-            this.drawPictureBoxVideo.Margin = new System.Windows.Forms.Padding(4);
-            this.drawPictureBoxVideo.Name = "drawPictureBoxVideo";
-            this.drawPictureBoxVideo.Size = new System.Drawing.Size(525, 1225);
-            this.drawPictureBoxVideo.TabIndex = 0;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -544,7 +531,6 @@ namespace videocapture
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox landwidth_box;
-        private System.Windows.Forms.Button caculate_rl;
         private System.Windows.Forms.TextBox info_box;
         private System.Windows.Forms.Button Concatenate_frames;
         private System.Windows.Forms.Button drawcombainframe;
